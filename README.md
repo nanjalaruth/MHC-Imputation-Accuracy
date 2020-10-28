@@ -1,7 +1,7 @@
 # MHC-Imputation-Accuracy
 
-## Hello world!!
-### So excited to have you here.
+## Greetings!!
+### So excited to have you here!!
 
 ## Introduction
 Genome wide association studies (GWAS) traditionally use genotyping arrays to genotype large sets of individuals, usually cases and controls, to determine which SNPs are significantly overrepresented in the cases to identify associations with disease. Genotyping arrays are cheaper than sequencing but only “measure” tag or selected SNPs across the genome (up to2.5 million SNPs). To increase the number of available SNPs per individual one can then use a reference panel of whole genome sequence data from related populations to impute SNPs from the ones on the array. This can be done due to the non-random inheritance of SNPs, or linkage disequilibrium (LD).Several methods are available for imputation, as are several different reference panels.
