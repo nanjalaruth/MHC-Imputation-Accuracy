@@ -11,7 +11,7 @@ There are some regions on the human genome that have high variability and thus m
 ## Project description
 Genotype imputation refers to the statistical inference of unobserved genotypes.
 
-This project is focussed on assessing the accuracy of imputation tools, reference panels, sample sizes and chip densities used for genotype imputation in the human leukocyte antigen (HLA) region.
+This project focusses on assessing the accuracy of imputation tools, reference panels, sample sizes and chip densities used for genotype imputation in the human leukocyte antigen (HLA) region.
 
 ### Author
 Ruth Nanjala
