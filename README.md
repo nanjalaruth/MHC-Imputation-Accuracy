@@ -9,7 +9,7 @@ Genome wide association studies (GWAS) traditionally use genotyping arrays to ge
 There are some regions on the human genome that have high variability and thus may be difficult to impute. This includes the major histocompatibility (MHC) region. This project will look at different arrays, imputation tools and reference panels to evaluate the accuracy of imputation in MHC regions in different populations, including European and African. African populations have high diversity and thus are more difficult to work with.Once imputed the project can then characterise and compare MHC region SNPs across populations.
 
 ## Project description
-The project is focussed on assessing the accuracy of imputation tools, reference panels, sample sizes and chip densities used for genotype imputation in the human leukocyte antigen (HLA) region.
+This project is focussed on assessing the accuracy of imputation tools, reference panels, sample sizes and chip densities used for genotype imputation in the human leukocyte antigen (HLA) region.
 
 ### Author
 Ruth Nanjala
