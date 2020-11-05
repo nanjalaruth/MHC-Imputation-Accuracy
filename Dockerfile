@@ -115,10 +115,11 @@ RUN conda clean --all --yes && \
 RUN conda clean --all --yes && \
   conda install -c bioconda bioconductor-hibag
 
-
+# Change ownership
 RUN useradd --create-home --shell /bin/bash ubuntu && \
   chown -R ubuntu:ubuntu /home/ubuntu
 
 USER ubuntu
 
+# Run the specified command within the container
 CMD ["/bin/bash","-i"]
