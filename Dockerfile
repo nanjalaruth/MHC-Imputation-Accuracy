@@ -7,12 +7,20 @@
 FROM ubuntu:18.04
 
 # File Author 
-LABEL maintenair="Ruth Nanjala rnanjala@icipe.org"
+LABEL maintainer="Ruth Nanjala rnanjala@icipe.org"
+LABEL description="This is custom Docker Image for \
+MHC Imputation tools and their dependencies."
 
+# Update Ubuntu Software repository
+RUN apt update
+
+# Define the environment variable
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 ENV PATH /opt/conda/bin:$PATH
 
 ################## BEGIN INSTALLATION ######################
+# Once installation is complete, remove all packages cache 
+# to reduce the size of the custom image.
 
 # Install wget
 RUN apt-get update && apt-get install -y \
@@ -36,9 +44,7 @@ RUN wget https://www.dropbox.com/sh/k6b34fzw9w4s8bg/AADRaxyaRFsDn6P5InT5qMiga/im
 # Install SNP2HLA
 RUN wget http://software.broadinstitute.org/mpg/snp2hla/data/SNP2HLA_package_v1.0.3.tar.gz && \
   tar -xzvf SNP2HLA_package_v1.0.3.tar.gz && \
-  cd SNP2HLA_package_v1.0.3 && \
-  make && \
-  mv ./bin/SNP2HLA_package_v1.0.3 /usr/local/bin/SNP2HLA
+  cd SNP2HLA_package_v1.0.3 
 
 # Install htslib
 RUN wget https://github.com/samtools/htslib/releases/download/1.9/htslib-1.9.tar.bz2 && \
@@ -86,9 +92,7 @@ RUN wget https://github.com/arq5x/bedtools2/releases/download/v2.28.0/bedtools-2
 # Install minimac3
 RUN wget ftp://share.sph.umich.edu/minimac3/Minimac3.v2.0.1.tar.gz  && \
   tar -xzvf Minimac3.v2.0.1.tar.gz  && \
-  cd Minimac3/  && \
-  make  && \
-  mv ./bin/Minimac3 /usr/local/bin/minimac3
+  cd Minimac3/  
 
 # Install minimac4
 RUN wget http://debian.mirror.ac.za/debian/pool/main/libs/libstatgen/libstatgen0_1.0.14-5_amd64.deb && \
@@ -112,14 +116,17 @@ RUN conda clean --all --yes && \
   conda install -y -c bioconda r-ggplot2 r-dplyr r-plyr r-tidyr r-data.table r-reshape2 r-optparse r-sm
 RUN conda clean --all --yes && \
   conda install -y -c conda-forge r-ggsci
+
+# HIBAG tool
 RUN conda clean --all --yes && \
   conda install -c bioconda bioconductor-hibag
 
-# Change ownership
+# Change ownership recursively
 RUN useradd --create-home --shell /bin/bash ubuntu && \
   chown -R ubuntu:ubuntu /home/ubuntu
 
+# Defines the default user when running the image
 USER ubuntu
 
-# Run the specified command within the container
+# Defines the default command to execute when running the container
 CMD ["/bin/bash","-i"]
