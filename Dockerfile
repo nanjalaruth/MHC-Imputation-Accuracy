@@ -1,27 +1,16 @@
 ############################################################
-# Dockerfile to build MHC Imputation tools
-# Based on Ubuntu 18.04
+# Dockerfile to build Genotype imputation
+# Based on Ubuntu 16.04
 ############################################################
-
 # Set the base image to Ubuntu
-FROM ubuntu:18.04
-
-# File Author 
+FROM ubuntu:16.04
+# File Author / Maintainer
 LABEL maintainer="Ruth Nanjala rnanjala@icipe.org"
 LABEL description="This is custom Docker Image for \
 MHC Imputation tools and their dependencies."
-
-# Update Ubuntu Software repository
-RUN apt update
-
-# Define the environment variable
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 ENV PATH /opt/conda/bin:$PATH
-
 ################## BEGIN INSTALLATION ######################
-# Once installation is complete, remove all packages cache 
-# to reduce the size of the custom image.
-
 # Install wget
 RUN apt-get update && apt-get install -y \
   autoconf \
@@ -37,15 +26,13 @@ RUN apt-get update && apt-get install -y \
   zlib1g-dev &&\
   apt-get clean && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-#Install IMPUTE4
-RUN wget https://www.dropbox.com/sh/k6b34fzw9w4s8bg/AADRaxyaRFsDn6P5InT5qMiga/impute4.1.2_r300.3?dl=0
-
-# Install SNP2HLA
-RUN wget http://software.broadinstitute.org/mpg/snp2hla/data/SNP2HLA_package_v1.0.3.tar.gz && \
-  tar -xzvf SNP2HLA_package_v1.0.3.tar.gz && \
-  cd SNP2HLA_package_v1.0.3 
-
+# Install IMPUTE2
+RUN wget http://mathgen.stats.ox.ac.uk/impute/impute_v2.3.2_x86_64_static.tgz && \
+  tar -zxvf impute_v2.3.2_x86_64_static.tgz && \
+  mv impute_v2.3.2_x86_64_static/impute2 /usr/local/bin/impute2 && \
+  mkdir /opt/impute2/example -p && \
+  mv impute_v2.3.2_x86_64_static/Example/* /opt/impute2/example && \
+  rm -rf impute_v2.3.2_x86_64_static impute_v2.3.2_x86_64_static.tgz
 # Install htslib
 RUN wget https://github.com/samtools/htslib/releases/download/1.9/htslib-1.9.tar.bz2 && \
   tar -xvf htslib-1.9.tar.bz2 && \
@@ -54,7 +41,6 @@ RUN wget https://github.com/samtools/htslib/releases/download/1.9/htslib-1.9.tar
   make && \
   make install && \
   cd .. && rm -rf htslib-1.9*
-
 # Install samtools
 RUN wget https://github.com/samtools/samtools/releases/download/1.9/samtools-1.9.tar.bz2 && \
   tar -xvf samtools-1.9.tar.bz2 && \
@@ -63,7 +49,6 @@ RUN wget https://github.com/samtools/samtools/releases/download/1.9/samtools-1.9
   make && \
   make install && \
   cd .. && rm -rf samtools-1.9*
-
 # Install VCFTools
 RUN wget https://github.com/vcftools/vcftools/releases/download/v0.1.16/vcftools-0.1.16.tar.gz && \
   tar -xvf vcftools-0.1.16.tar.gz && \
@@ -71,7 +56,6 @@ RUN wget https://github.com/vcftools/vcftools/releases/download/v0.1.16/vcftools
   ./configure && \
   make && \
   make install
-
 # Install bcftools
 RUN wget https://github.com/samtools/bcftools/releases/download/1.9/bcftools-1.9.tar.bz2 && \
   tar -xvf bcftools-1.9.tar.bz2 && \
@@ -80,7 +64,6 @@ RUN wget https://github.com/samtools/bcftools/releases/download/1.9/bcftools-1.9
   make && \
   make install && \
   cd .. && rm -rf bcftools-1.9*
-
 # Install bedtools
 RUN wget https://github.com/arq5x/bedtools2/releases/download/v2.28.0/bedtools-2.28.0.tar.gz && \
   tar -zxvf bedtools-2.28.0.tar.gz && \
@@ -88,45 +71,56 @@ RUN wget https://github.com/arq5x/bedtools2/releases/download/v2.28.0/bedtools-2
   make && \
   mv bin/bedtools /usr/local/bin/ && \
   cd .. && rm -r bedtools2
-
 # Install minimac3
 RUN wget ftp://share.sph.umich.edu/minimac3/Minimac3.v2.0.1.tar.gz  && \
   tar -xzvf Minimac3.v2.0.1.tar.gz  && \
-  cd Minimac3/  
-
+  cd Minimac3/  && \
+  make && \
+  mv ./bin/Minimac3 /usr/local/bin/minimac3 && \
+  cd .. && rm -r Minimac3
 # Install minimac4
 RUN wget http://debian.mirror.ac.za/debian/pool/main/libs/libstatgen/libstatgen0_1.0.14-5_amd64.deb && \
   dpkg -i libstatgen0_1.0.14-5_amd64.deb && \
   wget https://github.com/statgen/Minimac4/releases/download/v1.0.2/minimac4-1.0.2-Linux.deb && \
   dpkg -i minimac4-1.0.2-Linux.deb
-
 # Install PLINK2
 # there is an undocumented stable url (without the date)
 RUN wget http://s3.amazonaws.com/plink2-assets/plink2_linux_x86_64_latest.zip -O plink.zip && \
   unzip plink.zip -d /usr/local/bin/ && \
   rm -f plink.zip
-
-
+# Install Eagle
+RUN wget https://data.broadinstitute.org/alkesgroup/Eagle/downloads/Eagle_v2.4.1.tar.gz && \
+  gunzip Eagle_v2.4.1.tar.gz && \
+  tar xvf Eagle_v2.4.1.tar && \
+  mv Eagle_v2.4.1/eagle /usr/local/bin/ && \
+  rm -rf Eagle_v2.4.1
 # Install R and R packages
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
   /bin/bash ~/miniconda.sh -b -p /opt/conda && \
   rm ~/miniconda.sh && \
   echo "conda activate base" >> ~/.bashrc
 RUN conda clean --all --yes && \
+  conda install -y -c conda-forge r-base r-ggsci && \
   conda install -y -c bioconda r-ggplot2 r-dplyr r-plyr r-tidyr r-data.table r-reshape2 r-optparse r-sm
-RUN conda clean --all --yes && \
-  conda install -y -c conda-forge r-ggsci
-
+# Install SNP2HLA
+RUN wget http://software.broadinstitute.org/mpg/snp2hla/data/SNP2HLA_package_v1.0.3.tar.gz && \
+  tar -xzvf SNP2HLA_package_v1.0.3.tar.gz && \
+  mv SNP2HLA_package_v1.0.3 /usr/local/bin/ && \
+  chmod a+x /usr/local/bin/SNP2HLA_package_v1.0.3/SNP2HLA/SNP2HLA.csh && \
+  chmod a+x /usr/local/bin/SNP2HLA_package_v1.0.3/MakeReference/MakeReference.csh
 # HIBAG tool
 RUN conda clean --all --yes && \
   conda install -c bioconda bioconductor-hibag
-
-# Change ownership recursively
+#Install IMPUTE4
+RUN wget https://www.dropbox.com/sh/k6b34fzw9w4s8bg/AAA0iXka9zQX-gj0JAdPATP1a/impute4.1.2_r300.1?dl=0 && \
+  mv impute4.1.2_r300.1?dl=0 /usr/local/bin
+#Install DEEPHLA
+RUN git clone https://github.com/tatsuhikonaito/DEEP-HLA.git && \
+  mv DEEP-HLA /usr/local/bin/
+#install csh
+RUN conda clean --all --yes && \
+  conda install -c conda-forge tcsh
 RUN useradd --create-home --shell /bin/bash ubuntu && \
   chown -R ubuntu:ubuntu /home/ubuntu
-
-# Defines the default user when running the image
 USER ubuntu
-
-# Defines the default command to execute when running the container
 CMD ["/bin/bash","-i"]
