@@ -102,24 +102,37 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 RUN conda clean --all --yes && \
   conda install -y -c conda-forge r-base r-ggsci && \
   conda install -y -c bioconda r-ggplot2 r-dplyr r-plyr r-tidyr r-data.table r-reshape2 r-optparse r-sm
-# Install SNP2HLA
-RUN wget http://software.broadinstitute.org/mpg/snp2hla/data/SNP2HLA_package_v1.0.3.tar.gz && \
-  tar -xzvf SNP2HLA_package_v1.0.3.tar.gz && \
-  mv SNP2HLA_package_v1.0.3 /usr/local/bin/ && \
-  chmod a+x /usr/local/bin/SNP2HLA_package_v1.0.3/SNP2HLA/SNP2HLA.csh && \
-  chmod a+x /usr/local/bin/SNP2HLA_package_v1.0.3/MakeReference/MakeReference.csh
 # HIBAG tool
 RUN conda clean --all --yes && \
   conda install -c bioconda bioconductor-hibag
-#Install IMPUTE4
-RUN wget https://www.dropbox.com/sh/k6b34fzw9w4s8bg/AAA0iXka9zQX-gj0JAdPATP1a/impute4.1.2_r300.1?dl=0 && \
-  mv impute4.1.2_r300.1?dl=0 /usr/local/bin
 #Install DEEPHLA
 RUN git clone https://github.com/tatsuhikonaito/DEEP-HLA.git && \
   mv DEEP-HLA /usr/local/bin/
 #install csh
 RUN conda clean --all --yes && \
   conda install -c conda-forge tcsh
+# Install SNP2HLA
+RUN wget http://software.broadinstitute.org/mpg/snp2hla/data/SNP2HLA_package_v1.0.3.tar.gz && \
+  tar -xzvf SNP2HLA_package_v1.0.3.tar.gz && \
+  mv SNP2HLA_package_v1.0.3 /usr/local/bin/ && \
+  chmod a+x /usr/local/bin/SNP2HLA_package_v1.0.3/SNP2HLA/SNP2HLA.csh && \
+  chmod a+x /usr/local/bin/SNP2HLA_package_v1.0.3/MakeReference/MakeReference.csh && \
+  cd /usr/local/bin/SNP2HLA_package_v1.0.3 && \
+  wget http://zzz.bwh.harvard.edu/plink/dist/plink-1.07-x86_64.zip && \
+  unzip plink-1.07-x86_64.zip && \
+  rm -f plink-1.07-x86_64.zip && \
+  cp plink-1.07-x86_64/plink ./MakeReference && \
+  cp plink-1.07-x86_64/plink ./SNP2HLA && \
+  wget http://faculty.washington.edu/browning/beagle/recent.versions/beagle_3.0.4_05May09.zip && \
+  unzip beagle_3.0.4_05May09.zip && \
+  cp beagle.3.0.4/beagle.jar ./MakeReference && \
+  cp beagle.3.0.4/beagle.jar ./SNP2HLA && \
+  wget http://faculty.washington.edu/browning/beagle_utilities/linkage2beagle.jar && \
+  cp linkage2beagle.jar ./MakeReference && \
+  cp linkage2beagle.jar ./SNP2HLA && \
+  wget http://faculty.washington.edu/browning/beagle_utilities/beagle2linkage.jar && \
+  cp beagle2linkage.jar ./MakeReference && \
+  cp beagle2linkage.jar ./SNP2HLA
 RUN useradd --create-home --shell /bin/bash ubuntu && \
   chown -R ubuntu:ubuntu /home/ubuntu
 USER ubuntu
