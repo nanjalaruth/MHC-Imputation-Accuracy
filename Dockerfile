@@ -1,5 +1,5 @@
 ############################################################
-# Dockerfile to build Genotype imputation
+# Dockerfile to build Genotype imputation tools
 # Based on Ubuntu 16.04
 ############################################################
 # Set the base image to Ubuntu
@@ -112,11 +112,12 @@ RUN git clone https://github.com/tatsuhikonaito/DEEP-HLA.git && \
 RUN conda clean --all --yes && \
   conda install -c conda-forge tcsh
 # Install SNP2HLA
+# chmod a+x /usr/local/bin/SNP2HLA_package_v1.0.3 && \
 RUN wget http://software.broadinstitute.org/mpg/snp2hla/data/SNP2HLA_package_v1.0.3.tar.gz && \
   tar -xzvf SNP2HLA_package_v1.0.3.tar.gz && \
   mv SNP2HLA_package_v1.0.3 /usr/local/bin/ && \
-  chmod a+x /usr/local/bin/SNP2HLA_package_v1.0.3/SNP2HLA/SNP2HLA.csh && \
-  chmod a+x /usr/local/bin/SNP2HLA_package_v1.0.3/MakeReference/MakeReference.csh && \
+  chmod -R g+rwx /usr/local/bin/SNP2HLA_package_v1.0.3 && \
+  chmod -R o+rwx /usr/local/bin/SNP2HLA_package_v1.0.3 && \ 
   cd /usr/local/bin/SNP2HLA_package_v1.0.3 && \
   wget http://zzz.bwh.harvard.edu/plink/dist/plink-1.07-x86_64.zip && \
   unzip plink-1.07-x86_64.zip && \
@@ -134,10 +135,12 @@ RUN wget http://software.broadinstitute.org/mpg/snp2hla/data/SNP2HLA_package_v1.
   cd plink-1.07-x86_64 && \
   cp ./plink ../MakeReference && \
   cp ./plink ../SNP2HLA
-
 #install nano
 RUN conda clean --all --yes && \
   conda install -c conda-forge nano
+#install java
+RUN conda clean --all --yes && \
+  conda install -c bioconda java-jdk 
 RUN useradd --create-home --shell /bin/bash ubuntu && \
   chown -R ubuntu:ubuntu /home/ubuntu
 USER ubuntu
