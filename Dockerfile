@@ -121,8 +121,6 @@ RUN wget http://software.broadinstitute.org/mpg/snp2hla/data/SNP2HLA_package_v1.
   wget http://zzz.bwh.harvard.edu/plink/dist/plink-1.07-x86_64.zip && \
   unzip plink-1.07-x86_64.zip && \
   rm -f plink-1.07-x86_64.zip && \
-  cp plink-1.07-x86_64/plink ./MakeReference && \
-  cp plink-1.07-x86_64/plink ./SNP2HLA && \
   wget http://faculty.washington.edu/browning/beagle/recent.versions/beagle_3.0.4_05May09.zip && \
   unzip beagle_3.0.4_05May09.zip && \
   cp beagle.3.0.4/beagle.jar ./MakeReference && \
@@ -132,7 +130,14 @@ RUN wget http://software.broadinstitute.org/mpg/snp2hla/data/SNP2HLA_package_v1.
   cp linkage2beagle.jar ./SNP2HLA && \
   wget http://faculty.washington.edu/browning/beagle_utilities/beagle2linkage.jar && \
   cp beagle2linkage.jar ./MakeReference && \
-  cp beagle2linkage.jar ./SNP2HLA
+  cp beagle2linkage.jar ./SNP2HLA && \
+  cd plink-1.07-x86_64 && \
+  cp ./plink ../MakeReference && \
+  cp ./plink ../SNP2HLA
+
+#install nano
+RUN conda clean --all --yes && \
+  conda install -c conda-forge nano
 RUN useradd --create-home --shell /bin/bash ubuntu && \
   chown -R ubuntu:ubuntu /home/ubuntu
 USER ubuntu
