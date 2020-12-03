@@ -69,12 +69,12 @@ else
     set WIN=1000 # Default Beagle phasing/imputation window = 1000 markers
 endif
 
-set JAVATMP=$OUTPUT.javatmpdir
-mkdir -p $JAVATMP
+#set JAVATMP=$OUTPUT.javatmpdir
+#mkdir -p $JAVATMP
 alias plink '$PLINK --noweb --silent --allow-no-sex'
-alias beagle 'java -Djava.io.tmpdir=$JAVATMP -Xmx$MEM\m -jar $SCRIPTPATH/beagle.jar'
-alias linkage2beagle 'java -Djava.io.tmpdir=$JAVATMP -Xmx$MEM\m -jar $SCRIPTPATH/linkage2beagle.jar'
-alias beagle2linkage 'java -Djava.io.tmpdir=$JAVATMP -Xmx$MEM\m -jar $SCRIPTPATH/beagle2linkage.jar'
+#alias beagle 'java -Djava.io.tmpdir=$JAVATMP -Xmx$MEM\m -jar $SCRIPTPATH/beagle.jar'
+#alias linkage2beagle 'java -Djava.io.tmpdir=$JAVATMP -Xmx$MEM\m -jar $SCRIPTPATH/linkage2beagle.jar'
+#alias beagle2linkage 'java -Djava.io.tmpdir=$JAVATMP -Xmx$MEM\m -jar $SCRIPTPATH/beagle2linkage.jar'
 
 # Functions to run
 set EXTRACT_MHC = 1
@@ -165,8 +165,7 @@ endif
 
 if ($CONVERT_IN) then
     echo "[$i] Convering data to beagle format."; @ i++
-    java -jar $SCRIPTPATH/linkage2beagle.jar data=$MHC.QC.dat pedigree=$MHC.QC.nopheno.ped beagle=$MHC.QC.bgl standard=true > $OUTPUT.bgl.log
-
+    java -jar $SCRIPTPATH/linkage2beagle.jar $MHC.QC.dat $MHC.QC.nopheno.ped > $MHC.QC.bgl
     echo "===============================================================================" >> $OUTPUT.bgl.log
 
     rm $MHC.QC.reorder*
@@ -176,7 +175,7 @@ endif
 if ($IMPUTE) then
     echo "[$i] Performing HLA imputation (see $OUTPUT.bgl.log for progress)."; @ i++
 
-    beagle markers=$REFERENCE.markers unphased=$MHC.QC.bgl phased=$REFERENCE.bgl.phased gprobs=true niterations=10 nsamples=4 missing=0 verbose=true maxwindow=$WIN out=$OUTPUT.IMPUTED log=$OUTPUT.phasing lowmem=true >> $OUTPUT.bgl.log
+    java -jar $SCRIPTPATH/beagle.jar markers=$REFERENCE.markers unphased=$MHC.QC.bgl phased=$REFERENCE.bgl.phased gprobs=true niterations=10 nsamples=4 missing=0 verbose=true maxwindow=$WIN out=$OUTPUT.IMPUTED log=$OUTPUT.phasing lowmem=true >> $OUTPUT.bgl.log
 endif
 
 if ($CONVERT_OUT) then
@@ -208,7 +207,7 @@ if ($CLEANUP) then
     rm $OUTPUT.ped
     rm $OUTPUT.map
     rm $OUTPUT.log
-    rm -r $JAVATMP
+    #rm -r $JAVATMP
     rm -f plink.log
     echo "DONE!"
     echo ""
