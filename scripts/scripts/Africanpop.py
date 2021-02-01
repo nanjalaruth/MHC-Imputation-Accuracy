@@ -17,4 +17,17 @@ Afrids=AFR["ID"]
 AFR.to_csv('Africansamples.tsv', sep="\t", index=False)
 Afrids.to_csv('Africanids.txt', sep=" ", index=False, header=False)
 
+#extract data from the Gambian samples
+GWD = data[data["POP"] == "GWD"]
+#extract the  ids of the African samples
+Gwdids=AFR["ID"]
+#Write the output to a file
+GWD.to_csv('Africansamples.tsv', sep="\t", index=False)
+Gwdids.to_csv('Africanids.txt', sep=" ", index=False, header=False)
 
+#extractgender of the samples
+gender = data[B"SEX"]
+gn = gender.replace({'female': 2})
+gy = gn.replace({'male': 1})
+
+gy.to_csv('gender.txt',index=False, header=False)
