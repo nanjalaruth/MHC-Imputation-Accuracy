@@ -1,4 +1,4 @@
-params.reads = 'https://github.com/nanjalaruth/MHC-Imputation-Accuracy/tree/main/optitype/*/*.tsv'
+params.reads = ('https://github.com/nanjalaruth/MHC-Imputation-Accuracy/tree/main/optitype/*/*.tsv')
 params.outdir = './my-results'
 params.ids = 'https://github.com/nanjalaruth/MHC-Imputation-Accuracy/tree/main/data/Gambianids.txt'
 
