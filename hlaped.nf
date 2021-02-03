@@ -1,6 +1,6 @@
-params.reads = '/scratch3/users/nanje/hlatyping/results/optitype/*/*.tsv'
-params.outdir = '/scratch3/users/nanje/hlatyping/results/my-results'
-params.ids = '/users/nanje/data/Gambianids.txt'
+params.reads = 'https://github.com/nanjalaruth/MHC-Imputation-Accuracy/tree/main/optitype/*/*.tsv'
+params.outdir = './my-results'
+params.ids = 'https://github.com/nanjalaruth/MHC-Imputation-Accuracy/tree/main/data/Gambianids.txt'
 
 // SNP2HLA version
 Channel.fromPath(params.reads).set { samples_ch }

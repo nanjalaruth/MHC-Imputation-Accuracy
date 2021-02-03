@@ -27,7 +27,7 @@ params.name = false
 params.email = false
 params.plaintext_email = false
 
-output_docs = file("$baseDir/docs/output.md")
+//output_docs = file("$baseDir/docs/output.md")
 
 // Has the run name been specified by the user?
 // this has the bonus effect of catching both -name and --name
