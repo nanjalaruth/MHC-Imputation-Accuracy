@@ -1,10 +1,6 @@
-params.reads = 'https://github.com/nanjalaruth/MHC-Imputation-Accuracy/tree/main/optitype/*/*.tsv'
-params.outdir = './my-results'
-params.ids = 'https://github.com/nanjalaruth/MHC-Imputation-Accuracy/tree/main/data/Gambianids.txt'
-
 // SNP2HLA version
 Channel.fromPath(params.reads).set { samples_ch }
-Channel.fromPath(params.ids).set {ids_ch }
+Channel.fromPath(params.gwdids).set {ids_ch }
 process snp2hlatypes {
   publishDir "$params.outdir"
 
@@ -38,7 +34,7 @@ process snp2hlatypes {
 
 // HIBAG version
 Channel.fromPath(params.reads).set { smp_ch }
-Channel.fromPath(params.ids).set {id_ch }
+Channel.fromPath(params.gwdids).set {id_ch }
 process hibaghlatypes {
   publishDir "$params.outdir"
 
