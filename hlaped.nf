@@ -1,5 +1,6 @@
+
 // SNP2HLA version
-Channel.fromPath(params.input).set { samples_ch }
+Channel.fromPath(params.reads).set { samples_ch }
 Channel.fromPath(params.gwdids).set {ids_ch }
 process snp2hlatypes {
   publishDir "$params.outdir"
