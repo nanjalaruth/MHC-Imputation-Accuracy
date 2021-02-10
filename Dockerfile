@@ -132,10 +132,6 @@ RUN wget http://software.broadinstitute.org/mpg/snp2hla/data/SNP2HLA_package_v1.
   wget http://faculty.washington.edu/browning/beagle_utilities/beagle2linkage.jar && \
   cp beagle2linkage.jar ./MakeReference && \
   cp beagle2linkage.jar ./SNP2HLA && \ 
-  mv https://github.com/nanjalaruth/MHC-Imputation-Accuracy/blob/main/scripts/SNP2HLA.csh ./SNP2HLA && \
-  chmod +x ./SNP2HLA/SNP2HLA.csh && \
-  mv https://github.com/nanjalaruth/MHC-Imputation-Accuracy/blob/main/scripts/MakeReference.csh ./MakeReference && \
-  chmod +x ./MakeReference/MakeReference.csh && \
   cd plink-1.07-x86_64 && \
   cp ./plink ../MakeReference && \
   cp ./plink ../SNP2HLA 
