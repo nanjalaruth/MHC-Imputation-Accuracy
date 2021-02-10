@@ -131,10 +131,10 @@ RUN wget http://software.broadinstitute.org/mpg/snp2hla/data/SNP2HLA_package_v1.
   cp linkage2beagle.jar ./SNP2HLA && \
   wget http://faculty.washington.edu/browning/beagle_utilities/beagle2linkage.jar && \
   cp beagle2linkage.jar ./MakeReference && \
-  cp beagle2linkage.jar ./SNP2HLA && \
+  cp beagle2linkage.jar ./SNP2HLA && \ 
   cd plink-1.07-x86_64 && \
   cp ./plink ../MakeReference && \
-  cp ./plink ../SNP2HLA
+  cp ./plink ../SNP2HLA 
 #install nano
 RUN conda clean --all --yes && \
   conda install -c conda-forge nano
