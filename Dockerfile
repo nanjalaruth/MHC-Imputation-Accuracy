@@ -113,7 +113,7 @@ RUN conda clean --all --yes && \
   conda install -c conda-forge tcsh
 # Install SNP2HLA
 # chmod a+x /usr/local/bin/SNP2HLA_package_v1.0.3 && \
-RUN wget http://software.broadinstitute.org/mpg/snp2hla/data/SNP2HLA_package_v1.0.3.tar.gz && \
+RUN wget https://github.com/nanjalaruth/MHC-Imputation-Accuracy/blob/main/SNP2HLA_package_v1.0.3.tar.gz && \
   tar -xzvf SNP2HLA_package_v1.0.3.tar.gz && \
   mv SNP2HLA_package_v1.0.3 /usr/local/bin/ && \
   chmod -R g+rwx /usr/local/bin/SNP2HLA_package_v1.0.3 && \
