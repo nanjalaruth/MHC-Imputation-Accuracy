@@ -116,9 +116,9 @@ RUN conda clean --all --yes && \
 RUN wget https://github.com/nanjalaruth/MHC-Imputation-Accuracy/tree/main/SNP2HLA_package_v1.0.3 && \
   mv SNP2HLA_package_v1.0.3 /usr/local/bin/ && \
   chmod -R g+rwx /usr/local/bin/SNP2HLA_package_v1.0.3 && \
-  chmod -R o+rwx /usr/local/bin/SNP2HLA_package_v1.0.3 && \ 
-  cd /usr/local/bin/SNP2HLA_package_v1.0.3 && \
-  wget http://zzz.bwh.harvard.edu/plink/dist/plink-1.07-x86_64.zip && \
+  chmod -R o+rwx /usr/local/bin/SNP2HLA_package_v1.0.3  
+WORKDIR /usr/local/bin/SNP2HLA_package_v1.0.3 
+RUN wget http://zzz.bwh.harvard.edu/plink/dist/plink-1.07-x86_64.zip && \
   unzip plink-1.07-x86_64.zip && \
   rm -f plink-1.07-x86_64.zip && \
   wget http://faculty.washington.edu/browning/beagle/recent.versions/beagle_3.0.4_05May09.zip && \
