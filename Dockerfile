@@ -111,9 +111,12 @@ RUN git clone https://github.com/tatsuhikonaito/DEEP-HLA.git && \
 #install csh
 RUN conda clean --all --yes && \
   conda install -c conda-forge tcsh
+#install svn  
+RUN conda clean --all --yes && \
+  conda install -c anaconda svn
 # Install SNP2HLA
 # chmod a+x /usr/local/bin/SNP2HLA_package_v1.0.3 && \
-RUN wget https://github.com/nanjalaruth/MHC-Imputation-Accuracy/tree/main/SNP2HLA_package_v1.0.3 && \
+RUN svn checkout https://github.com/nanjalaruth/MHC-Imputation-Accuracy/trunk/SNP2HLA_package_v1.0.3 && \
   mv SNP2HLA_package_v1.0.3 /usr/local/bin/ && \
   chmod -R g+rwx /usr/local/bin/SNP2HLA_package_v1.0.3 && \
   chmod -R o+rwx /usr/local/bin/SNP2HLA_package_v1.0.3  
