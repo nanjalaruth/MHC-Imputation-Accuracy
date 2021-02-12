@@ -119,7 +119,7 @@ RUN conda clean --all --yes && \
 RUN git clone https://github.com/nanjalaruth/MHC-Imputation-Accuracy.git && \
   cd MHC-Imputation-Accuracy/ && \
   tar -xvzf SNP2HLA_package_v1.0.3.tar.gz && \ 
-  mv SNP2HLA_package_v1.0.3.tar.gz /usr/local/bin && \
+  mv SNP2HLA_package_v1.0.3 /usr/local/bin && \
   chmod -R g+rwx /usr/local/bin/SNP2HLA_package_v1.0.3 && \
   chmod -R o+rwx /usr/local/bin/SNP2HLA_package_v1.0.3  
 WORKDIR /usr/local/bin/SNP2HLA_package_v1.0.3 
