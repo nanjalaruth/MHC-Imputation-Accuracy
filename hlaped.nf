@@ -154,8 +154,7 @@ process gwd_snp2hlarefence {
      file "gwdreference"
    script:
    """
-   cd $t
-   ./MakeReference.csh $q $z gwdreference ./plink
+   tcsh $t $q $z gwdreference ./plink
    """
  } 
 
@@ -172,7 +171,6 @@ process afr_snp2hlarefence {
      file "afrreference"
    script:
    """
-   cd $h
-   ./MakeReference.csh $d $b afrreference ./plink
+   tcsh $h $d $b afrreference ./plink
    """
  }

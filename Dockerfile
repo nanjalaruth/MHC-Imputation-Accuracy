@@ -119,26 +119,19 @@ RUN conda clean --all --yes && \
 RUN git clone https://github.com/nanjalaruth/MHC-Imputation-Accuracy.git && \
   cd MHC-Imputation-Accuracy/ && \
   tar -xvzf SNP2HLA_package_v1.0.3.tar.gz && \ 
-  mv SNP2HLA_package_v1.0.3 /usr/local/bin && \
-  chmod -R g+rwx /usr/local/bin/SNP2HLA_package_v1.0.3 && \
-  chmod -R o+rwx /usr/local/bin/SNP2HLA_package_v1.0.3  
-WORKDIR /usr/local/bin/SNP2HLA_package_v1.0.3 
+  mv SNP2HLA_package_v1.0.3/*/* /usr/local/bin && \
+  chmod -R a+rwx /usr/local/bin/*  
+WORKDIR /usr/local/bin/
 RUN wget http://zzz.bwh.harvard.edu/plink/dist/plink-1.07-x86_64.zip && \
   unzip plink-1.07-x86_64.zip && \
-  rm -f plink-1.07-x86_64.zip && \
+  mv plink-1.07-x86_64/plink . && \
+  rm -f plink-1.07-x86_64.zip plink-1.07-x86_64 && \
   wget http://faculty.washington.edu/browning/beagle/recent.versions/beagle_3.0.4_05May09.zip && \
   unzip beagle_3.0.4_05May09.zip && \
-  cp beagle.3.0.4/beagle.jar ./MakeReference && \
-  cp beagle.3.0.4/beagle.jar ./SNP2HLA && \
+  mv beagle.3.0.4/beagle.jar . && \
+  rm -f beagle_3.0.4_05May09.zip beagle.3.0.4 && \
   wget http://faculty.washington.edu/browning/beagle_utilities/linkage2beagle.jar && \
-  cp linkage2beagle.jar ./MakeReference && \
-  cp linkage2beagle.jar ./SNP2HLA && \
   wget http://faculty.washington.edu/browning/beagle_utilities/beagle2linkage.jar && \
-  cp beagle2linkage.jar ./MakeReference && \
-  cp beagle2linkage.jar ./SNP2HLA && \ 
-  cd plink-1.07-x86_64 && \
-  cp ./plink ../MakeReference && \
-  cp ./plink ../SNP2HLA 
 #install nano
 RUN conda clean --all --yes && \
   conda install -c conda-forge nano
