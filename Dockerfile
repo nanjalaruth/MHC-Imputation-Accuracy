@@ -119,7 +119,8 @@ RUN conda clean --all --yes && \
 RUN git clone https://github.com/nanjalaruth/MHC-Imputation-Accuracy.git && \
   cd MHC-Imputation-Accuracy/ && \
   tar -xvzf SNP2HLA_package_v1.0.3.tar.gz && \ 
-  mv -f SNP2HLA_package_v1.0.3/*/* /usr/local/bin && \
+  mv -f SNP2HLA_package_v1.0.3/MakeReference/* /usr/local/bin && \
+  mv -f SNP2HLA_package_v1.0.3/SNP2HLA/* /usr/local/bin && \
   chmod -R a+rwx /usr/local/bin/*  
 WORKDIR /usr/local/bin/
 RUN wget http://zzz.bwh.harvard.edu/plink/dist/plink-1.07-x86_64.zip && \
