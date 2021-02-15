@@ -143,17 +143,19 @@
 // SNP2HLA
 // GAMBIANS
 
-// Channel.fromPath(params.makereference).set {csh_ch }
+Channel.fromPath(params.makereference).set {csh_ch }
 process gwd_snp2hlarefence {
    publishDir "$params.outdir"
    input:
      file q from gwdgenotypes
      file z from gwdsnp2hlatypes
+     file t from csh_ch
    output:
      file "gwdreference"
    script:
    """
-   MakeReference.csh $q $z gwdreference plink
+   cd $t
+   ./MakeReference.csh $q $z gwdreference plink
    """
  } 
 
