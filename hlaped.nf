@@ -143,34 +143,32 @@
 // SNP2HLA
 // GAMBIANS
 
-Channel.fromPath(params.makereference).set {csh_ch }
+// Channel.fromPath(params.makereference).set {csh_ch }
 process gwd_snp2hlarefence {
    publishDir "$params.outdir"
    input:
      file q from gwdgenotypes
      file z from gwdsnp2hlatypes
-     file t from csh_ch
    output:
      file "gwdreference"
    script:
    """
-   tcsh $t $q $z gwdreference ./plink
+   MakeReference.csh $q $z gwdreference plink
    """
  } 
 
 // ALL AFRICANS
 
-Channel.fromPath(params.makereference).set {sh_ch }
-process afr_snp2hlarefence {
-   publishDir "$params.outdir"
-   input:
-     file d from afrgenotypes
-     file b from afrsnp2hlatypes
-     file h from sh_ch
-   output:
-     file "afrreference"
-   script:
-   """
-   tcsh $h $d $b afrreference ./plink
-   """
- }
+// Channel.fromPath(params.makereference).set {sh_ch }
+// process afr_snp2hlarefence {
+   // publishDir "$params.outdir"
+   // input:
+     // file d from afrgenotypes
+     // file b from afrsnp2hlatypes
+  //  output:
+     // file "afrreference"
+   // script:
+  // """
+   // MakeReference.csh $d $b afrreference plink
+   // """
+ // }
