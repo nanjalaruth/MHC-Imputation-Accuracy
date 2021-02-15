@@ -133,7 +133,7 @@ RUN wget http://zzz.bwh.harvard.edu/plink/dist/plink-1.07-x86_64.zip && \
   mv -f beagle.3.0.4/beagle.jar . && \
   rm -fr beagle_3.0.4_05May09.zip beagle.3.0.4 && \
   wget http://faculty.washington.edu/browning/beagle_utilities/linkage2beagle.jar && \
-  wget http://faculty.washington.edu/browning/beagle_utilities/beagle2linkage.jar && \
+  wget http://faculty.washington.edu/browning/beagle_utilities/beagle2linkage.jar
 #install nano
 RUN conda clean --all --yes && \
   conda install -c conda-forge nano
