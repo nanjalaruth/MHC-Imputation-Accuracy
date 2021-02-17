@@ -53,8 +53,8 @@ set SNP_DATA=$1
 set HLA_DATA=$2
 set OUTPUT=$3
 alias plink '$4 --noweb --silent'
-alias beagle 'java -Xmx2000m -jar $SCRIPTPATH/beagle.jar'
-alias linkage2beagle 'java -Xmx500m -jar $SCRIPTPATH/linkage2beagle.jar'
+# alias beagle 'java -Xmx2000m -jar $SCRIPTPATH/beagle.jar'
+# alias linkage2beagle 'java -Xmx500m -jar $SCRIPTPATH/linkage2beagle.jar'
 
 set ENCODE_AA          = 1
 set ENCODE_HLA         = 1
