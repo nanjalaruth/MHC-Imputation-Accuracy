@@ -143,15 +143,23 @@
 // SNP2HLA
 // GAMBIANS
 
-// Channel.fromPath(params.makereference).set {csh_ch }
-process gwd_snp2hlarefence {
+ // Channel.fromPath(params.genotypes).set {geno_ch}
+ // Channel.fromPath(params.hlatypes).set {hla_ch}
+ datasets_ch = Channel.fromList(params.datasets)
+ process gwd_snp2hlarefence {
    publishDir "$params.outdir"
+   input:
+     file dta from datasets_ch 
+   output:
+     file "gref*"
    script:
+   refoutput = 'gref'
    """
-   MakeReference.csh HAPMAP_CEU HAPMAP_CEU_HLA.ped ref plink
+   MakeReference.csh $dta $refoutput plink
    """
  } 
 
+// refoutput = 'ref'
 // ALL AFRICANS
 
 // Channel.fromPath(params.makereference).set {sh_ch }
