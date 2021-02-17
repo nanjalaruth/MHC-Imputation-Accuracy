@@ -74,40 +74,40 @@ echo "Creating reference panel: $OUTPUT"
 # Encode HLA amino acids
 if ($ENCODE_AA) then
     echo "[$i] Generating amino acid sequences from HLA types.";  @ i++
-    ./HLAtoSequences.pl $HLA_DATA HLA_DICTIONARY_AA.txt AA > $OUTPUT.AA.ped
-    cp HLA_DICTIONARY_AA.map $OUTPUT.AA.map
+    $SCRIPTPATH/HLAtoSequences.pl $HLA_DATA $SCRIPTPATH/HLA_DICTIONARY_AA.txt AA > $OUTPUT.AA.ped
+    cp $SCRIPTPATH/HLA_DICTIONARY_AA.map $OUTPUT.AA.map
 
     echo "[$i] Encoding amino acids positions." ;  @ i++
-    ./encodeVariants.pl $OUTPUT.AA.ped $OUTPUT.AA.map $OUTPUT.AA.CODED
+    $SCRIPTPATH/encodeVariants.pl $OUTPUT.AA.ped $OUTPUT.AA.map $OUTPUT.AA.CODED
 
     plink --file $OUTPUT.AA.CODED --missing-genotype 0 --make-bed --out $OUTPUT.AA.TMP
     awk '{if ($5 == "0" || $5 == "x" || $6 == "x"){print $2}}' $OUTPUT.AA.TMP.bim | grep -v INS | cut -f2 > to_remove
     plink --bfile $OUTPUT.AA.TMP --exclude to_remove --make-bed --out $OUTPUT.AA.CODED
-    #rm $OUTPUT.AA.TMP*; rm to_remove
-    #rm $OUTPUT.AA.???
+    rm $OUTPUT.AA.TMP*; rm to_remove
+    rm $OUTPUT.AA.???
 endif
 
 # Encode classical HLA alleles into binary format
 if ($ENCODE_HLA) then
     echo "[$i] Encoding HLA alleles.";  @ i++
-    ./encodeHLA.pl $HLA_DATA $OUTPUT.HLA.map > $OUTPUT.HLA.ped
+    $SCRIPTPATH/encodeHLA.pl $HLA_DATA $OUTPUT.HLA.map > $OUTPUT.HLA.ped
     plink --file $OUTPUT.HLA --make-bed --out $OUTPUT.HLA
 endif
 
 # Encode HLA SNPs
 if ($ENCODE_SNPS) then
     echo "[$i] Generating DNA sequences from HLA types.";  @ i++
-    ./HLAtoSequences.pl $HLA_DATA HLA_DICTIONARY_SNPS.txt SNPS > $OUTPUT.SNPS.ped
-    cp HLA_DICTIONARY_SNPS.map $OUTPUT.SNPS.map
+    $SCRIPTPATH/HLAtoSequences.pl $HLA_DATA $SCRIPTPATH/HLA_DICTIONARY_SNPS.txt SNPS > $OUTPUT.SNPS.ped
+    cp $SCRIPTPATH/HLA_DICTIONARY_SNPS.map $OUTPUT.SNPS.map
 
     echo "[$i] Encoding SNP positions." ;  @ i++
-    ./encodeVariants.pl $OUTPUT.SNPS.ped $OUTPUT.SNPS.map $OUTPUT.SNPS.CODED
+    $SCRIPTPATH/encodeVariants.pl $OUTPUT.SNPS.ped $OUTPUT.SNPS.map $OUTPUT.SNPS.CODED
     plink --file $OUTPUT.SNPS.CODED --missing-genotype 0 --make-bed --out $OUTPUT.SNPS.TMP
 
     awk '{if ($5 == "0" || $5 == "x" || $6 == "x"){print $2}}' $OUTPUT.SNPS.TMP.bim | grep -v INS | cut -f2 > to_remove
     plink --bfile $OUTPUT.SNPS.TMP --exclude to_remove --make-bed --out $OUTPUT.SNPS.CODED
-    #rm $OUTPUT.SNPS.TMP*; rm to_remove
-    #rm $OUTPUT.SNPS.???
+    rm $OUTPUT.SNPS.TMP*; rm to_remove
+    rm $OUTPUT.SNPS.???
 endif
 
 if ($EXTRACT_FOUNDERS) then
@@ -141,10 +141,10 @@ if ($MERGE) then
     echo "$OUTPUT.AA.FOUNDERS.bed $OUTPUT.AA.FOUNDERS.bim $OUTPUT.AA.FOUNDERS.fam" >> merge_list
     echo "$OUTPUT.SNPS.FOUNDERS.bed $OUTPUT.SNPS.FOUNDERS.bim $OUTPUT.SNPS.FOUNDERS.fam" >> merge_list
     plink --bfile $SNP_DATA.FOUNDERS.QC --merge-list merge_list --make-bed --out $OUTPUT.MERGED.FOUNDERS
-    #rm $OUTPUT.HLA.???
-    #rm $OUTPUT.AA.CODED.???
-    #rm $OUTPUT.SNPS.CODED.???
-    #rm merge_list
+    rm $OUTPUT.HLA.???
+    rm $OUTPUT.AA.CODED.???
+    rm $OUTPUT.SNPS.CODED.???
+    rm merge_list
 endif
 
 if ($QC) then
@@ -158,11 +158,11 @@ if ($QC) then
 
     # Calculate allele frequencies
     plink --bfile $OUTPUT --keep-allele-order --freq --out $OUTPUT.FRQ
-    #rm $SNP_DATA.FOUNDERS.*
-    #rm $OUTPUT.MERGED.FOUNDERS.*
-    #rm $OUTPUT.*.FOUNDERS.???
-    #rm allele.order
-    #rm all.remove.snps
+    rm $SNP_DATA.FOUNDERS.*
+    rm $OUTPUT.MERGED.FOUNDERS.*
+    rm $OUTPUT.*.FOUNDERS.???
+    rm allele.order
+    rm all.remove.snps
 endif
 
 if ($PREPARE) then
@@ -182,15 +182,15 @@ if ($PHASE) then
     java -jar $SCRIPTPATH/beagle.jar unphased=$OUTPUT.bgl nsamples=4 niterations=10 missing=0 verbose=true maxwindow=1000 log=$OUTPUT.phasing >> $OUTPUT.bgl.log
 endif
 
-#if ($CLEANUP) then
-    #rm $OUTPUT.nopheno.ped
-    #rm $OUTPUT.bgl.gprobs
-    #rm $OUTPUT.bgl.r2
-    #rm $OUTPUT.bgl
-    #rm $OUTPUT.ped
-    #rm $OUTPUT.map
-    #rm $OUTPUT.dat
-    #rm $OUTPUT.phasing.log
+if ($CLEANUP) then
+    rm $OUTPUT.nopheno.ped
+    rm $OUTPUT.bgl.gprobs
+    rm $OUTPUT.bgl.r2
+    rm $OUTPUT.bgl
+    rm $OUTPUT.ped
+    rm $OUTPUT.map
+    rm $OUTPUT.dat
+    rm $OUTPUT.phasing.log
 #endif
 
 echo "[$i] Done."
