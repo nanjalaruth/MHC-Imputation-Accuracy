@@ -1,0 +1,51 @@
+
+@----------------------------------------------------------@
+|        PLINK!       |     v1.07      |   10/Aug/2009     |
+|----------------------------------------------------------|
+|  (C) 2009 Shaun Purcell, GNU General Public License, v2  |
+|----------------------------------------------------------|
+|  For documentation, citation & bug-report instructions:  |
+|        http://pngu.mgh.harvard.edu/purcell/plink/        |
+@----------------------------------------------------------@
+
+Skipping web check... [ --noweb ] 
+Writing this text to log file [ HAPMAP_CEU_FOUNDERS.log ]
+Analysis started: Sun May 13 21:19:50 2012
+
+Options in effect:
+	--noweb
+	--bfile HAPMAP_CEU_TRIOS
+	--keep tmp
+	--keep-allele-order
+	--maf 0.0001
+	--make-bed
+	--out HAPMAP_CEU_FOUNDERS
+
+Reading map (extended format) from [ HAPMAP_CEU_TRIOS.bim ] 
+6700 markers to be included from [ HAPMAP_CEU_TRIOS.bim ]
+Reading pedigree information from [ HAPMAP_CEU_TRIOS.fam ] 
+180 individuals read from [ HAPMAP_CEU_TRIOS.fam ] 
+0 individuals with nonmissing phenotypes
+Assuming a disease phenotype (1=unaff, 2=aff, 0=miss)
+Missing phenotype value is also -9
+0 cases, 0 controls and 180 missing
+87 males, 93 females, and 0 of unspecified sex
+Reading genotype bitfile from [ HAPMAP_CEU_TRIOS.bed ] 
+Detected that binary PED file is v1.00 SNP-major mode
+Reading individuals to keep [ tmp ] ... 124 read
+56 individuals removed with --keep option
+Before frequency and genotyping pruning, there are 6700 SNPs
+88 founders and 36 non-founders found
+Total genotyping rate in remaining individuals is 0.977358
+0 SNPs failed missingness test ( GENO > 1 )
+0 SNPs failed frequency test ( MAF < 0.0001 )
+After frequency and genotyping pruning, there are 6700 SNPs
+After filtering, 0 cases, 0 controls and 124 missing
+After filtering, 62 males, 62 females, and 0 of unspecified sex
+Writing pedigree information to [ HAPMAP_CEU_FOUNDERS.fam ] 
+Writing map (extended format) information to [ HAPMAP_CEU_FOUNDERS.bim ] 
+Writing genotype bitfile to [ HAPMAP_CEU_FOUNDERS.bed ] 
+Using (default) SNP-major mode
+
+Analysis finished: Sun May 13 21:19:51 2012
+
