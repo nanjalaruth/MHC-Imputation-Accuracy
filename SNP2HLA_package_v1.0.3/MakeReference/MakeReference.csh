@@ -131,7 +131,7 @@ if ($EXTRACT_FOUNDERS) then
     plink --bfile $OUTPUT.SNPS.CODED --filter-founders --maf 0.0001 --make-bed --out $OUTPUT.SNPS.FOUNDERS
     plink --bfile $OUTPUT.AA.CODED --filter-founders --maf 0.0001 --make-bed --out $OUTPUT.AA.FOUNDERS
 
-    rm remove.snps.*
+    #rm remove.snps.*
 endif
 
 # Merging SNP, HLA, and amino acid datasets 

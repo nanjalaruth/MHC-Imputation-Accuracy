@@ -143,20 +143,19 @@
 // SNP2HLA
 // GAMBIANS
 
-// datasets_ch = Channel.fromList(params.datasets)
- Channel.fromPath(params.genotypes).set {geno_ch}
- Channel.fromPath(params.hlatypes).set {hla_ch}
+ // Channel.fromPath(params.genotypes).set {geno_ch}
+ // Channel.fromPath(params.hlatypes).set {hla_ch}
+ datasets_ch = Channel.fromList(params.datasets)
  process gwd_snp2hlarefence {
    publishDir "$params.outdir"
    input:
-     file geno from geno_ch
-     file hla from hla_ch 
+     file dta from datasets_ch 
    output:
-     file "*"
+     file "gref*"
    script:
    refoutput = "gref"
    """
-   MakeReference.csh $geno $hla $refoutput plink
+   MakeReference.csh $dta $refoutput plink
    """
  } 
 
