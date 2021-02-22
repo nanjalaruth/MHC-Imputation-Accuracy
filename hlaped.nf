@@ -142,21 +142,19 @@
 // TRAIN REFERENCE PANEL
 // SNP2HLA
 // GAMBIANS
-
-// datasets_ch = Channel.fromList(params.datasets)
- Channel.fromPath(params.genotypes).set {geno_ch}
- Channel.fromPath(params.hlatypes).set {hla_ch}
+ 
  process gwd_snp2hlarefence {
    publishDir "$params.outdir"
    input:
-     file geno from geno_ch
-     file hla from hla_ch 
+     file gen from gwdgenotypes
+     file hl from gwdsnp2hlatypes
    output:
      file "*"
    script:
+   base = gen[0].baseName
    refoutput = "gref"
    """
-   MakeReference.csh $geno $hla $refoutput plink
+   MakeReference.csh $base $hl $refoutput plink
    """
  } 
 
@@ -164,15 +162,16 @@
 // ALL AFRICANS
 
 // Channel.fromPath(params.makereference).set {sh_ch }
-// process afr_snp2hlarefence {
+ // process afr_snp2hlarefence {
    // publishDir "$params.outdir"
    // input:
-     // file d from afrgenotypes
+     // #file d from afrgenotypes
      // file b from afrsnp2hlatypes
-  //  output:
-     // file "afrreference"
+   // output:
+     // file "*"
    // script:
-  // """
-   // MakeReference.csh $d $b afrreference plink
+   // refoutput = "afrreference"
+   // """
+   // MakeReference.csh $params.outdir/AFR $b afrreference plink
    // """
  // }
