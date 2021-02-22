@@ -143,35 +143,34 @@
 // SNP2HLA
 // GAMBIANS
  
- process gwd_snp2hlarefence {
-   publishDir "$params.outdir"
-   input:
-     file gen from gwdgenotypes
-     file hl from gwdsnp2hlatypes
-   output:
-     file "*"
-   script:
-   base = gen[0].baseName
-   refoutput = "gref"
-   """
-   MakeReference.csh $base $hl $refoutput plink
-   """
- } 
-
-// refoutput = 'ref'
-// ALL AFRICANS
-
-// Channel.fromPath(params.makereference).set {sh_ch }
- // process afr_snp2hlarefence {
+ // process gwd_snp2hlarefence {
    // publishDir "$params.outdir"
    // input:
-     // #file d from afrgenotypes
-     // file b from afrsnp2hlatypes
+     // file gen from gwdgenotypes
+     // file hl from gwdsnp2hlatypes
    // output:
      // file "*"
    // script:
-   // refoutput = "afrreference"
+   // base = gen[0].baseName
+   // refoutput = "gref"
    // """
-   // MakeReference.csh $params.outdir/AFR $b afrreference plink
+   // MakeReference.csh $base $hl $refoutput plink
    // """
- // }
+ // } 
+
+// ALL AFRICANS
+
+  process afr_snp2hlarefence {
+    publishDir "$params.outdir"
+    input:
+      file agen from afrgenotypes
+      file ahl from afrsnp2hlatypes
+    output:
+      file "*"
+    script:
+    base = agen[0].baseName
+    refoutput = "aref"
+    """
+    MakeReference.csh $base $ahl $refoutput plink
+    """
+ }
