@@ -140,6 +140,9 @@ RUN conda clean --all --yes && \
 #install java
 RUN conda clean --all --yes && \
   conda install -c bioconda java-jdk 
+#install pandas
+RUN conda clean --all --yes && \
+  conda install pandas
 RUN useradd --create-home --shell /bin/bash ubuntu && \
   chown -R ubuntu:ubuntu /home/ubuntu
 USER ubuntu

@@ -1,3 +1,4 @@
+
 // Merge HLA types
 // SNP2HLA version
 // All African population
@@ -141,37 +142,21 @@
 
 // TRAIN REFERENCE PANEL
 // SNP2HLA
-// GAMBIANS
-
- // Channel.fromPath(params.genotypes).set {geno_ch}
- // Channel.fromPath(params.hlatypes).set {hla_ch}
- datasets_ch = Channel.fromList(params.datasets)
- process gwd_snp2hlarefence {
-   publishDir "$params.outdir"
-   input:
-     file dta from datasets_ch 
-   output:
-     file "gref*"
-   script:
-   refoutput = "gref"
-   """
-   MakeReference.csh $dta $refoutput plink
-   """
- } 
-
-// refoutput = 'ref'
 // ALL AFRICANS
-
-// Channel.fromPath(params.makereference).set {sh_ch }
-// process afr_snp2hlarefence {
-   // publishDir "$params.outdir"
-   // input:
-     // file d from afrgenotypes
-     // file b from afrsnp2hlatypes
-  //  output:
-     // file "afrreference"
-   // script:
-  // """
-   // MakeReference.csh $d $b afrreference plink
-   // """
- // }
+ // Channel.fromFilePairs("$params.agen.{bed,bim,fam}", size:3, flat : true){ file -> file.baseName }.set {agen_ch}
+  agen_ch = Channel.fromList(params.datasets).map{bed,bim,fam -> [file(bed), file(bim), file(fam)]}.view()
+  Channel.fromPath(params.ahl).set {ahl_ch}
+  process afr_snp2hlarefence {
+    publishDir "$params.outdir"
+    input:
+      set file(bed), file(bim), file(fam) from agen_ch
+      file ahl from ahl_ch
+    output:
+      file "*"
+    script:
+    base = bed.baseName
+    refoutput = "aref"
+    """
+    MakeReference.csh $base $ahl $refoutput plink
+    """
+ }
