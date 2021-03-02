@@ -83,8 +83,8 @@ if ($ENCODE_AA) then
     plink --file $OUTPUT.AA.CODED --missing-genotype 0 --make-bed --out $OUTPUT.AA.TMP
     awk '{if ($5 == "0" || $5 == "x" || $6 == "x"){print $2}}' $OUTPUT.AA.TMP.bim | grep -v INS | cut -f2 > to_remove
     plink --bfile $OUTPUT.AA.TMP --exclude to_remove --make-bed --out $OUTPUT.AA.CODED
-    #rm $OUTPUT.AA.TMP*; rm to_remove
-    #rm $OUTPUT.AA.???
+    rm $OUTPUT.AA.TMP*; rm to_remove
+    rm $OUTPUT.AA.???
 endif
 
 # Encode classical HLA alleles into binary format
@@ -106,8 +106,8 @@ if ($ENCODE_SNPS) then
 
     awk '{if ($5 == "0" || $5 == "x" || $6 == "x"){print $2}}' $OUTPUT.SNPS.TMP.bim | grep -v INS | cut -f2 > to_remove
     plink --bfile $OUTPUT.SNPS.TMP --exclude to_remove --make-bed --out $OUTPUT.SNPS.CODED
-    #rm $OUTPUT.SNPS.TMP*; rm to_remove
-    #rm $OUTPUT.SNPS.???
+    rm $OUTPUT.SNPS.TMP*; rm to_remove
+    rm $OUTPUT.SNPS.???
 endif
 
 if ($EXTRACT_FOUNDERS) then
@@ -131,7 +131,7 @@ if ($EXTRACT_FOUNDERS) then
     plink --bfile $OUTPUT.SNPS.CODED --filter-founders --maf 0.0001 --make-bed --out $OUTPUT.SNPS.FOUNDERS
     plink --bfile $OUTPUT.AA.CODED --filter-founders --maf 0.0001 --make-bed --out $OUTPUT.AA.FOUNDERS
 
-    #rm remove.snps.*
+    rm remove.snps.*
 endif
 
 # Merging SNP, HLA, and amino acid datasets 
@@ -141,10 +141,10 @@ if ($MERGE) then
     echo "$OUTPUT.AA.FOUNDERS.bed $OUTPUT.AA.FOUNDERS.bim $OUTPUT.AA.FOUNDERS.fam" >> merge_list
     echo "$OUTPUT.SNPS.FOUNDERS.bed $OUTPUT.SNPS.FOUNDERS.bim $OUTPUT.SNPS.FOUNDERS.fam" >> merge_list
     plink --bfile $SNP_DATA.FOUNDERS.QC --merge-list merge_list --make-bed --out $OUTPUT.MERGED.FOUNDERS
-    #rm $OUTPUT.HLA.???
-    #rm $OUTPUT.AA.CODED.???
-    #rm $OUTPUT.SNPS.CODED.???
-    #rm merge_list
+    rm $OUTPUT.HLA.???
+    rm $OUTPUT.AA.CODED.???
+    rm $OUTPUT.SNPS.CODED.???
+    rm merge_list
 endif
 
 if ($QC) then
@@ -158,11 +158,11 @@ if ($QC) then
 
     # Calculate allele frequencies
     plink --bfile $OUTPUT --keep-allele-order --freq --out $OUTPUT.FRQ
-    #rm $SNP_DATA.FOUNDERS.*
-    #rm $OUTPUT.MERGED.FOUNDERS.*
-    #rm $OUTPUT.*.FOUNDERS.???
-    #rm allele.order
-    #rm all.remove.snps
+    rm $SNP_DATA.FOUNDERS.*
+    rm $OUTPUT.MERGED.FOUNDERS.*
+    rm $OUTPUT.*.FOUNDERS.???
+    rm allele.order
+    rm all.remove.snps
 endif
 
 if ($PREPARE) then
@@ -182,15 +182,15 @@ if ($PHASE) then
     java -jar $SCRIPTPATH/beagle.jar unphased=$OUTPUT.bgl nsamples=4 niterations=10 missing=0 verbose=true maxwindow=1000 log=$OUTPUT.phasing >> $OUTPUT.bgl.log
 endif
 
-#if ($CLEANUP) then
-    #rm $OUTPUT.nopheno.ped
-    #rm $OUTPUT.bgl.gprobs
-    #rm $OUTPUT.bgl.r2
-    #rm $OUTPUT.bgl
-    #rm $OUTPUT.ped
-    #rm $OUTPUT.map
-    #rm $OUTPUT.dat
-    #rm $OUTPUT.phasing.log
-#endif
+if ($CLEANUP) then
+    rm $OUTPUT.nopheno.ped
+    rm $OUTPUT.bgl.gprobs
+    rm $OUTPUT.bgl.r2
+    rm $OUTPUT.bgl
+    rm $OUTPUT.ped
+    rm $OUTPUT.map
+    rm $OUTPUT.dat
+    rm $OUTPUT.phasing.log
+endif
 
 echo "[$i] Done."

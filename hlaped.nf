@@ -3,7 +3,6 @@ nextflow.enable.dsl=2
 
 include {  combine_hlatypes_snp2hla; combine_hlatypes_hibag; subset_hlatypes_snp2hla; subset_hlatypes_hibag; get_geno_plink as get_geno_plink_dataset; get_geno_plink as get_geno_plink_subpop; make_snp2hlarefpanel as make_snp2hlarefpanel_dataset; make_snp2hlarefpanel as make_snp2hlarefpanel_subpop} from './modules/make_reference'
 
-
 // Main workflow
 workflow{
 
