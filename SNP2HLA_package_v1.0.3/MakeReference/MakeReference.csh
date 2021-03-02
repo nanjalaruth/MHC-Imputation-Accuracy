@@ -127,9 +127,9 @@ if ($EXTRACT_FOUNDERS) then
 
     # Founders are identified here as individuals with "0"s in mother and father IDs in .fam file
 
-    plink --bfile $OUTPUT.HLA --filter-founders --maf 0.0001 --make-bed --out $OUTPUT.HLA.FOUNDERS
-    plink --bfile $OUTPUT.SNPS.CODED --filter-founders --maf 0.0001 --make-bed --out $OUTPUT.SNPS.FOUNDERS
-    plink --bfile $OUTPUT.AA.CODED --filter-founders --maf 0.0001 --make-bed --out $OUTPUT.AA.FOUNDERS
+    plink --bfile $OUTPUT.HLA --filter-nonfounders --maf 0 --make-bed --out $OUTPUT.HLA.FOUNDERS
+    plink --bfile $OUTPUT.SNPS.CODED --filter-nonfounders --maf 0.0001 --make-bed --out $OUTPUT.SNPS.FOUNDERS
+    plink --bfile $OUTPUT.AA.CODED --filter-nonfounders --maf 0.0001 --make-bed --out $OUTPUT.AA.FOUNDERS
 
     #rm remove.snps.*
 endif
