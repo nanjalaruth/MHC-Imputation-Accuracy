@@ -88,7 +88,7 @@ process get_geno_plink {
             cut -f 2 MHC.bim | sort | uniq -d > 1.dups
             plink2 --bfile MHC --exclude 1.dups --make-bed --out MHC.filt
             #Get the samples that were typed
-            cut -f 1 ${hlatypes} > ids.txt
+            cut -f 2 ${hlatypes} > ids.txt
             # extract plink datasets
             plink2 --bfile MHC.filt --keep ids.txt --make-bed --out ${prefix}
             rm MHC.* ids.txt ${prefix}.log

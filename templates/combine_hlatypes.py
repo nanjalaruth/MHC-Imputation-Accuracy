@@ -22,7 +22,7 @@ def combine_hlatype(hlatype_files, hlatypes_out):
             if nline > 1:
                 line = line.strip().split('\\t')
                 hla = [ it.replace('*','').replace(':','')[1:] for it in line[1:7] ]
-                data = [ sample, sample, sample, sample, '1', '0' ] + hla + zeros
+                data = [ '0', sample, '0', '0', '1', '0' ] + hla + zeros
                 outfile.writelines('\\t'.join(data)+'\\n')
             nline += 1
     outfile.close()
