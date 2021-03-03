@@ -183,13 +183,13 @@ if ($PHASE) then
 endif
 
 if ($CLEANUP) then
-    rm $OUTPUT.nopheno.ped
-    rm $OUTPUT.bgl.gprobs
-    rm $OUTPUT.bgl.r2
+    #rm $OUTPUT.nopheno.ped
+    #rm $OUTPUT.bgl.gprobs
+    #rm $OUTPUT.bgl.r2
     #rm $OUTPUT.bgl
-    rm $OUTPUT.ped
-    rm $OUTPUT.map
-    rm $OUTPUT.dat
+    #rm $OUTPUT.ped
+    #rm $OUTPUT.map
+    #rm $OUTPUT.dat
     #rm $OUTPUT.phasing.log
 endif
 
