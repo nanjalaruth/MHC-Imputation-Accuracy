@@ -10,4 +10,4 @@
 cd /scratch3/users/nanje/hlatyping
 
 echo "Submitting SLURM job"
-nextflow -c /users/nanje/Africanpop/1kg-AFR.config run nanjalaruth/hlatyping -profile singularity,slurm --input "/users/nanje/data/link_Afrdata/*/*_R{1,2}.fastq.gz" -resume
+nextflow -c /users/nanje/Africanpop/1kg-AFR.config run nanjalaruth/hlatyping -profile singularity,slurm --input "/users/nanje/data/link_kg_all_data/*/*_R{1,2}.fastq.gz" -resume
