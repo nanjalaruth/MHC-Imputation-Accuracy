@@ -40,7 +40,7 @@ process combine_hlatypes_hibag {
     output:
         tuple val(dataset), file(hlatypes_out)
     script:
-        hlatypes_out = "${dataset}.hibag_hlatypes"
+        hlatypes_out = "${dataset}_hibag_hlatypes"
         hlatype_files = hlatype_list.join(',')
         template "combine_hibaghlatypes.py"
 }
@@ -54,7 +54,7 @@ process subset_hlatypes_hibag {
     output:
         tuple val(dataset), val(subpop), file(hlatype_out)
     script:
-        hlatype_out = "${subpop}.gwdhibag_HLAType"
+        hlatype_out = "${subpop}_hibag_HLAType"
         """
             # extract the gambian subpopulation
             grep -f ${subpop_ids} ${hlatypes} > subpop_ids_temp
@@ -96,18 +96,51 @@ process get_geno_plink {
 }
 
 process make_snp2hlarefpanel {
-    tag "make_snp2hlarefpanel"
+    tag "make_snp2hlarefpanel_${dataset}_${subpop}"
     publishDir "$params.outdir"
     
     input:
         tuple val(dataset), val(subpop), file(bed), file(bim), file(fam), file(hla)
     output:
-        tuple val(dataset), val(subpop), file(make_snp2hlarefence_out)
+        tuple val(dataset), val(subpop), file("${refoutput}.*")
     script:
-        make_snp2hlarefence_out = "*"
         base = bed.baseName
         refoutput = "${dataset}_${subpop}_ref"
+        template "MakeReference.csh"
+
+}
+
+process convert_to_beagle {
+    tag "convert_to_beagle_${dataset}_${subpop}"
+    publishDir "$params.outdir"
+    label "medium"
+
+    input:
+        tuple val(dataset), val(subpop), file(dat), file(nopheno_ped)
+    output:
+        tuple val(dataset), val(subpop), file(bgl)
+    script:
+        refoutput = "${dataset}_${subpop}_ref"
+        dat = "${refoutput}.dat"
+        nopheno_ped = "${refoutput}.nopheno.ped"
+        bgl = "${refoutput}.bgl"
         """
-            MakeReference.csh ${base} ${hla} ${refoutput} plink
+        java -Djava.io.tmpdir=${params.bgltemp} -Xmx${task.memory.toGiga()}g -jar /usr/local/bin/linkage2beagle.jar ${dat} ${nopheno_ped} > ${bgl} 
+        
+        """
+}
+
+process makeref_snp2hla_phasing {
+    tag "makeref_snp2hla_phasing_${dataset}_${subpop}"
+    publishDir "$params.outdir"
+    label "bigmem"
+    
+    input:
+        tuple val(dataset), val(subpop), file(bgl)
+    output:
+        tuple val(dataset), val(subpop), file("${bgl}.phased")
+    script:
+        """
+        java -Djava.io.tmpdir=${params.scratch} -Xmx4g -jar /usr/local/bin/beagle.jar unphased=${bgl} nsamples=4 niterations=10 missing=0 verbose=true maxwindow=1000 lowmem=true seed=993470 log=${bgl}.phasing
         """
 }

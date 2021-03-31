@@ -17,7 +17,7 @@ def combine_hibaghlatypes(hlatype_files, hlatypes_out):
     outfile = open(hlatypes_out, 'w')
     writer = csv.DictWriter(outfile, fieldnames=["\\tsample.id\\tA.1\\tA.2\\tB.1\\tB.2\\tC.1\\tC.2\\tDQA1.1\\tDQA1.2\\tDQB1.1\\tDQB1.2\\tDRB1.1\\tDRB1.2"])
     writer.writeheader()
-    zeros = ['<NA>'] * 10
+    zeros = ['<NA>'] * 6
     fg = 1
     for hla_file in hlatype_files:
         nline = 1
@@ -26,7 +26,12 @@ def combine_hibaghlatypes(hlatype_files, hlatypes_out):
         for line in open(hla_file):
             if nline > 1:
                 line = line.strip().split('\\t')
-                hla = [ it.replace('*','')[1:] for it in line[1:7] ]
+                hla = []
+                for it in line[1:7]:
+                    it = it.replace('*','')[1:]
+                    if it == '':
+                        it = '<NA>'
+                    hla.append(it)
                 data = [str(fg)] + [sample] + hla + zeros
                 fg += 1
                 outfile.writelines('\\t'.join(data)+'\\n')

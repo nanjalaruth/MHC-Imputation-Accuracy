@@ -1,7 +1,21 @@
 #!/usr/bin/env nextflow
+
+// Enable DSL syntax
 nextflow.enable.dsl=2
 
-include {  combine_hlatypes_snp2hla; combine_hlatypes_hibag; subset_hlatypes_snp2hla; subset_hlatypes_hibag; get_geno_plink as get_geno_plink_dataset; get_geno_plink as get_geno_plink_subpop; make_snp2hlarefpanel as make_snp2hlarefpanel_dataset; make_snp2hlarefpanel as make_snp2hlarefpanel_subpop} from './modules/make_reference'
+// Include modules
+include {  combine_hlatypes_snp2hla; combine_hlatypes_hibag; 
+subset_hlatypes_snp2hla; subset_hlatypes_hibag; get_geno_plink as get_geno_plink_dataset; 
+get_geno_plink as get_geno_plink_subpop; make_snp2hlarefpanel as make_snp2hlarefpanel_dataset; 
+make_snp2hlarefpanel as make_snp2hlarefpanel_subpop; 
+makeref_snp2hla_phasing as makeref_snp2hla_phasing_dataset; 
+makeref_snp2hla_phasing as makeref_snp2hla_phasing_subpop; 
+convert_to_beagle as convert_to_beagle_dataset; 
+convert_to_beagle as convert_to_beagle_subpop} from './modules/make_reference'
+
+include { impute_data as impute_dataset; impute_data as impute_subpop} from './modules/Impute.nf'
+
+include { hibag_impute as hibag_impute_dataset; hibag_impute as hibag_impute_subpop } from './modules/Hibag.nf'
 
 // Main workflow
 workflow{
@@ -67,12 +81,53 @@ workflow{
                     }.combine(subset_hlatypes_snp2hla.out, by:0)
     get_geno_plink_subpop(subpop_geno_ch)
 
-
-    // Make reference panel
-    // African population
+    //SNP2HLA
+    // Step 3: Make reference panel
+    // Step 3.1: Get first output files
     make_snp2hlarefpanel_dataset(get_geno_plink_dataset.out)
     make_snp2hlarefpanel_subpop(get_geno_plink_subpop.out)
 
-}
+    // Step 3.2 Convert to Beagle
+    // Step 3.2.1: Dataset
+    beagle_data_in_ch = make_snp2hlarefpanel_dataset.out
+    convert_to_beagle_dataset(beagle_data_in_ch)
 
-   
+    // Step 3.2.2: subpop
+    beaglein_ch = make_snp2hlarefpanel_subpop.out
+    convert_to_beagle_subpop(beaglein_ch)
+
+
+    // Step 3.3: Phasing
+    // Step 3.3.1: Dataset
+    makeref_snp2hla_phasing_dataset(convert_to_beagle_dataset.out)
+
+    // Step 3.3.2: Subpop
+    makeref_snp2hla_phasing_subpop(convert_to_beagle_subpop.out)
+
+    // Step 4: Imputation
+    //Step 4.1: Dataset
+    // dataset_testdata_ch = Channel.fromList(params.sample_data)
+    //                 .map{ dataset, bed, bim, fam -> [dataset, bed, bim, fam]}
+    //                 .combine(make_snp2hlarefpanel_subpop.out, by:0)
+    // impute_dataset(dataset_testdata_ch, makeref_snp2hla_phasing_subpop.out)
+
+    //Step 4.2: Subpop
+    // subpop_testdata_ch = Channel.fromList(params.sample_data)
+    //                 .map{ dataset, genotype -> 
+    //                     genotypes = file(genotype)
+    //                     return [dataset, genotypes] 
+    //                 }.combine(make_snp2hlarefpanel_subpop.out, by:0)
+    // impute_subpop(subpop_testdata_geno_ch, makeref_snp2hla_phasing_subpop.out)     
+
+
+    //HIBAG
+    input_ch = get_geno_plink_subpop.out.combine(subset_hlatypes_hibag.out, by:[0,1])
+    .map{dataset, subpop, bed, bim, fam, snp2hla_ped, hibag_HLAType -> [dataset, subpop, bed, bim, fam, hibag_HLAType]} 
+    hibag_impute_subpop(input_ch)
+
+
+    input_two_ch = get_geno_plink_dataset.out.combine(combine_hlatypes_hibag.out, by:[0])
+    .map{dataset, subpop, bed, bim, fam, snp2hla_ped, hibag_HLAType -> [dataset, subpop, bed, bim, fam, hibag_HLAType]} 
+    hibag_impute_dataset(input_two_ch)
+
+} 

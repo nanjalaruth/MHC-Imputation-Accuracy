@@ -21,7 +21,13 @@ def combine_hlatype(hlatype_files, hlatypes_out):
         for line in open(hla_file):
             if nline > 1:
                 line = line.strip().split('\\t')
-                hla = [ it.replace('*','').replace(':','')[1:] for it in line[1:7] ]
+                hla = []
+                for it in line[1:7]:
+                    it = it.replace('*','').replace(':','')[1:]
+                    if it == '':
+                        it = '0'
+                    hla.append(it)
+                # hla = [ it.replace('*','').replace(':','')[1:] for it in line[1:7] ]
                 data = [ '0', sample, '0', '0', '0', '0' ] + hla + zeros
                 outfile.writelines('\\t'.join(data)+'\\n')
             nline += 1

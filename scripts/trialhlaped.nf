@@ -144,7 +144,7 @@
 // SNP2HLA
 // ALL AFRICANS
  // Channel.fromFilePairs("$params.agen.{bed,bim,fam}", size:3, flat : true){ file -> file.baseName }.set {agen_ch}
-  agen_ch = Channel.fromList(params.datasets).map{bed,bim,fam -> [file(bed), file(bim), file(fam)]}.view()
+  agen_ch = Channel.fromList(params.datasets).map{bed,bim,fam -> [file(bed), file(bim), file(fam)]}
   Channel.fromPath(params.ahl).set {ahl_ch}
   process afr_snp2hlarefence {
     publishDir "$params.outdir"
