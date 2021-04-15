@@ -13,7 +13,7 @@ makeref_snp2hla_phasing as makeref_snp2hla_phasing_subpop;
 convert_to_beagle as convert_to_beagle_dataset; 
 convert_to_beagle as convert_to_beagle_subpop} from './modules/make_reference'
 
-include { impute_data as impute_dataset; impute_data as impute_subpop} from './modules/Impute.nf'
+include { preparedata_imputation; impute_data as impute_dataset; impute_data as impute_subpop; imputation as subpop_imputation} from './modules/Impute.nf'
 
 include { hibag_impute as hibag_impute_dataset; hibag_impute as hibag_impute_subpop } from './modules/Hibag.nf'
 
@@ -89,45 +89,115 @@ workflow{
 
     // Step 3.2 Convert to Beagle
     // Step 3.2.1: Dataset
-    beagle_data_in_ch = make_snp2hlarefpanel_dataset.out
-    convert_to_beagle_dataset(beagle_data_in_ch)
+    beagle_input = make_snp2hlarefpanel_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[11], datas[15]]}
+    convert_to_beagle_dataset(beagle_input)
 
     // Step 3.2.2: subpop
-    beaglein_ch = make_snp2hlarefpanel_subpop.out
-    convert_to_beagle_subpop(beaglein_ch)
+    beagle_subpop_input = make_snp2hlarefpanel_subpop.out.map{dataset, subpop, datas -> [dataset, subpop, datas[11], datas[15]]}
+    convert_to_beagle_subpop(beagle_subpop_input)
 
 
     // Step 3.3: Phasing
     // Step 3.3.1: Dataset
-    makeref_snp2hla_phasing_dataset(convert_to_beagle_dataset.out)
+    // makeref_snp2hla_phasing_dataset(convert_to_beagle_dataset.out)
 
     // Step 3.3.2: Subpop
     makeref_snp2hla_phasing_subpop(convert_to_beagle_subpop.out)
 
     // Step 4: Imputation
-    //Step 4.1: Dataset
-    // dataset_testdata_ch = Channel.fromList(params.sample_data)
-    //                 .map{ dataset, bed, bim, fam -> [dataset, bed, bim, fam]}
-    //                 .combine(make_snp2hlarefpanel_subpop.out, by:0)
-    // impute_dataset(dataset_testdata_ch, makeref_snp2hla_phasing_subpop.out)
+    // Step 4.1: prepare data
+    dataset_testdata_ch = Channel.fromList(params.sample_data)
+                    .map{ pop, chip, sample_geno -> 
+                        genotype = file(sample_geno)
+                        return [pop, chip, genotype]
+                    }
+    // dataset_testdata_ch.view()   
+    preparedata_imputation(dataset_testdata_ch)
 
-    //Step 4.2: Subpop
-    // subpop_testdata_ch = Channel.fromList(params.sample_data)
-    //                 .map{ dataset, genotype -> 
-    //                     genotypes = file(genotype)
-    //                     return [dataset, genotypes] 
-    //                 }.combine(make_snp2hlarefpanel_subpop.out, by:0)
-    // impute_subpop(subpop_testdata_geno_ch, makeref_snp2hla_phasing_subpop.out)     
+    // Step 4.2: Pre-imputation
+    // Step 4.2.1: Subpop
+    bgl_input = make_snp2hlarefpanel_subpop.out.map{dataset, subpop, datas -> [dataset, subpop, datas[9], datas[10], datas[12]]}
+    impute_input = preparedata_imputation.out.combine(bgl_input)
+    .map {dataset, subpop, bed, bim, fam, pop, spop, pbed, pbim, pfam -> [dataset, subpop, bed, bim, fam, spop, pbed, pbim, pfam]}      
+    // impute_subpop(impute_input)
+      
+    //Step 4.2.2: Dataset
+    // beagl_input = make_snp2hlarefpanel_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[9], datas[10], datas[12]]}
+    // imput_input = preparedata_imputation.out.combine(beagl_input)
+    // .map {dataset, subpop, bed, bim, fam, pop, spop, pbed, pbim, pfam -> [dataset, subpop, bed, bim, fam, spop, pbed, pbim, pfam]}      
+    // impute_dataset(imput_input)
+    
+
+    // Step 4.3: Proceed with imputation
+    // Step 4.3.1: Subpop
+    // inp = make_snp2hlarefpanel_subpop.out.map{dataset, subpop, datas -> [dataset, subpop, datas[14]]}
+    // .combine(makeref_snp2hla_phasing_subpop.out, by:[0,1])
+    // .map{dataset, subpop, markers, phased -> [subpop, markers, phased]}
+    // imp_input = impute_subpop.out.map{datset, spop, pop, data -> [pop, spop, data[4]]}
+    // .combine(inp, by:0)
+    // subpop_imputation(imp_input)
+    
+    // Step 4.3.1: Dataset
+    // in = make_snp2hlarefpanel_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[14]]}
+    // .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
+    // .map{dataset, subpop, markers, phased -> [subpop, markers, phased]}
+    // impt_input = impute_dataset.out.map{datset, spop, pop, data -> [pop, spop, data[4]]}
+    // .combine(in, by:0)
+    // dataset_imputation(impt_input)
+      
+    // MASKED DATA
+    masked_data = Channel.fromList(params.masked_data)
+    .map{dataset, subpop, pbed, pbim, pfam  -> [dataset, subpop, file(pbed), file(pbim), file(pfam)]}
+    bgl_input = make_snp2hlarefpanel_subpop.out.map{dataset, subpop, datas -> [dataset, subpop, datas[9], datas[10], datas[12]]}
+    impute_input = masked_data.combine(bgl_input)
+    .map {dataset, subpop, bed, bim, fam, pop, spop, pbed, pbim, pfam -> [dataset, subpop, bed, bim, fam, spop, pbed, pbim, pfam]}      
+    // impute_input.view() 
+    impute_subpop(impute_input)
+    
+    inp = make_snp2hlarefpanel_subpop.out.map{dataset, subpop, datas -> [dataset, subpop, datas[14]]}
+    .combine(makeref_snp2hla_phasing_subpop.out, by:[0,1])
+    .map{dataset, subpop, markers, phased -> [subpop, markers, phased]}
+    imp_input = impute_subpop.out.map{datset, spop, pop, data -> [pop, spop, data[4]]}
+    .combine(inp, by:0)
+    subpop_imputation(imp_input)
 
 
-    //HIBAG
+    // Train and predict using SOFTWARE 2
+    //2. HIBAG
+    // 2.1 Subpop
+    subpop_modeldata = Channel.fromList(params.subpop_modeldata)
+    .map{dataset, subpop, hlaA, hlaB, hlaC  -> [dataset, subpop, file(hlaA), file(hlaB), file(hlaC)]}
     input_ch = get_geno_plink_subpop.out.combine(subset_hlatypes_hibag.out, by:[0,1])
     .map{dataset, subpop, bed, bim, fam, snp2hla_ped, hibag_HLAType -> [dataset, subpop, bed, bim, fam, hibag_HLAType]} 
-    hibag_impute_subpop(input_ch)
+    .combine(subpop_modeldata, by:[0,1])
+    test_data = preparedata_imputation.out.combine(input_ch)
+    .map{dataset, subpop, pbed, pbim, pfam, pop, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC -> [dataset, subpop, pbed, pbim, pfam, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC]}
+    // test_data.view()
+    // hibag_impute_subpop(test_data)
+    
 
+    // 2.2 Dataset
+    // dataset_modeldata = Channel.fromList(params.dataset_modeldata)
+    // .map{dataset, subpop, hlaA, hlaB, hlaC  -> [dataset, subpop, file(hlaA), file(hlaB), file(hlaC)]}
+    // input_two_ch = get_geno_plink_dataset.out.combine(combine_hlatypes_hibag.out, by:[0,1])
+    // .map{dataset, subpop, bed, bim, fam, snp2hla_ped, hibag_HLAType -> [dataset, subpop, bed, bim, fam, hibag_HLAType]} 
+    // .combine(dataset_modeldata, by:[0,1])
+    // input_two_ch.view()
+    // hibag_impute_dataset(input_two_ch)
 
-    input_two_ch = get_geno_plink_dataset.out.combine(combine_hlatypes_hibag.out, by:[0])
+    // 
+
+    //MASKED DATA
+    masked_data = Channel.fromList(params.masked_data)
+    .map{dataset, subpop, pbed, pbim, pfam  -> [dataset, subpop, file(pbed), file(pbim), file(pfam)]}
+    subpop_modeldata = Channel.fromList(params.subpop_modeldata)
+    .map{dataset, subpop, hlaA, hlaB, hlaC  -> [dataset, subpop, file(hlaA), file(hlaB), file(hlaC)]}
+    input_ch = get_geno_plink_subpop.out.combine(subset_hlatypes_hibag.out, by:[0,1])
     .map{dataset, subpop, bed, bim, fam, snp2hla_ped, hibag_HLAType -> [dataset, subpop, bed, bim, fam, hibag_HLAType]} 
-    hibag_impute_dataset(input_two_ch)
+    .combine(subpop_modeldata, by:[0,1])
+    test_data = masked_data.combine(input_ch)
+    .map{dataset, subpop, pbed, pbim, pfam, pop, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC -> [dataset, subpop, pbed, pbim, pfam, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC]}
+    // test_data.view()
+    // hibag_impute_subpop(test_data)
+}
 
-} 

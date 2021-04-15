@@ -1,38 +1,6 @@
-Feb-18 15:19:33.288 [main] DEBUG nextflow.cli.Launcher - $> nextflow run trial.nf
-Feb-18 15:19:33.446 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 20.10.0
-Feb-18 15:19:33.474 [main] INFO  nextflow.cli.CmdRun - Launching `trial.nf` [happy_mendel] - revision: e68ee0971b
-Feb-18 15:19:33.522 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /scratch3/users/nanje/MHC-Imputation-Accuracy/nextflow.config
-Feb-18 15:19:33.523 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /scratch3/users/nanje/MHC-Imputation-Accuracy/nextflow.config
-Feb-18 15:19:33.560 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
-Feb-18 15:19:35.501 [main] DEBUG nextflow.Session - Session uuid: 505cae1f-6416-4b61-a307-c22d4361f655
-Feb-18 15:19:35.501 [main] DEBUG nextflow.Session - Run name: happy_mendel
-Feb-18 15:19:35.502 [main] DEBUG nextflow.Session - Executor pool size: 8
-Feb-18 15:19:35.528 [main] DEBUG nextflow.cli.CmdRun - 
-  Version: 20.10.0 build 5430
-  Created: 01-11-2020 15:14 UTC (17:14 SAST)
-  System: Linux 4.15.0-109-generic
-  Runtime: Groovy 3.0.5 on OpenJDK 64-Bit Server VM 1.8.0_152-release-1056-b12
-  Encoding: UTF-8 (UTF-8)
-  Process: 2224@jupyter-003 [192.168.100.38]
-  CPUs: 8 - Mem: 236.2 GB (183.4 GB) - Swap: 0 (0)
-Feb-18 15:19:35.574 [main] DEBUG nextflow.Session - Work-dir: /scratch3/users/nanje/MHC-Imputation-Accuracy/work [ceph]
-Feb-18 15:19:35.575 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /scratch3/users/nanje/MHC-Imputation-Accuracy/bin
-Feb-18 15:19:35.664 [main] DEBUG nextflow.Session - Observer factory: TowerFactory
-Feb-18 15:19:35.668 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
-Feb-18 15:19:36.199 [main] DEBUG nextflow.Session - Session start invoked
-Feb-18 15:19:36.206 [main] DEBUG nextflow.trace.TraceFileObserver - Flow starting -- trace file: /scratch3/users/nanje/hlatyping/results/my-results/pipeline_info/execution_trace.txt
-Feb-18 15:19:36.391 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
-Feb-18 15:19:36.434 [main] DEBUG nextflow.Session - Workflow process names [dsl1]: 
-Feb-18 15:19:36.573 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
-Feb-18 15:19:36.573 [main] DEBUG nextflow.Session - Session await
-Feb-18 15:19:36.573 [main] DEBUG nextflow.Session - Session await > all process finished
-Feb-18 15:19:36.573 [main] DEBUG nextflow.Session - Session await > all barriers passed
-Feb-18 15:19:36.612 [main] DEBUG nextflow.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=0ms; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=0; peakCpus=0; peakMemory=0; ]
-Feb-18 15:19:36.612 [main] DEBUG nextflow.trace.TraceFileObserver - Flow completing -- flushing trace file
-Feb-18 15:19:36.616 [main] DEBUG nextflow.trace.ReportObserver - Flow completing -- rendering html report
-Feb-18 15:19:36.626 [main] DEBUG nextflow.trace.ReportObserver - Execution report summary data:
-  []
-Feb-18 15:19:37.607 [main] DEBUG nextflow.trace.TimelineObserver - Flow completing -- rendering html timeline
-Feb-18 15:19:37.658 [main] WARN  nextflow.dag.GraphvizRenderer - To render the execution DAG in the required format it is required to install Graphviz -- See http://www.graphviz.org for more info.
-Feb-18 15:19:37.842 [main] DEBUG nextflow.CacheDB - Closing CacheDB done
-Feb-18 15:19:37.983 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
+Apr-05 15:20:14.130 [main] DEBUG nextflow.cli.Launcher - $> nextflow run hlaped.nf
+Apr-05 15:20:14.447 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 20.10.0
+Apr-05 15:20:14.491 [main] INFO  nextflow.cli.CmdRun - Launching `hlaped.nf` [pedantic_picasso] - revision: b6f1c0adbe
+Apr-05 15:20:14.580 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /scratch3/users/nanje/MHC-Imputation-Accuracy/nextflow.config
+Apr-05 15:20:14.581 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /scratch3/users/nanje/MHC-Imputation-Accuracy/nextflow.config
+Apr-05 15:20:14.636 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`

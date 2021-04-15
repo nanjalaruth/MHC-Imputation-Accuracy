@@ -1,0 +1,416 @@
+Submitting SLURM job
+N E X T F L O W  ~  version 20.10.0
+Launching `/scratch3/users/nanje/MHC-Imputation-Accuracy/hlaped.nf` [extravagant_austin] - revision: 89cb2ee3d4
+[-        ] process > combine_hlatypes_snp2hla -
+[-        ] process > subset_hlatypes_snp2hla  -
+
+[-        ] process > combine_hlatypes_snp2hla       -
+[-        ] process > subset_hlatypes_snp2hla        -
+[-        ] process > combine_hlatypes_hibag         -
+[-        ] process > subset_hlatypes_hibag          -
+[-        ] process > get_geno_plink_dataset         -
+[-        ] process > get_geno_plink_subpop          -
+[-        ] process > make_snp2hlarefpanel_dataset   -
+[-        ] process > make_snp2hlarefpanel_subpop    -
+[-        ] process > convert_to_beagle_dataset      -
+[-        ] process > convert_to_beagle_subpop       -
+[-        ] process > makeref_snp2hla_phasing_dat... -
+[-        ] process > makeref_snp2hla_phasing_subpop -
+[-        ] process > preparedata_imputation         -
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+[-        ] process > combine_hlatypes_snp2hla       -
+[-        ] process > subset_hlatypes_snp2hla        -
+[-        ] process > combine_hlatypes_hibag         -
+[-        ] process > subset_hlatypes_hibag          -
+[-        ] process > get_geno_plink_dataset         -
+[-        ] process > get_geno_plink_subpop          -
+[-        ] process > make_snp2hlarefpanel_dataset   -
+[-        ] process > make_snp2hlarefpanel_subpop    -
+[-        ] process > convert_to_beagle_dataset      -
+[-        ] process > convert_to_beagle_subpop       -
+[-        ] process > makeref_snp2hla_phasing_dat... -
+[-        ] process > makeref_snp2hla_phasing_subpop -
+[2f/a72265] process > preparedata_imputation (get... [100%] 1 of 1, cached: 1
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[2d/ec2cea] process > subset_hlatypes_snp2hla (su... [100%] 1 of 1, cached: 1
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[2b/cd5a30] process > get_geno_plink_subpop (get_... [100%] 1 of 1, cached: 1
+[-        ] process > make_snp2hlarefpanel_dataset   -
+[-        ] process > make_snp2hlarefpanel_subpop    -
+[-        ] process > convert_to_beagle_dataset      -
+[-        ] process > convert_to_beagle_subpop       -
+[-        ] process > makeref_snp2hla_phasing_dat... -
+[-        ] process > makeref_snp2hla_phasing_subpop -
+[2f/a72265] process > preparedata_imputation (get... [100%] 1 of 1, cached: 1
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[c3/1b9a47] process > make_snp2hlarefpanel_subpop... [100%] 1 of 1, cached: 1
+[-        ] process > convert_to_beagle_dataset      [  0%] 0 of 1
+[-        ] process > convert_to_beagle_subpop       [  0%] 0 of 1
+[-        ] process > makeref_snp2hla_phasing_dat... -
+[-        ] process > makeref_snp2hla_phasing_subpop -
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (3)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [  0%] 0 of 1
+[0e/3f3214] process > convert_to_beagle_subpop (c... [  0%] 0 of 2
+[-        ] process > makeref_snp2hla_phasing_dat... -
+[-        ] process > makeref_snp2hla_phasing_subpop -
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (3)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [  0%] 0 of 1
+[0e/3f3214] process > convert_to_beagle_subpop (c... [  0%] 0 of 2
+[-        ] process > makeref_snp2hla_phasing_dat... -
+[-        ] process > makeref_snp2hla_phasing_subpop -
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (4)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [  0%] 0 of 1
+[0e/3f3214] process > convert_to_beagle_subpop (c... [ 50%] 1 of 2
+[-        ] process > makeref_snp2hla_phasing_dat... -
+[75/4104d7] process > makeref_snp2hla_phasing_sub... [  0%] 0 of 1
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (4)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [  0%] 0 of 1
+[0e/3f3214] process > convert_to_beagle_subpop (c... [ 50%] 1 of 2
+[-        ] process > makeref_snp2hla_phasing_dat... -
+[75/4104d7] process > makeref_snp2hla_phasing_sub... [  0%] 0 of 1
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (5)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [  0%] 0 of 1
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[-        ] process > makeref_snp2hla_phasing_dat... -
+[72/93cbb7] process > makeref_snp2hla_phasing_sub... [  0%] 0 of 2
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (5)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [  0%] 0 of 1
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[-        ] process > makeref_snp2hla_phasing_dat... -
+[72/93cbb7] process > makeref_snp2hla_phasing_sub... [  0%] 0 of 2
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (6)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[72/93cbb7] process > makeref_snp2hla_phasing_sub... [  0%] 0 of 2
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (6)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[72/93cbb7] process > makeref_snp2hla_phasing_sub... [  0%] 0 of 2
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (6)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[75/4104d7] process > makeref_snp2hla_phasing_sub... [ 50%] 1 of 2
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[-        ] process > impute_subpop                  -
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (7)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[75/4104d7] process > makeref_snp2hla_phasing_sub... [ 50%] 1 of 2
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[16/cb8c7e] process > impute_subpop (Impute_GGVP_... [  0%] 0 of 2
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (8)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[75/4104d7] process > makeref_snp2hla_phasing_sub... [ 50%] 1 of 2
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[ea/7ee1e4] process > impute_subpop (Impute_GGVP_... [  0%] 0 of 2
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (8)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[75/4104d7] process > makeref_snp2hla_phasing_sub... [ 50%] 1 of 2
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[ea/7ee1e4] process > impute_subpop (Impute_GGVP_... [  0%] 0 of 2
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (8)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[75/4104d7] process > makeref_snp2hla_phasing_sub... [ 50%] 1 of 2
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[ea/7ee1e4] process > impute_subpop (Impute_GGVP_... [100%] 2 of 2
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (8)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[72/93cbb7] process > makeref_snp2hla_phasing_sub... [100%] 2 of 2 ✔
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[ea/7ee1e4] process > impute_subpop (Impute_GGVP_... [100%] 2 of 2
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (10)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[72/93cbb7] process > makeref_snp2hla_phasing_sub... [100%] 2 of 2 ✔
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[9b/5336ef] process > impute_subpop (Impute_GGVP_... [ 50%] 2 of 4
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (10)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[72/93cbb7] process > makeref_snp2hla_phasing_sub... [100%] 2 of 2 ✔
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[9b/5336ef] process > impute_subpop (Impute_GGVP_... [ 50%] 2 of 4
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (10)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[72/93cbb7] process > makeref_snp2hla_phasing_sub... [100%] 2 of 2 ✔
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[80/93ac16] process > impute_subpop (Impute_GGVP_... [ 75%] 3 of 4
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (10)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[72/93cbb7] process > makeref_snp2hla_phasing_sub... [100%] 2 of 2 ✔
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[80/93ac16] process > impute_subpop (Impute_GGVP_... [ 75%] 3 of 4 ✔
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (10)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[72/93cbb7] process > makeref_snp2hla_phasing_sub... [100%] 2 of 2 ✔
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[9b/5336ef] process > impute_subpop (Impute_GGVP_... [100%] 4 of 4 ✔
+[-        ] process > impute_dataset                 -
+
+executor >  slurm (10)
+[62/37ddad] process > combine_hlatypes_snp2hla (s... [100%] 1 of 1, cached: 1 ✔
+[ca/c6fe6b] process > subset_hlatypes_snp2hla (su... [100%] 2 of 2, cached: 2 ✔
+[34/bf4dc8] process > combine_hlatypes_hibag (com... [100%] 1 of 1, cached: 1 ✔
+[8e/6c6981] process > subset_hlatypes_hibag (subs... [100%] 2 of 2, cached: 2 ✔
+[df/a8d2b2] process > get_geno_plink_dataset (get... [100%] 1 of 1, cached: 1 ✔
+[6f/e26dc8] process > get_geno_plink_subpop (get_... [100%] 2 of 2, cached: 2 ✔
+[a3/4cbcf6] process > make_snp2hlarefpanel_datase... [100%] 1 of 1, cached: 1 ✔
+[b6/bc4cd7] process > make_snp2hlarefpanel_subpop... [100%] 2 of 2, cached: 2 ✔
+[29/c892a8] process > convert_to_beagle_dataset (... [100%] 1 of 1 ✔
+[61/7555e8] process > convert_to_beagle_subpop (c... [100%] 2 of 2 ✔
+[9f/d0b7c3] process > makeref_snp2hla_phasing_dat... [  0%] 0 of 1
+[72/93cbb7] process > makeref_snp2hla_phasing_sub... [100%] 2 of 2 ✔
+[fd/4e08b5] process > preparedata_imputation (get... [100%] 2 of 2, cached: 2 ✔
+[9b/5336ef] process > impute_subpop (Impute_GGVP_... [100%] 4 of 4 ✔
+[-        ] process > impute_dataset                 -
+WARN: [SLURM] queue status cannot be fetched
+- cmd executed: squeue --noheader -o %i %t -t all -u nanje
+- exit status : 1
+- output      :
+  squeue: error: Parsing error at unrecognized key: SelectType
+  squeue: error: Parse error in file /opt/slurms/slurm-20-02-3-1/etc/slurm.conf line 114: " SelectType=select/cons_res SelectTypeParameters=CR_Core_Memory"
+  squeue: fatal: Unable to process configuration file

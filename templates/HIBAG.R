@@ -63,67 +63,47 @@ summary(train.geno)
 
 
 #STEP 6
-# TRAIN THE HIBAG model
-set.seed(100)
-model <- hlaAttrBagging(train.HLA_A, train.geno, nclassifier=100)
-
+# LOAD THE HIBAG model
+model.obj <- get(load("${hla_a}"))
+model <- hlaModelFromObj(model.obj)
 summary(model)
 
 
 #STEP 7
 #Import a test data file and predict its hla types
 # import a PLINK BED file
-#
-#bed.fn <- ("")
-#fam.fn <- ("")
-#bim.fn <- ("")
-#test.geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
+gbed.fn <- ("${pbed}")
+gfam.fn <- ("${pfam}")
+gbim.fn <- ("${pbim}")
+test.geno <- hlaBED2Geno(gbed.fn, gfam.fn, gbim.fn, assembly="hg19")
 
-# predict
-#pred <- hlaPredict(model, test.geno)
-#head(pred\$value)
 
 #STEP 8
-#Compare the predicted HLA allele to the original validation population
-#comp <- hlaCompareAllele(train.HLA_A, pred, allele.limit=model,
- #                        call.threshold=0)
-#comp\$overall
+# predict
+pred <- hlaPredict(model, test.geno)
+head(pred\$value)
+
 
 #STEP 9
-#REPORT OVERALL ACCURACY, PER ALLELE SENSITIVITY & SPECIFICITY
+#Compare the predicted HLA allele to the original validation population
+comp <- hlaCompareAllele(train.HLA_A, pred, allele.limit=model,
+                        call.threshold=0)
+comp\$overall
 
-#hlaReport(comp, export.fn="${hibag_out}_HLA_A_accuracy.html", type="html", header=TRUE)
 
 #STEP 10
-#RELEASE HIBAG MODELS WITHOUT CONFIDENTIAL INFORMATION
-mobj <- hlaPublish(model,
-                   platform = "Illumina 1M Duo",
-                   information = "Training set -- 1000 genomes, gambian subpop",
-                   warning = NULL,
-                   rm.unused.snp=TRUE, anonymize=TRUE)
+#REPORT OVERALL ACCURACY, PER ALLELE SENSITIVITY & SPECIFICITY
 
-save(mobj, file="${hibag_out}_HLA_A_Model.RData")
+hlaReport(comp, export.fn="${hibag_out}_HLA_A_accuracy.html", type="html", header=TRUE)
 
 
 #STEP 11
-#BUILD AND PREDICT IN PARALLEL
-#library(parallel)
-#cl <- makeCluster(2)
-#set.seed(1000)
-#hlaParallelAttrBagging(cl, gwdtrain.HLA, gwdtrain.geno, nclassifier=100, 
- #                      auto.save = "Gambian_HLA_A_Model.RData", stop.cluster=TRUE)
-#model.obj <- get(load("Gambian_HLA_A_Model.RData"))
-#model <- hlaModelFromObj(model.obj)
-#summary(model)
-
-
-#STEP 12
 # Visualize
-# hlaReportPlot(pred, fig="matching")
-# hlaReportPlot(model=model, fig="matching")
-# hlaReportPlot(pred, model=model, fig="matching")
-# hlaReportPlot(pred, train.HLA_A, fig="call.rate")
-# hlaReportPlot(pred, train.HLA_A, fig="call.threshold")
+hlaReportPlot(pred, fig="matching")
+hlaReportPlot(model=model, fig="matching")
+hlaReportPlot(pred, model=model, fig="matching")
+hlaReportPlot(pred, train.HLA_A, fig="call.rate")
+hlaReportPlot(pred, train.HLA_A, fig="call.threshold")
 
 
 ###########################################################################
@@ -176,68 +156,48 @@ train.geno <- hlaGenoSubset(geno,
 summary(train.geno)
 
 
-# #STEP 6
-# # TRAIN THE HIBAG model
-set.seed(100)
-model <- hlaAttrBagging(train.HLA_B, train.geno, nclassifier=100)
- 
+#STEP 6
+# LOAD THE HIBAG model
+model.obj <- get(load("${hla_b}"))
+model <- hlaModelFromObj(model.obj)
 summary(model)
 
 
 #STEP 7
 #Import a test data file and predict its hla types
 # import a PLINK BED file
-#
-#bed.fn <- ("")
-#fam.fn <- ("")
-#bim.fn <- ("")
-#test.geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
+# gbed.fn <- ("${pbed}")
+# gfam.fn <- ("${pfam}")
+# gbim.fn <- ("${pbim}")
+# test.geno <- hlaBED2Geno(gbed.fn, gfam.fn, gbim.fn, assembly="hg19")
 
-# predict
-#pred <- hlaPredict(model, test.geno)
-#head(pred\$value)
 
 #STEP 8
-#Compare the predicted HLA allele to the original validation population
-#comp <- hlaCompareAllele(train.HLA_B, pred, allele.limit=model,
- #                        call.threshold=0)
-#comp\$overall
+# predict
+pred <- hlaPredict(model, test.geno)
+head(pred\$value)
+
 
 #STEP 9
-#REPORT OVERALL ACCURACY, PER ALLELE SENSITIVITY & SPECIFICITY
+#Compare the predicted HLA allele to the original validation population
+comp <- hlaCompareAllele(train.HLA_B, pred, allele.limit=model,
+                        call.threshold=0)
+comp\$overall
 
-#hlaReport(comp, export.fn="${hibag_out}_HLA_B_accuracy.html", type="html", header=TRUE)
 
 #STEP 10
-#RELEASE HIBAG MODELS WITHOUT CONFIDENTIAL INFORMATION
-mobj <- hlaPublish(model,
-                   platform = "Illumina 1M Duo",
-                   information = "Training set -- 1000 genomes, HLA_B",
-                   warning = NULL,
-                   rm.unused.snp=TRUE, anonymize=TRUE)
+#REPORT OVERALL ACCURACY, PER ALLELE SENSITIVITY & SPECIFICITY
 
-save(mobj, file="${hibag_out}_HLA_B_Model.RData")
+hlaReport(comp, export.fn="${hibag_out}_HLA_B_accuracy.html", type="html", header=TRUE)
 
 
 #STEP 11
-#BUILD AND PREDICT IN PARALLEL
-#library(parallel)
-#cl <- makeCluster(2)
-#set.seed(1000)
-#hlaParallelAttrBagging(cl, gwdtrain.HLA, gwdtrain.geno, nclassifier=100, 
-#                      auto.save = "Gambian_HLA_B_Model.RData", stop.cluster=TRUE)
-#model.obj <- get(load("Gambian_HLA_B_Model.RData"))
-#model <- hlaModelFromObj(model.obj)
-#summary(model)
-
-
-#STEP 12
 # visualize
-# hlaReportPlot(pred, fig="matching")
-# hlaReportPlot(model=model, fig="matching")
-# hlaReportPlot(pred, model=model, fig="matching")
-# hlaReportPlot(pred, train.HLA_B, fig="call.rate")
-# hlaReportPlot(pred, train.HLA_B, fig="call.threshold")
+hlaReportPlot(pred, fig="matching")
+hlaReportPlot(model=model, fig="matching")
+hlaReportPlot(pred, model=model, fig="matching")
+hlaReportPlot(pred, train.HLA_B, fig="call.rate")
+hlaReportPlot(pred, train.HLA_B, fig="call.threshold")
 
 
 ###########################################################################
@@ -289,65 +249,45 @@ train.geno <- hlaGenoSubset(geno,
 summary(train.geno)
 
 
-# #STEP 6
-# # TRAIN THE HIBAG model
-set.seed(100)
-model <- hlaAttrBagging(train.HLA_C, train.geno, nclassifier=100)
- 
+#STEP 6
+# LOAD THE HIBAG model
+model.obj <- get(load("${hla_b}"))
+model <- hlaModelFromObj(model.obj)
 summary(model)
 
 
 #STEP 7
 #Import a test data file and predict its hla types
 # import a PLINK BED file
+# gbed.fn <- ("${pbed}")
+# gfam.fn <- ("${pfam}")
+# gbim.fn <- ("${pbim}")
+# test.geno <- hlaBED2Geno(gbed.fn, gfam.fn, gbim.fn, assembly="hg19")
 
-#bed.fn <- ("")
-#fam.fn <- ("")
-#bim.fn <- ("")
-#test.geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
-
-# predict
-#pred <- hlaPredict(model, test.geno)
-#head(pred\$value)
 
 #STEP 8
-#Compare the predicted HLA allele to the original validation population
-#comp <- hlaCompareAllele(train.HLA_C, pred, allele.limit=model,
- #                        call.threshold=0)
-#comp\$overall
+# predict
+pred <- hlaPredict(model, test.geno)
+head(pred\$value)
+
 
 #STEP 9
-#REPORT OVERALL ACCURACY, PER ALLELE SENSITIVITY & SPECIFICITY
+#Compare the predicted HLA allele to the original validation population
+comp <- hlaCompareAllele(train.HLA_C, pred, allele.limit=model,
+                        call.threshold=0)
+comp\$overall
 
-#hlaReport(comp, export.fn="${hibag_out}_HLA_C_accuracy.html", type="html", header=TRUE)
 
 #STEP 10
-#RELEASE HIBAG MODELS WITHOUT CONFIDENTIAL INFORMATION
-mobj <- hlaPublish(model,
-                  platform = "Illumina 1M Duo",
-                 information = "Training set -- 1000 genomes, HLA_B",
-                warning = NULL,
-               rm.unused.snp=TRUE, anonymize=TRUE)
+#REPORT OVERALL ACCURACY, PER ALLELE SENSITIVITY & SPECIFICITY
 
-save(mobj, file="${hibag_out}_HLA_C_Model.RData")
+hlaReport(comp, export.fn="${hibag_out}_HLA_C_accuracy.html", type="html", header=TRUE)
 
 
 #STEP 11
-#BUILD AND PREDICT IN PARALLEL
-#library(parallel)
-#cl <- makeCluster(2)
-#set.seed(1000)
-#hlaParallelAttrBagging(cl, gwdtrain.HLA, gwdtrain.geno, nclassifier=100, 
-#                      auto.save = "Gambian_HLA_C_Model.RData", stop.cluster=TRUE)
-#model.obj <- get(load("Gambian_HLA_C_Model.RData"))
-#model <- hlaModelFromObj(model.obj)
-#summary(model)
-
-
-#STEP 12
 # visualize
-# hlaReportPlot(pred, fig="matching")
-# hlaReportPlot(model=model, fig="matching")
-# hlaReportPlot(pred, model=model, fig="matching")
-# hlaReportPlot(pred, train.HLA_C, fig="call.rate")
-# hlaReportPlot(pred, train.HLA_C, fig="call.threshold")
+hlaReportPlot(pred, fig="matching")
+hlaReportPlot(model=model, fig="matching")
+hlaReportPlot(pred, model=model, fig="matching")
+hlaReportPlot(pred, train.HLA_C, fig="call.rate")
+hlaReportPlot(pred, train.HLA_C, fig="call.threshold")

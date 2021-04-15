@@ -59,6 +59,10 @@ set INPUT=${base}
 set REFERENCE=${ref}
 set OUTPUT=${imputeoutput}
 
+set JAVATMP=\$OUTPUT.javatmpdir
+mkdir -p \$JAVATMP
+
+
 alias plink '/usr/local/bin/plink --noweb --silent'
 # set PLINK=\$4
 
@@ -75,12 +79,7 @@ alias plink '/usr/local/bin/plink --noweb --silent'
 #     set WIN=1000 # Default Beagle phasing/imputation window = 1000 markers
 # endif
 
-# #set JAVATMP=\$OUTPUT.javatmpdir
-# #mkdir -p \$JAVATMP
-# alias plink '\$PLINK --noweb --silent --allow-no-sex'
-#alias beagle 'java -Djava.io.tmpdir=\$JAVATMP -Xmx\$MEM\m -jar /usr/local/bin/beagle.jar'
-#alias linkage2beagle 'java -Djava.io.tmpdir=\$JAVATMP -Xmx\$MEM\m -jar /usr/local/bin/linkage2beagle.jar'
-#alias beagle2linkage 'java -Djava.io.tmpdir=\$JAVATMP -Xmx\$MEM\m -jar /usr/local/bin/beagle2linkage.jar'
+
 
 # Functions to run
 set EXTRACT_MHC = 1
@@ -172,49 +171,49 @@ endif
 if (\$CONVERT_IN) then
     echo "[\$i] Converting data to beagle format."; @ i++
     java -Djava.io.tmpdir=\$OUTPUT.javatmpdir -Xmx4000m -jar /usr/local/bin/linkage2beagle.jar \$MHC.QC.dat \$MHC.QC.nopheno.ped > \$MHC.QC.bgl
-    echo "===============================================================================" >> \$OUTPUT.bgl.log
+    # echo "===============================================================================" >> \$OUTPUT.bgl.log
 
     rm \$MHC.QC.reorder*
     rm \$MHC.QC.nopheno.ped
 endif
 
-if (\$IMPUTE) then
-    echo "[\$i] Performing HLA imputation (see \$OUTPUT.bgl.log for progress)."; @ i++
+# if (\$IMPUTE) then
+#     echo "[\$i] Performing HLA imputation (see \$OUTPUT.bgl.log for progress)."; @ i++
 
-    java -Djava.io.tmpdir=\$OUTPUT.javatmpdir -Xmx4000m -jar /usr/local/bin/beagle.jar markers=\$REFERENCE.markers unphased=\$MHC.QC.bgl phased=\$REFERENCE.bgl.phased gprobs=true niterations=10 nsamples=4 missing=0 verbose=true maxwindow=1000 out=\$OUTPUT.IMPUTED log=\$OUTPUT.phasing lowmem=true >> \$OUTPUT.bgl.log
-endif
+#     java -Djava.io.tmpdir=\$OUTPUT.javatmpdir -Xmx40000m -jar /usr/local/bin/beagle.jar markers=\$REFERENCE.markers unphased=\$MHC.QC.bgl phased=\$REFERENCE.bgl.phased gprobs=true niterations=10 nsamples=4 missing=0 verbose=true maxwindow=1000 out=\$OUTPUT.IMPUTED log=\$OUTPUT.phasing lowmem=true seed=994000>> \$OUTPUT.bgl.log
+# endif
 
-if (\$CONVERT_OUT) then
-    echo "[\$i] Converting posterior probabilities to PLINK dosage format."; @ i++
+# if (\$CONVERT_OUT) then
+#     echo "[\$i] Converting posterior probabilities to PLINK dosage format."; @ i++
 
-    # Converting .gprobs to .dosage format
-    mv \$OUTPUT.IMPUTED.\${MHC:t}.QC.bgl.phased \$OUTPUT.bgl.phased
-    mv \$OUTPUT.IMPUTED.\${MHC:t}.QC.bgl.gprobs \$OUTPUT.bgl.gprobs
-    mv \$OUTPUT.IMPUTED.\${MHC:t}.QC.bgl.r2 \$OUTPUT.bgl.r2
+#     # Converting .gprobs to .dosage format
+#     mv \$OUTPUT.IMPUTED.\${MHC:t}.QC.bgl.phased \$OUTPUT.bgl.phased
+#     mv \$OUTPUT.IMPUTED.\${MHC:t}.QC.bgl.gprobs \$OUTPUT.bgl.gprobs
+#     mv \$OUTPUT.IMPUTED.\${MHC:t}.QC.bgl.r2 \$OUTPUT.bgl.r2
 
-    \$PARSEDOSAGE \$OUTPUT.bgl.gprobs > \$OUTPUT.dosage
+#     \$PARSEDOSAGE \$OUTPUT.bgl.gprobs > \$OUTPUT.dosage
 
-    echo "[\$i] Converting imputation genotypes to PLINK .ped format."; @ i++
-    cat \$OUTPUT.bgl.phased | java -jar /usr/local/bin/beagle2linkage.jar \$OUTPUT.tmp # Buhm
-    cut -d ' ' -f6- \$OUTPUT.tmp.ped > \$OUTPUT.tmp       # Buhm
-    paste -d ' ' \$MHC.fam \$OUTPUT.tmp | tr -d "\015" > \$OUTPUT.ped
-    cut -f1-4 \$REFERENCE.bim > \$OUTPUT.map
-    cp \$MHC.fam \$OUTPUT.fam
+#     echo "[\$i] Converting imputation genotypes to PLINK .ped format."; @ i++
+#     cat \$OUTPUT.bgl.phased | java -jar /usr/local/bin/beagle2linkage.jar \$OUTPUT.tmp # Buhm
+#     cut -d ' ' -f6- \$OUTPUT.tmp.ped > \$OUTPUT.tmp       # Buhm
+#     paste -d ' ' \$MHC.fam \$OUTPUT.tmp | tr -d "\015" > \$OUTPUT.ped
+#     cut -f1-4 \$REFERENCE.bim > \$OUTPUT.map
+#     cp \$MHC.fam \$OUTPUT.fam
 
-    # Create PLINK bed file
-    plink --ped \$OUTPUT.ped --map \$OUTPUT.map --make-bed --out \$OUTPUT
+#     # Create PLINK bed file
+#     plink --ped \$OUTPUT.ped --map \$OUTPUT.map --make-bed --out \$OUTPUT
 endif
 
 if (\$CLEANUP) then
-    rm \$OUTPUT.MHC.*
+    #rm \$OUTPUT.MHC.*
     rm \$OUTPUT.tmp*
-    rm \$OUTPUT.IMPUTED.*.bgl.phased.phased
-    rm \$OUTPUT.phasing.log
-    rm \$OUTPUT.ped
-    rm \$OUTPUT.map
-    rm \$OUTPUT.log
-    #rm -r \$JAVATMP
-    rm -f plink.log
+    #rm \$OUTPUT.IMPUTED.*.bgl.phased.phased
+    #rm \$OUTPUT.phasing.log
+    #rm \$OUTPUT.ped
+    #rm \$OUTPUT.map
+    #rm \$OUTPUT.log
+    rm -r \$JAVATMP
+    #rm -f plink.log
     echo "DONE!"
     echo ""
 endif

@@ -1,5 +1,5 @@
 #!/usr/bin/env nextflow
-nextflow.enable.dsl=2
+// nextflow.enable.dsl=2
 
 process combine_hlatypes_snp2hla {
     tag "snp2hlatypes_${dataset}"
@@ -141,6 +141,6 @@ process makeref_snp2hla_phasing {
         tuple val(dataset), val(subpop), file("${bgl}.phased")
     script:
         """
-        java -Djava.io.tmpdir=${params.scratch} -Xmx4g -jar /usr/local/bin/beagle.jar unphased=${bgl} nsamples=4 niterations=10 missing=0 verbose=true maxwindow=1000 lowmem=true seed=993470 log=${bgl}.phasing
+        java -Djava.io.tmpdir=${params.scratch} -Xmx${task.memory.toGiga()}g -jar /usr/local/bin/beagle.jar unphased=${bgl} nsamples=4 niterations=10 missing=0 seed=993470 lowmem=true verbose=true maxwindow=1000 log=${bgl}.phasing
         """
 }
