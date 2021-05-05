@@ -1,0 +1,295 @@
+submitting slurm job
+Open "./1kg_all_1kg_all_geno.bed" in the SNP-major mode.
+Open "./1kg_all_1kg_all_geno.fam".
+Open "./1kg_all_1kg_all_geno.bim".
+Import 252784 SNPs within the xMHC region on chromosome 6.
+  sample.id   A.1   A.2   B.1    B.2   C.1   C.2 DQA1.1 DQA1.2 DQB1.1 DQB1.2
+1   HG03782 31:01 32:01 13:01  44:03 04:03 07:01   <NA>   <NA>   <NA>   <NA>
+2   HG00110 02:01 11:01 44:02  55:01 03:03 05:01   <NA>   <NA>   <NA>   <NA>
+3   HG03473 33:01 34:02 41:03  50:01 06:02 17:01   <NA>   <NA>   <NA>   <NA>
+4   NA18579 11:01 11:01 52:01  81:01 08:01 12:02   <NA>   <NA>   <NA>   <NA>
+5   NA18565 24:02 11:01 51:01 15:108 07:01 14:02   <NA>   <NA>   <NA>   <NA>
+6   NA18983 01:01 02:01 27:04  27:04 03:02 04:01   <NA>   <NA>   <NA>   <NA>
+  DRB1.1 DRB1.2
+1   <NA>   <NA>
+2   <NA>   <NA>
+3   <NA>   <NA>
+4   <NA>   <NA>
+5   <NA>   <NA>
+6   <NA>   <NA>
+[1] 2051   13
+[1] 34078
+SNP genotypes: 
+    2051 samples X 34078 SNPs
+    SNPs range from 29410258bp to 30413652bp on hg19
+Missing rate per SNP:
+    min: 0, max: 0, mean: 0, median: 0, sd: 0
+Missing rate per sample:
+    min: 0, max: 0, mean: 0, median: 0, sd: 0
+Minor allele frequency:
+    min: 0, max: 0.5, mean: 0.0646972, median: 0.00219405, sd: 0.116262
+Allelic information:
+ A/G  T/C  C/T  G/A  A/C  C/G  T/G  G/C  C/A  G/T  T/A  A/T CA/C G/GA AT/A A/AT 
+6715 6564 4681 4241 1654 1521 1480 1402 1121 1095 1034 1014   59   59   55   49 
+C/CA T/TA C/CT TA/T A/AC GA/G A/AG CT/C T/TG G/GT GT/G T/TC AG/A G/GC AC/A  ... 
+  49   46   44   44   42   41   40   39   32   31   30   29   28   28   22  789 
+[1] 35483
+SNP genotypes: 
+    2051 samples X 35483 SNPs
+    SNPs range from 30821874bp to 31824968bp on hg19
+Missing rate per SNP:
+    min: 0, max: 0, mean: 0, median: 0, sd: 0
+Missing rate per sample:
+    min: 0, max: 0, mean: 0, median: 0, sd: 0
+Minor allele frequency:
+    min: 0, max: 0.5, mean: 0.0762326, median: 0.00316919, sd: 0.128947
+Allelic information:
+  A/G   T/C   G/A   C/T   C/G   A/C   T/G   G/C   C/A   G/T   T/A   A/T  C/CA 
+ 7724  7339  4347  4178  1644  1540  1531  1509  1066  1035   947   918    72 
+ C/CT  T/TG  AT/A  CA/C  CT/C  G/GA  T/TA  A/AG  A/AT  TA/T  T/TC  A/AC  GA/G 
+   58    58    52    51    50    50    49    48    45    44    42    32    31 
+ G/GT  GT/G  AC/A C/CTT C/CAG   ... 
+   30    30    21    21    20   901 
+[1] 36012
+SNP genotypes: 
+    2051 samples X 36012 SNPs
+    SNPs range from 30736541bp to 31739837bp on hg19
+Missing rate per SNP:
+    min: 0, max: 0, mean: 0, median: 0, sd: 0
+Missing rate per sample:
+    min: 0, max: 0, mean: 0, median: 0, sd: 0
+Minor allele frequency:
+    min: 0, max: 0.499512, mean: 0.0786102, median: 0.00390054, sd: 0.130563
+Allelic information:
+  A/G   T/C   G/A   C/T   C/G   A/C   T/G   G/C   C/A   G/T   T/A   A/T  C/CA 
+ 7801  7416  4426  4294  1638  1555  1544  1524  1077  1069   974   934    71 
+ C/CT  T/TG  G/GA  AT/A  T/TA  A/AG  A/AT  CT/C  CA/C  TA/T  T/TC  GT/G  A/AC 
+   62    57    53    52    51    50    50    50    49    45    43    35    34 
+ G/GT  GA/G  G/GC  AC/A C/CAG   ... 
+   31    28    22    21    20   936 
+Build a HIBAG model of 100 individual classifiers in parallel with 32 compute nodes:
+The model is autosaved in '1kg_all_HLA_C_Model.RData'.
+2021-04-26 08:07:28,   1, job 30, # of SNPs: 128, # of haplo: 1063, acc: 86.7%
+  --  avg out-of-bag acc: 86.67%, sd: NA%, min: 86.67%, max: 86.67%
+2021-04-26 08:27:56,   2, job  1, # of SNPs: 128, # of haplo: 1127, acc: 85.3%
+  --  avg out-of-bag acc: 86.01%, sd: 0.94%, min: 85.34%, max: 86.67%
+2021-04-26 09:31:19,   3, job  6, # of SNPs: 128, # of haplo: 1187, acc: 87.5%
+  --  avg out-of-bag acc: 86.50%, sd: 1.08%, min: 85.34%, max: 87.48%
+2021-04-26 10:06:38,   4, job  7, # of SNPs: 128, # of haplo: 1227, acc: 86.8%
+  --  avg out-of-bag acc: 86.57%, sd: 0.89%, min: 85.34%, max: 87.48%
+2021-04-26 10:17:04,   5, job  4, # of SNPs: 128, # of haplo: 1187, acc: 87.0%
+  --  avg out-of-bag acc: 86.65%, sd: 0.80%, min: 85.34%, max: 87.48%
+2021-04-26 10:27:44,   6, job 17, # of SNPs: 128, # of haplo: 1138, acc: 85.2%
+  --  avg out-of-bag acc: 86.41%, sd: 0.94%, min: 85.16%, max: 87.48%
+2021-04-26 11:13:30,   7, job 11, # of SNPs: 128, # of haplo: 1224, acc: 87.3%
+  --  avg out-of-bag acc: 86.53%, sd: 0.92%, min: 85.16%, max: 87.48%
+2021-04-26 11:29:34,   8, job 29, # of SNPs: 128, # of haplo: 1378, acc: 87.8%
+  --  avg out-of-bag acc: 86.69%, sd: 0.95%, min: 85.16%, max: 87.75%
+2021-04-26 11:43:06,   9, job  3, # of SNPs: 128, # of haplo: 1183, acc: 86.7%
+  --  avg out-of-bag acc: 86.69%, sd: 0.89%, min: 85.16%, max: 87.75%
+2021-04-26 12:08:52,  10, job 24, # of SNPs: 128, # of haplo: 1236, acc: 86.1%
+  --  avg out-of-bag acc: 86.62%, sd: 0.86%, min: 85.16%, max: 87.75%
+2021-04-26 12:12:57,  11, job 23, # of SNPs: 128, # of haplo: 1252, acc: 87.0%
+  --  avg out-of-bag acc: 86.66%, sd: 0.83%, min: 85.16%, max: 87.75%
+2021-04-26 12:29:30,  12, job 19, # of SNPs: 128, # of haplo: 1156, acc: 86.4%
+  --  avg out-of-bag acc: 86.64%, sd: 0.79%, min: 85.16%, max: 87.75%
+2021-04-26 12:37:30,  13, job  2, # of SNPs: 128, # of haplo: 1227, acc: 86.7%
+  --  avg out-of-bag acc: 86.64%, sd: 0.76%, min: 85.16%, max: 87.75%
+2021-04-26 13:13:42,  14, job 22, # of SNPs: 128, # of haplo: 1242, acc: 86.2%
+  --  avg out-of-bag acc: 86.61%, sd: 0.74%, min: 85.16%, max: 87.75%
+2021-04-26 13:57:20,  15, job 26, # of SNPs: 128, # of haplo: 1211, acc: 87.7%
+  --  avg out-of-bag acc: 86.68%, sd: 0.77%, min: 85.16%, max: 87.75%
+2021-04-26 14:10:47,  16, job 16, # of SNPs: 128, # of haplo: 1388, acc: 86.5%
+  --  avg out-of-bag acc: 86.67%, sd: 0.75%, min: 85.16%, max: 87.75%
+2021-04-26 14:38:57,  17, job 32, # of SNPs: 128, # of haplo: 1245, acc: 86.3%
+  --  avg out-of-bag acc: 86.65%, sd: 0.73%, min: 85.16%, max: 87.75%
+2021-04-26 15:02:20,  18, job 31, # of SNPs: 128, # of haplo: 1237, acc: 88.2%
+  --  avg out-of-bag acc: 86.74%, sd: 0.80%, min: 85.16%, max: 88.19%
+2021-04-26 15:55:52,  19, job 10, # of SNPs: 128, # of haplo: 1316, acc: 86.6%
+  --  avg out-of-bag acc: 86.73%, sd: 0.78%, min: 85.16%, max: 88.19%
+2021-04-26 16:04:25,  20, job 15, # of SNPs: 128, # of haplo: 1348, acc: 87.0%
+  --  avg out-of-bag acc: 86.74%, sd: 0.76%, min: 85.16%, max: 88.19%
+2021-04-26 16:06:05,  21, job 27, # of SNPs: 128, # of haplo: 1354, acc: 85.8%
+  --  avg out-of-bag acc: 86.70%, sd: 0.76%, min: 85.16%, max: 88.19%
+2021-04-26 17:33:32,  22, job 28, # of SNPs: 128, # of haplo: 1332, acc: 87.1%
+  --  avg out-of-bag acc: 86.72%, sd: 0.75%, min: 85.16%, max: 88.19%
+2021-04-26 17:39:59,  23, job 13, # of SNPs: 128, # of haplo: 1364, acc: 87.7%
+  --  avg out-of-bag acc: 86.76%, sd: 0.76%, min: 85.16%, max: 88.19%
+2021-04-26 17:54:24,  24, job  9, # of SNPs: 128, # of haplo: 1283, acc: 86.2%
+  --  avg out-of-bag acc: 86.74%, sd: 0.75%, min: 85.16%, max: 88.19%
+2021-04-26 18:46:36,  25, job  5, # of SNPs: 128, # of haplo: 1341, acc: 86.7%
+  --  avg out-of-bag acc: 86.74%, sd: 0.74%, min: 85.16%, max: 88.19%
+2021-04-26 18:55:44,  26, job 25, # of SNPs: 128, # of haplo: 1406, acc: 86.7%
+  --  avg out-of-bag acc: 86.73%, sd: 0.72%, min: 85.16%, max: 88.19%
+2021-04-26 19:33:47,  27, job  8, # of SNPs: 128, # of haplo: 1300, acc: 86.4%
+  --  avg out-of-bag acc: 86.72%, sd: 0.71%, min: 85.16%, max: 88.19%
+2021-04-26 19:39:40,  28, job 18, # of SNPs: 128, # of haplo: 1413, acc: 85.8%
+  --  avg out-of-bag acc: 86.69%, sd: 0.72%, min: 85.16%, max: 88.19%
+2021-04-26 22:44:35,  29, job 21, # of SNPs: 128, # of haplo: 1545, acc: 87.2%
+  --  avg out-of-bag acc: 86.71%, sd: 0.71%, min: 85.16%, max: 88.19%
+2021-04-27 02:01:05,  30, job 12, # of SNPs: 128, # of haplo: 1462, acc: 87.9%
+  --  avg out-of-bag acc: 86.75%, sd: 0.73%, min: 85.16%, max: 88.19%
+2021-04-27 02:03:00,  31, job 30, # of SNPs: 128, # of haplo: 1086, acc: 86.0%
+  --  avg out-of-bag acc: 86.73%, sd: 0.73%, min: 85.16%, max: 88.19%
+2021-04-27 02:09:10,  32, job 20, # of SNPs: 128, # of haplo: 1675, acc: 86.5%
+  --  avg out-of-bag acc: 86.72%, sd: 0.72%, min: 85.16%, max: 88.19%
+2021-04-27 02:23:15,  33, job 17, # of SNPs: 128, # of haplo: 1131, acc: 87.4%
+  --  avg out-of-bag acc: 86.74%, sd: 0.72%, min: 85.16%, max: 88.19%
+2021-04-27 04:17:41,  34, job 29, # of SNPs: 128, # of haplo: 1068, acc: 85.8%
+  --  avg out-of-bag acc: 86.71%, sd: 0.72%, min: 85.16%, max: 88.19%
+2021-04-27 06:50:21,  35, job 31, # of SNPs: 128, # of haplo: 1024, acc: 86.6%
+  --  avg out-of-bag acc: 86.71%, sd: 0.71%, min: 85.16%, max: 88.19%
+2021-04-27 07:03:18,  36, job 16, # of SNPs: 128, # of haplo: 1049, acc: 86.1%
+  --  avg out-of-bag acc: 86.69%, sd: 0.71%, min: 85.16%, max: 88.19%
+2021-04-27 07:04:43,  37, job 14, # of SNPs: 128, # of haplo: 1711, acc: 86.7%
+  --  avg out-of-bag acc: 86.69%, sd: 0.70%, min: 85.16%, max: 88.19%
+2021-04-27 07:24:21,  38, job  6, # of SNPs: 128, # of haplo: 1203, acc: 86.9%
+  --  avg out-of-bag acc: 86.70%, sd: 0.69%, min: 85.16%, max: 88.19%
+2021-04-27 07:40:15,  39, job 23, # of SNPs: 128, # of haplo: 1142, acc: 86.5%
+  --  avg out-of-bag acc: 86.69%, sd: 0.68%, min: 85.16%, max: 88.19%
+2021-04-27 08:21:19,  40, job  1, # of SNPs: 128, # of haplo: 1261, acc: 86.4%
+  --  avg out-of-bag acc: 86.68%, sd: 0.68%, min: 85.16%, max: 88.19%
+2021-04-27 10:11:14,  41, job 13, # of SNPs: 128, # of haplo: 1101, acc: 84.7%
+  --  avg out-of-bag acc: 86.64%, sd: 0.74%, min: 84.72%, max: 88.19%
+2021-04-27 10:54:34,  42, job 22, # of SNPs: 128, # of haplo: 1193, acc: 86.9%
+  --  avg out-of-bag acc: 86.64%, sd: 0.73%, min: 84.72%, max: 88.19%
+2021-04-27 11:57:45,  43, job  7, # of SNPs: 128, # of haplo: 1373, acc: 85.1%
+  --  avg out-of-bag acc: 86.61%, sd: 0.76%, min: 84.72%, max: 88.19%
+2021-04-27 12:42:44,  44, job  4, # of SNPs: 128, # of haplo: 1309, acc: 86.9%
+  --  avg out-of-bag acc: 86.61%, sd: 0.75%, min: 84.72%, max: 88.19%
+2021-04-27 13:03:25,  45, job 20, # of SNPs: 128, # of haplo: 992, acc: 86.9%
+  --  avg out-of-bag acc: 86.62%, sd: 0.74%, min: 84.72%, max: 88.19%
+2021-04-27 13:04:41,  46, job 11, # of SNPs: 128, # of haplo: 1329, acc: 85.7%
+  --  avg out-of-bag acc: 86.60%, sd: 0.75%, min: 84.72%, max: 88.19%
+2021-04-27 13:37:32,  47, job  5, # of SNPs: 128, # of haplo: 1098, acc: 87.2%
+  --  avg out-of-bag acc: 86.61%, sd: 0.74%, min: 84.72%, max: 88.19%
+2021-04-27 13:42:33,  48, job 26, # of SNPs: 128, # of haplo: 1266, acc: 86.7%
+  --  avg out-of-bag acc: 86.61%, sd: 0.73%, min: 84.72%, max: 88.19%
+2021-04-27 13:59:58,  49, job  9, # of SNPs: 128, # of haplo: 1210, acc: 86.7%
+  --  avg out-of-bag acc: 86.61%, sd: 0.73%, min: 84.72%, max: 88.19%
+2021-04-27 15:41:06,  50, job 27, # of SNPs: 128, # of haplo: 1193, acc: 86.2%
+  --  avg out-of-bag acc: 86.61%, sd: 0.72%, min: 84.72%, max: 88.19%
+2021-04-27 16:34:57,  51, job  8, # of SNPs: 128, # of haplo: 1223, acc: 87.0%
+  --  avg out-of-bag acc: 86.61%, sd: 0.72%, min: 84.72%, max: 88.19%
+2021-04-27 16:44:59,  52, job 18, # of SNPs: 128, # of haplo: 1263, acc: 85.9%
+  --  avg out-of-bag acc: 86.60%, sd: 0.72%, min: 84.72%, max: 88.19%
+2021-04-27 17:12:52,  53, job 24, # of SNPs: 128, # of haplo: 1322, acc: 86.4%
+  --  avg out-of-bag acc: 86.60%, sd: 0.71%, min: 84.72%, max: 88.19%
+2021-04-27 17:20:14,  54, job 15, # of SNPs: 128, # of haplo: 1306, acc: 86.8%
+  --  avg out-of-bag acc: 86.60%, sd: 0.70%, min: 84.72%, max: 88.19%
+2021-04-27 17:55:26,  55, job 25, # of SNPs: 128, # of haplo: 1228, acc: 86.9%
+  --  avg out-of-bag acc: 86.61%, sd: 0.70%, min: 84.72%, max: 88.19%
+2021-04-27 18:21:39,  56, job  3, # of SNPs: 128, # of haplo: 1481, acc: 87.0%
+  --  avg out-of-bag acc: 86.61%, sd: 0.69%, min: 84.72%, max: 88.19%
+2021-04-27 19:16:55,  57, job 10, # of SNPs: 128, # of haplo: 1354, acc: 87.9%
+  --  avg out-of-bag acc: 86.64%, sd: 0.71%, min: 84.72%, max: 88.19%
+2021-04-27 20:42:39,  58, job 32, # of SNPs: 128, # of haplo: 1461, acc: 86.7%
+  --  avg out-of-bag acc: 86.64%, sd: 0.70%, min: 84.72%, max: 88.19%
+2021-04-27 20:45:56,  59, job 28, # of SNPs: 128, # of haplo: 1368, acc: 87.3%
+  --  avg out-of-bag acc: 86.65%, sd: 0.70%, min: 84.72%, max: 88.19%
+2021-04-27 22:24:09,  60, job 13, # of SNPs: 128, # of haplo: 905, acc: 86.9%
+  --  avg out-of-bag acc: 86.65%, sd: 0.70%, min: 84.72%, max: 88.19%
+2021-04-27 22:56:54,  61, job 19, # of SNPs: 128, # of haplo: 1426, acc: 86.0%
+  --  avg out-of-bag acc: 86.64%, sd: 0.69%, min: 84.72%, max: 88.19%
+2021-04-28 03:58:50,  62, job 12, # of SNPs: 128, # of haplo: 1349, acc: 86.6%
+  --  avg out-of-bag acc: 86.64%, sd: 0.69%, min: 84.72%, max: 88.19%
+2021-04-28 04:06:23,  63, job  2, # of SNPs: 128, # of haplo: 1459, acc: 87.0%
+  --  avg out-of-bag acc: 86.65%, sd: 0.69%, min: 84.72%, max: 88.19%
+2021-04-28 04:09:10,  64, job 21, # of SNPs: 128, # of haplo: 1480, acc: 87.7%
+  --  avg out-of-bag acc: 86.67%, sd: 0.69%, min: 84.72%, max: 88.19%
+2021-04-28 04:47:16,  65, job  1, # of SNPs: 128, # of haplo: 1303, acc: 87.4%
+  --  avg out-of-bag acc: 86.68%, sd: 0.69%, min: 84.72%, max: 88.19%
+2021-04-28 04:59:08,  66, job 29, # of SNPs: 128, # of haplo: 1321, acc: 87.2%
+  --  avg out-of-bag acc: 86.68%, sd: 0.69%, min: 84.72%, max: 88.19%
+2021-04-28 05:04:30,  67, job 14, # of SNPs: 128, # of haplo: 1261, acc: 86.5%
+  --  avg out-of-bag acc: 86.68%, sd: 0.69%, min: 84.72%, max: 88.19%
+2021-04-28 05:50:20,  68, job 30, # of SNPs: 128, # of haplo: 1474, acc: 88.3%
+  --  avg out-of-bag acc: 86.71%, sd: 0.71%, min: 84.72%, max: 88.26%
+2021-04-28 06:43:27,  69, job 31, # of SNPs: 128, # of haplo: 1253, acc: 86.3%
+  --  avg out-of-bag acc: 86.70%, sd: 0.70%, min: 84.72%, max: 88.26%
+2021-04-28 07:27:59,  70, job 11, # of SNPs: 128, # of haplo: 1175, acc: 88.7%
+  --  avg out-of-bag acc: 86.73%, sd: 0.74%, min: 84.72%, max: 88.68%
+2021-04-28 09:10:04,  71, job  5, # of SNPs: 128, # of haplo: 1175, acc: 86.7%
+  --  avg out-of-bag acc: 86.73%, sd: 0.73%, min: 84.72%, max: 88.68%
+2021-04-28 09:24:31,  72, job 20, # of SNPs: 128, # of haplo: 1199, acc: 87.9%
+  --  avg out-of-bag acc: 86.74%, sd: 0.74%, min: 84.72%, max: 88.68%
+2021-04-28 10:11:57,  73, job 15, # of SNPs: 128, # of haplo: 1512, acc: 86.9%
+  --  avg out-of-bag acc: 86.75%, sd: 0.73%, min: 84.72%, max: 88.68%
+2021-04-28 10:16:19,  74, job  4, # of SNPs: 128, # of haplo: 1205, acc: 86.6%
+  --  avg out-of-bag acc: 86.74%, sd: 0.73%, min: 84.72%, max: 88.68%
+2021-04-28 11:45:44,  75, job 21, # of SNPs: 128, # of haplo: 1197, acc: 86.8%
+  --  avg out-of-bag acc: 86.74%, sd: 0.73%, min: 84.72%, max: 88.68%
+2021-04-28 13:40:14,  76, job 18, # of SNPs: 128, # of haplo: 1450, acc: 88.2%
+  --  avg out-of-bag acc: 86.76%, sd: 0.74%, min: 84.72%, max: 88.68%
+2021-04-28 13:53:52,  77, job  7, # of SNPs: 128, # of haplo: 1353, acc: 86.0%
+  --  avg out-of-bag acc: 86.75%, sd: 0.74%, min: 84.72%, max: 88.68%
+2021-04-28 14:15:25,  78, job  3, # of SNPs: 128, # of haplo: 1178, acc: 87.7%
+  --  avg out-of-bag acc: 86.76%, sd: 0.74%, min: 84.72%, max: 88.68%
+2021-04-28 15:29:48,  79, job  4, # of SNPs: 128, # of haplo: 1445, acc: 87.7%
+  --  avg out-of-bag acc: 86.78%, sd: 0.74%, min: 84.72%, max: 88.68%
+2021-04-28 15:32:34,  80, job 16, # of SNPs: 128, # of haplo: 1189, acc: 86.1%
+  --  avg out-of-bag acc: 86.77%, sd: 0.74%, min: 84.72%, max: 88.68%
+2021-04-28 18:10:57,  81, job  9, # of SNPs: 128, # of haplo: 1274, acc: 87.0%
+  --  avg out-of-bag acc: 86.77%, sd: 0.74%, min: 84.72%, max: 88.68%
+2021-04-28 18:25:00,  82, job 11, # of SNPs: 128, # of haplo: 1138, acc: 86.3%
+  --  avg out-of-bag acc: 86.76%, sd: 0.74%, min: 84.72%, max: 88.68%
+2021-04-28 18:40:44,  83, job  3, # of SNPs: 128, # of haplo: 1501, acc: 86.3%
+  --  avg out-of-bag acc: 86.76%, sd: 0.73%, min: 84.72%, max: 88.68%
+2021-04-28 18:44:37,  84, job  9, # of SNPs: 128, # of haplo: 1222, acc: 86.6%
+  --  avg out-of-bag acc: 86.76%, sd: 0.73%, min: 84.72%, max: 88.68%
+2021-04-28 19:40:27,  85, job 11, # of SNPs: 128, # of haplo: 1363, acc: 86.8%
+  --  avg out-of-bag acc: 86.76%, sd: 0.73%, min: 84.72%, max: 88.68%
+2021-04-28 20:57:42,  86, job  8, # of SNPs: 128, # of haplo: 1529, acc: 88.3%
+  --  avg out-of-bag acc: 86.78%, sd: 0.74%, min: 84.72%, max: 88.68%
+2021-04-28 21:09:42,  87, job  3, # of SNPs: 128, # of haplo: 1319, acc: 87.2%
+  --  avg out-of-bag acc: 86.78%, sd: 0.74%, min: 84.72%, max: 88.68%
+2021-04-28 21:20:54,  88, job  5, # of SNPs: 128, # of haplo: 1257, acc: 86.6%
+  --  avg out-of-bag acc: 86.78%, sd: 0.73%, min: 84.72%, max: 88.68%
+2021-04-28 21:54:58,  89, job  6, # of SNPs: 128, # of haplo: 1467, acc: 87.1%
+  --  avg out-of-bag acc: 86.78%, sd: 0.73%, min: 84.72%, max: 88.68%
+2021-04-28 22:28:08,  90, job 11, # of SNPs: 128, # of haplo: 1302, acc: 86.1%
+  --  avg out-of-bag acc: 86.77%, sd: 0.73%, min: 84.72%, max: 88.68%
+2021-04-28 22:30:55,  91, job  7, # of SNPs: 128, # of haplo: 1423, acc: 87.8%
+  --  avg out-of-bag acc: 86.79%, sd: 0.73%, min: 84.72%, max: 88.68%
+2021-04-28 22:34:47,  92, job  5, # of SNPs: 128, # of haplo: 1109, acc: 88.4%
+  --  avg out-of-bag acc: 86.80%, sd: 0.75%, min: 84.72%, max: 88.68%
+2021-04-28 23:42:30,  93, job  7, # of SNPs: 128, # of haplo: 1136, acc: 83.9%
+  --  avg out-of-bag acc: 86.77%, sd: 0.80%, min: 83.95%, max: 88.68%
+2021-04-29 00:03:25,  94, job  2, # of SNPs: 128, # of haplo: 1157, acc: 87.7%
+  --  avg out-of-bag acc: 86.78%, sd: 0.80%, min: 83.95%, max: 88.68%
+2021-04-29 02:59:30,  95, job  5, # of SNPs: 128, # of haplo: 1298, acc: 86.9%
+  --  avg out-of-bag acc: 86.78%, sd: 0.80%, min: 83.95%, max: 88.68%
+2021-04-29 05:40:12,  96, job  1, # of SNPs: 128, # of haplo: 1309, acc: 85.8%
+  --  avg out-of-bag acc: 86.77%, sd: 0.80%, min: 83.95%, max: 88.68%
+2021-04-29 05:59:23,  97, job  2, # of SNPs: 128, # of haplo: 1373, acc: 87.0%
+  --  avg out-of-bag acc: 86.78%, sd: 0.80%, min: 83.95%, max: 88.68%
+2021-04-29 06:04:38,  98, job  2, # of SNPs: 128, # of haplo: 1328, acc: 87.7%
+  --  avg out-of-bag acc: 86.78%, sd: 0.80%, min: 83.95%, max: 88.68%
+2021-04-29 06:21:55,  99, job  2, # of SNPs: 128, # of haplo: 1339, acc: 85.9%
+  --  avg out-of-bag acc: 86.78%, sd: 0.80%, min: 83.95%, max: 88.68%
+2021-04-29 11:02:48, 100, job  1, # of SNPs: 128, # of haplo: 1594, acc: 87.7%
+  --  avg out-of-bag acc: 86.78%, sd: 0.80%, min: 83.95%, max: 88.68%
+Calculating matching proportion:
+        Min.     0.1% Qu.       1% Qu.      1st Qu.       Median      3rd Qu. 
+3.647235e-07 6.695052e-07 2.062009e-06 3.168028e-05 9.990179e-05 2.572415e-04 
+        Max.         Mean           SD 
+2.186804e-03 2.037427e-04 2.691485e-04 
+Accuracy with training data: 92.2%
+Out-of-bag accuracy: 86.8%
+Gene: C
+Training dataset: 2051 samples X 33991 SNPs
+    # of HLA alleles: 70
+    # of individual classifiers: 100
+    total # of SNPs used: 7473
+    avg. # of SNPs in an individual classifier: 128.00
+        (sd: 0.00, min: 128, max: 128, median: 128.00)
+    avg. # of haplotypes in an individual classifier: 1285.39
+        (sd: 143.32, min: 905, max: 1711, median: 1270.00)
+    avg. out-of-bag accuracy: 86.78%
+        (sd: 0.80%, min: 83.95%, max: 88.68%, median: 86.74%)
+Matching proportion:
+        Min.     0.1% Qu.       1% Qu.      1st Qu.       Median      3rd Qu. 
+3.647235e-07 6.695052e-07 2.062009e-06 3.168028e-05 9.990179e-05 2.572415e-04 
+        Max.         Mean           SD 
+2.186804e-03 2.037427e-04 2.691485e-04 
+Genome assembly: hg19

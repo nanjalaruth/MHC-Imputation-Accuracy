@@ -80,30 +80,37 @@ test.geno <- hlaBED2Geno(gbed.fn, gfam.fn, gbim.fn, assembly="hg19")
 
 #STEP 8
 # predict
-pred <- hlaPredict(model, test.geno)
-head(pred\$value)
+pred.guess <- hlaPredict(model, test.geno, type="response", match.type="Position", allele.check=TRUE)
+head(pred.guess\$value)
 
+pred.prob <- hlaPredict(model, test.geno, type="prob", match.type="Position", allele.check=TRUE)
+head(pred.prob)
+
+save(pred.guess, pred.prob, file="${hibag_out}_HLA_A_imputationresults.RData")
+write.table(pred.prob, file="${hibag_out}_HLA_A_imputation.prob.txt", quote = F,col.names = T,na="", row.names = T, sep = "\t" )
+write.table(pred.guess\$value, file="${hibag_out}_HLA_A_imputation.guess.txt", quote = F,col.names = T,na="", row.names = F, sep = "\t" )
+sink()
 
 #STEP 9
 #Compare the predicted HLA allele to the original validation population
-comp <- hlaCompareAllele(train.HLA_A, pred, allele.limit=model,
-                        call.threshold=0)
-comp\$overall
+# comp <- hlaCompareAllele(train.HLA_A, pred, allele.limit=model,
+#                         call.threshold=0)
+# comp\$overall
 
 
 #STEP 10
 #REPORT OVERALL ACCURACY, PER ALLELE SENSITIVITY & SPECIFICITY
 
-hlaReport(comp, export.fn="${hibag_out}_HLA_A_accuracy.html", type="html", header=TRUE)
+# hlaReport(comp, export.fn="${hibag_out}_HLA_A_accuracy.html", type="html", header=TRUE)
 
 
 #STEP 11
 # Visualize
-hlaReportPlot(pred, fig="matching")
-hlaReportPlot(model=model, fig="matching")
-hlaReportPlot(pred, model=model, fig="matching")
-hlaReportPlot(pred, train.HLA_A, fig="call.rate")
-hlaReportPlot(pred, train.HLA_A, fig="call.threshold")
+# hlaReportPlot(pred, fig="matching")
+# hlaReportPlot(model=model, fig="matching")
+# hlaReportPlot(pred, model=model, fig="matching")
+# hlaReportPlot(pred, train.HLA_A, fig="call.rate")
+# hlaReportPlot(pred, train.HLA_A, fig="call.threshold")
 
 
 ###########################################################################
@@ -174,30 +181,37 @@ summary(model)
 
 #STEP 8
 # predict
-pred <- hlaPredict(model, test.geno)
-head(pred\$value)
+pred.guess <- hlaPredict(model, test.geno, type="response", match.type="Position", allele.check=TRUE)
+head(pred.guess\$value)
 
+pred.prob <- hlaPredict(model, test.geno, type="prob", match.type="Position", allele.check=TRUE)
+head(pred.prob)
+
+save(pred.guess, pred.prob, file="${hibag_out}_HLA_B_imputationresults.RData")
+write.table(pred.prob, file="${hibag_out}_HLA_B_imputation.prob.txt", quote = F,col.names = T,na="", row.names = T, sep = "\t" )
+write.table(pred.guess\$value, file="${hibag_out}_HLA_B_imputation.guess.txt", quote = F,col.names = T,na="", row.names = F, sep = "\t" )
+sink()
 
 #STEP 9
 #Compare the predicted HLA allele to the original validation population
-comp <- hlaCompareAllele(train.HLA_B, pred, allele.limit=model,
-                        call.threshold=0)
-comp\$overall
+# comp <- hlaCompareAllele(train.HLA_B, pred, allele.limit=model,
+#                         call.threshold=0)
+# comp\$overall
 
 
-#STEP 10
-#REPORT OVERALL ACCURACY, PER ALLELE SENSITIVITY & SPECIFICITY
+# #STEP 10
+# #REPORT OVERALL ACCURACY, PER ALLELE SENSITIVITY & SPECIFICITY
 
-hlaReport(comp, export.fn="${hibag_out}_HLA_B_accuracy.html", type="html", header=TRUE)
+# hlaReport(comp, export.fn="${hibag_out}_HLA_B_accuracy.html", type="html", header=TRUE)
 
 
-#STEP 11
-# visualize
-hlaReportPlot(pred, fig="matching")
-hlaReportPlot(model=model, fig="matching")
-hlaReportPlot(pred, model=model, fig="matching")
-hlaReportPlot(pred, train.HLA_B, fig="call.rate")
-hlaReportPlot(pred, train.HLA_B, fig="call.threshold")
+# #STEP 11
+# # visualize
+# hlaReportPlot(pred, fig="matching")
+# hlaReportPlot(model=model, fig="matching")
+# hlaReportPlot(pred, model=model, fig="matching")
+# hlaReportPlot(pred, train.HLA_B, fig="call.rate")
+# hlaReportPlot(pred, train.HLA_B, fig="call.threshold")
 
 
 ###########################################################################
@@ -267,27 +281,34 @@ summary(model)
 
 #STEP 8
 # predict
-pred <- hlaPredict(model, test.geno)
-head(pred\$value)
+pred.guess <- hlaPredict(model, test.geno, type="response", match.type="Position", allele.check=TRUE)
+head(pred.guess\$value)
 
+pred.prob <- hlaPredict(model, test.geno, type="prob", match.type="Position", allele.check=TRUE)
+head(pred.prob)
+
+save(pred.guess, pred.prob, file="${hibag_out}_HLA_C_imputationresults.RData")
+write.table(pred.prob, file="${hibag_out}_HLA_C_imputation.prob.txt", quote = F,col.names = T,na="", row.names = T, sep = "\t" )
+write.table(pred.guess\$value, file="${hibag_out}_HLA_C_imputation.guess.txt", quote = F,col.names = T,na="", row.names = F, sep = "\t" )
+sink()
 
 #STEP 9
 #Compare the predicted HLA allele to the original validation population
-comp <- hlaCompareAllele(train.HLA_C, pred, allele.limit=model,
-                        call.threshold=0)
-comp\$overall
+# comp <- hlaCompareAllele(train.HLA_C, pred, allele.limit=model,
+#                         call.threshold=0)
+# comp\$overall
 
 
 #STEP 10
 #REPORT OVERALL ACCURACY, PER ALLELE SENSITIVITY & SPECIFICITY
 
-hlaReport(comp, export.fn="${hibag_out}_HLA_C_accuracy.html", type="html", header=TRUE)
+# hlaReport(comp, export.fn="${hibag_out}_HLA_C_accuracy.html", type="html", header=TRUE)
 
 
-#STEP 11
-# visualize
-hlaReportPlot(pred, fig="matching")
-hlaReportPlot(model=model, fig="matching")
-hlaReportPlot(pred, model=model, fig="matching")
-hlaReportPlot(pred, train.HLA_C, fig="call.rate")
-hlaReportPlot(pred, train.HLA_C, fig="call.threshold")
+# #STEP 11
+# # visualize
+# hlaReportPlot(pred, fig="matching")
+# hlaReportPlot(model=model, fig="matching")
+# hlaReportPlot(pred, model=model, fig="matching")
+# hlaReportPlot(pred, train.HLA_C, fig="call.rate")
+# hlaReportPlot(pred, train.HLA_C, fig="call.threshold")

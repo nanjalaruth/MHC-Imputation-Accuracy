@@ -5,7 +5,7 @@
 #SBATCH --mem=5GB
 #SBATCH --output=hlaimputation-%j-stdout.log
 #SBATCH --error=hlaimputation-%j-stderr.log
-#SBATCH --time=72:00:00
+#SBATCH --time=10-00:00:00
 
 cd /scratch3/users/nanje/hlatyping/results
 

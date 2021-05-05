@@ -6,8 +6,8 @@ process hibag_impute {
     input:
         tuple val(dataset), val(subpop), file(pbed), file(pbim), file(pfam), val(spop), file(bed), file(bim), file(fam), file(hlatyps), file(hla_a), file(hla_b), file(hla_c)
     output:
-        tuple val(dataset), val(subpop), val(spop), file("${hibag_out}*")
+        tuple val(subpop), val(spop), file("${hibag_out}*")
     script:
-        hibag_out = "${dataset}_${subpop}_${spop}"
+        hibag_out = "${subpop}_${spop}"
         template "HIBAG.R"
 }
