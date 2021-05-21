@@ -1,6 +1,6 @@
 process preparedata_imputation {
     tag "get_samplegeno_plink_${dataset}_${subpop}"
-    publishDir "${params.outdir}"
+    publishDir "${params.outdir}/Genotypes/SampleData", mode: 'copy', overwrite: false
     
     input:
         tuple val(dataset), val(subpop), file(sample_geno)
@@ -24,7 +24,7 @@ process preparedata_imputation {
 
 process impute_data {
     tag "Impute_${dataset}_${subpop} using ${spop} reference"
-    publishDir "$params.outdir"
+    publishDir "${params.outdir}/Imputation/SNP2HLA", mode: 'copy', overwrite: false
     
     input:
         tuple val(dataset), val(subpop), file(bed), file(bim), file(fam), val(spop), file(pbed), file(pbim), file(pfam)
@@ -40,7 +40,7 @@ process impute_data {
 
 process imputation{
     tag "Impute data from the ${array} array using ${ref} reference"
-    publishDir "$params.outdir"
+    publishDir "${params.outdir}/Imputation/SNP2HLA", mode: 'copy', overwrite: false
     label "biggermem"
     
     input:
@@ -56,7 +56,7 @@ process imputation{
 
 process posteprob_dosage{
     tag "Convert posterior probability to dosage format"
-    publishDir "$params.outdir"
+    publishDir "${params.outdir}/Imputation/SNP2HLA", mode: 'copy', overwrite: false
 
     input:
         tuple val(refenc), val(data), file(gprobs), file(phased), file(r2), file(fam), file(refbim)
