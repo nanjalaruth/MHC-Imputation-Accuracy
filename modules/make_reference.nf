@@ -3,7 +3,7 @@
 
 process combine_hlatypes_snp2hla {
     tag "snp2hlatypes_${dataset}"
-    publishDir "$params.outdir"
+    publishDir "${params.outdir}/HLAtypes/SNP2HLA/Dataset", mode: 'copy', overwrite: false
 
     input:
         tuple val(dataset), val(hlatype_list)
@@ -17,7 +17,7 @@ process combine_hlatypes_snp2hla {
 
 process subset_hlatypes_snp2hla {
     tag "subset_hlatypes_snp2hla_${subpop}_${dataset}"
-    publishDir "$params.outdir"
+    publishDir "${params.outdir}/HLAtypes/SNP2HLA/Subpop", mode: 'copy', overwrite: false
 
     input:
         tuple val(dataset), val(subpop), file(subpop_ids), file(hlatypes)
@@ -33,7 +33,7 @@ process subset_hlatypes_snp2hla {
 
 process combine_hlatypes_hibag {
     tag "combine_hlatypes_hibag_${dataset}"
-    publishDir "$params.outdir"
+    publishDir "${params.outdir}/HLAtypes/HIBAG/Dataset", mode: 'copy', overwrite: false
 
     input:
         tuple val(dataset), val(hlatype_list)
@@ -47,7 +47,7 @@ process combine_hlatypes_hibag {
 
 process subset_hlatypes_hibag {
     tag "subset_hlatypes_hibag_${subpop}_${dataset}"
-    publishDir "$params.outdir"
+    publishDir "${params.outdir}/HLAtypes/HIBAG/Subpop", mode: 'copy', overwrite: false
 
     input:
         tuple val(dataset), val(subpop), file(subpop_ids), file(hlatypes)
@@ -70,7 +70,7 @@ process subset_hlatypes_hibag {
 
 process get_geno_plink {
     tag "get_geno_plink_${dataset}_${subpop}"
-    publishDir "${params.outdir}"
+    publishDir "${params.outdir}/Genotypes/Reference", mode: 'copy', overwrite: false
     
     input:
         tuple val(dataset), file(genotypes), val(subpop), file(hlatypes)
@@ -97,7 +97,7 @@ process get_geno_plink {
 
 process make_snp2hlarefpanel {
     tag "make_snp2hlarefpanel_${dataset}_${subpop}"
-    publishDir "$params.outdir"
+    publishDir "${params.outdir}/RefPanel/SNP2HLA", mode: 'copy', overwrite: false
     
     input:
         tuple val(dataset), val(subpop), file(bed), file(bim), file(fam), file(hla)
@@ -112,7 +112,7 @@ process make_snp2hlarefpanel {
 
 process convert_to_beagle {
     tag "convert_to_beagle_${dataset}_${subpop}"
-    publishDir "$params.outdir"
+    publishDir "${params.outdir}/RefPanel/SNP2HLA", mode: 'copy', overwrite: false
     label "medium"
 
     input:
@@ -132,7 +132,7 @@ process convert_to_beagle {
 
 process makeref_snp2hla_phasing {
     tag "makeref_snp2hla_phasing_${dataset}_${subpop}"
-    publishDir "$params.outdir"
+    publishDir "${params.outdir}/RefPanel/SNP2HLA", mode: 'copy', overwrite: false
     label "bigmem"
     
     input:
