@@ -1,6 +1,6 @@
 process hibag_impute {
     tag "Performing imputation on ${dataset}_${subpop} using HIBAG"
-    publishDir "${params.outdir}"
+    publishDir "${params.outdir}/Imputation/HIBAG", mode: 'copy', overwrite: false
     label "bigmem"
     
     input:
