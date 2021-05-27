@@ -21,14 +21,14 @@ library("HIBAG")
 
 #STEP 1
 ##LOAD SNP GENOTYPES
-bed.fn <- "./h3a_geno.bed"
-fam.fn <- "./h3a_geno.fam"
-bim.fn <- "./h3a_geno.bim"
-geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
+bed.fn <- "/scratch3/users/nanje/hlatyping/results/my-results/Genotypes/Reference/h3a_h3a_geno.bed"
+fam.fn <- "/scratch3/users/nanje/hlatyping/results/my-results/Genotypes/Reference/h3a_h3a_geno.fam"
+bim.fn <- "/scratch3/users/nanje/hlatyping/results/my-results/Genotypes/Reference/h3a_h3a_geno.bim"
+geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg38")
 
 #STEP 2
 ##LOAD HLA TYPES
-HLA_Type_Table <- read.table(file="h3a_hibag_HLAType")
+HLA_Type_Table <- read.table(file="/scratch3/users/nanje/hlatyping/results/my-results/Genotypes/Reference/h3a_hibag_hlatypes.edited")
 head(HLA_Type_Table)
 dim(HLA_Type_Table)
 
@@ -43,7 +43,7 @@ hlaA.id <- "A"
 train.HLA_A <- hlaAllele(HLA_Type_Table$sample.id,
                        H1 = HLA_Type_Table[, paste(hlaA.id, ".1", sep="")],
                        H2 = HLA_Type_Table[, paste(hlaA.id, ".2", sep="")],
-                       locus=hlaA.id, assembly="hg19")
+                       locus=hlaA.id, assembly="hg38")
 
 
 #STEP 4
@@ -51,7 +51,7 @@ train.HLA_A <- hlaAllele(HLA_Type_Table$sample.id,
 #or an appropriate flanking size without sacrificing predictive accuracy
 region <- 500   # kb
 snpid <- hlaFlankingSNP(geno$snp.id,
-                        geno$snp.position, hlaA.id, region*1000, assembly="hg19")
+                        geno$snp.position, hlaA.id, region*1000, assembly="hg38")
 length(snpid)
 
 
@@ -77,7 +77,7 @@ summary(train.geno)
 #bed.fn <- ("")
 #fam.fn <- ("")
 #bim.fn <- ("")
-#test.geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
+#test.geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg38")
 
 # predict
 #pred <- hlaPredict(model, test.geno)
@@ -137,7 +137,7 @@ summary(model)
 # bed.fn <- ("./1kg_all_gambian_geno.bed")
 # fam.fn <- ("./1kg_all_gambian_geno.fam")
 # bim.fn <- ("./1kg_all_gambian_geno.bim")
-# geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
+# geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg38")
 
 
 # #STEP 2
@@ -158,14 +158,14 @@ hlaB.id <- "B"
 train.HLA_B <- hlaAllele(HLA_Type_Table$sample.id,
                          H1 = HLA_Type_Table[, paste(hlaB.id, ".1", sep="")],
                          H2 = HLA_Type_Table[, paste(hlaB.id, ".2", sep="")],
-                         locus=hlaB.id, assembly="hg19")
+                         locus=hlaB.id, assembly="hg38")
 
 #STEP 4
 # Select SNPs flanking a region of 500kb on each side 
 #or an appropriate flanking size without sacrificing predictive accuracy
 region <- 500   # kb
 snpid <- hlaFlankingSNP(geno$snp.id,
-                        geno$snp.position, hlaB.id, region*1000, assembly="hg19")
+                        geno$snp.position, hlaB.id, region*1000, assembly="hg38")
 length(snpid)
 
 
@@ -191,7 +191,7 @@ summary(train.geno)
 #bed.fn <- ("")
 #fam.fn <- ("")
 #bim.fn <- ("")
-#test.geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
+#test.geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg38")
 
 # predict
 #pred <- hlaPredict(model, test.geno)
@@ -251,7 +251,7 @@ summary(model)
 # bed.fn <- ("./1kg_all_gambian_geno.bed")
 # fam.fn <- ("./1kg_all_gambian_geno.fam")
 # bim.fn <- ("./1kg_all_gambian_geno.bim")
-# geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
+# geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg38")
 
 
 # #STEP 2
@@ -271,14 +271,14 @@ hlaC.id <- "C"
 train.HLA_C <- hlaAllele(HLA_Type_Table$sample.id,
                          H1 = HLA_Type_Table[, paste(hlaC.id, ".1", sep="")],
                          H2 = HLA_Type_Table[, paste(hlaC.id, ".2", sep="")],
-                         locus=hlaC.id, assembly="hg19")
+                         locus=hlaC.id, assembly="hg38")
 
 #STEP 4
 # Select SNPs flanking a region of 500kb on each side 
 #or an appropriate flanking size without sacrificing predictive accuracy
 region <- 500   # kb
 snpid <- hlaFlankingSNP(geno$snp.id,
-                        geno$snp.position, hlaC.id, region*1000, assembly="hg19")
+                        geno$snp.position, hlaC.id, region*1000, assembly="hg38")
 length(snpid)
 
 
@@ -304,7 +304,7 @@ summary(train.geno)
 #bed.fn <- ("")
 #fam.fn <- ("")
 #bim.fn <- ("")
-#test.geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
+#test.geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg38")
 
 # predict
 #pred <- hlaPredict(model, test.geno)
