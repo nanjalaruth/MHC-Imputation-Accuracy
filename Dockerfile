@@ -140,6 +140,47 @@ RUN conda clean --all --yes && \
 #install java
 RUN conda clean --all --yes && \
   conda install -c bioconda java-jdk 
+#Plink version 1.9
+RUN wget https://s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20210416.zip && \
+  unzip plink_linux_x86_64_20210416.zip && \
+  mv plink /usr/local/bin/ && \
+  rm -fr plink_linux_x86_64_20210416.zip toy.map toy.ped prettify
+#MACH 
+RUN wget http://csg.sph.umich.edu/abecasis/mach/download/mach.1.0.18.Linux.tgz && \
+  tar -xvzf mach.1.0.18.Linux.tgz && \
+  mv executables/mach1 /usr/local/bin/ && \
+  rm -fr mach.1.0.18.Linux.tgz examples executables README
+#Beagle version 5 jar file
+RUN wget https://faculty.washington.edu/browning/beagle/beagle.18May20.d20.jar && \
+  mv beagle.18May20.d20.jar beagle5.jar && \
+  mv beagle5.jar /usr/local/bin/
+#vcf2beagle.jar
+RUN wget https://faculty.washington.edu/browning/beagle_utilities/vcf2beagle.jar && \
+  mv vcf2beagle.jar /usr/local/bin/
+#beagle2vcf.jar
+RUN wget https://faculty.washington.edu/browning/beagle_utilities/beagle2vcf.jar && \
+  mv beagle2vcf.jar /usr/local/bin/
+#transpose.jar
+RUN wget https://faculty.washington.edu/browning/beagle_utilities/transpose.jar && \
+  mv transpose.jar /usr/local/bin/
+#python 3.6
+RUN conda clean --all --yes && \
+  conda install -c anaconda python=3.6
+#pandas 0.25.3
+RUN conda clean --all --yes && \
+  conda install pandas=0.25.3
+#perl 5.26.2
+RUN conda clean --all --yes && \
+  conda install -c anaconda perl=5.26.2
+#rbase
+RUN conda clean --all --yes && \
+  conda install -y -c conda-forge r-base=3.6
+#pyliftover 0.4
+RUN conda clean --all --yes && \
+  conda install -c bioconda pyliftover=0.4
+#Install cookHLA
+RUN git clone https://github.com/WansonChoi/CookHLA.git && \
+  mv cookHLA /usr/local/bin/  
 RUN useradd --create-home --shell /bin/bash ubuntu && \
   chown -R ubuntu:ubuntu /home/ubuntu
 USER ubuntu
