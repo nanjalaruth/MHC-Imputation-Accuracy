@@ -141,10 +141,10 @@ RUN conda clean --all --yes && \
 RUN conda clean --all --yes && \
   conda install -c bioconda java-jdk 
 #Plink version 1.9
-RUN wget https://s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20210416.zip && \
-  unzip plink_linux_x86_64_20210416.zip && \
-  mv plink /usr/local/bin/ && \
-  rm -fr plink_linux_x86_64_20210416.zip toy.map toy.ped prettify
+# RUN wget https://s3.amazonaws.com/plink1-assets/plink_linux_x86_64_20210416.zip && \
+#   unzip plink_linux_x86_64_20210416.zip && \
+#   mv plink /usr/local/bin/ && \
+#   rm -fr plink_linux_x86_64_20210416.zip toy.map toy.ped prettify
 #MACH 
 RUN wget http://csg.sph.umich.edu/abecasis/mach/download/mach.1.0.18.Linux.tgz && \
   tar -xvzf mach.1.0.18.Linux.tgz && \
