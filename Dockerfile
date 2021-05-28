@@ -133,7 +133,9 @@ RUN wget http://zzz.bwh.harvard.edu/plink/dist/plink-1.07-x86_64.zip && \
   mv -f beagle.3.0.4/beagle.jar . && \
   rm -fr beagle_3.0.4_05May09.zip beagle.3.0.4 && \
   wget http://faculty.washington.edu/browning/beagle_utilities/linkage2beagle.jar && \
-  wget http://faculty.washington.edu/browning/beagle_utilities/beagle2linkage.jar
+  wget http://faculty.washington.edu/browning/beagle_utilities/beagle2linkage.jar && \
+  wget https://faculty.washington.edu/browning/beagle/beagle.18May20.d20.jar && \
+  mv beagle.18May20.d20.jar beagle5.jar
 #install nano
 RUN conda clean --all --yes && \
   conda install -c conda-forge nano
@@ -150,10 +152,6 @@ RUN wget http://csg.sph.umich.edu/abecasis/mach/download/mach.1.0.18.Linux.tgz &
   tar -xvzf mach.1.0.18.Linux.tgz && \
   mv executables/mach1 /usr/local/bin/ && \
   rm -fr mach.1.0.18.Linux.tgz examples executables README
-#Beagle version 5 jar file
-RUN wget https://faculty.washington.edu/browning/beagle/beagle.18May20.d20.jar && \
-  mv beagle.18May20.d20.jar beagle5.jar && \
-  mv beagle5.jar /usr/local/bin/
 #vcf2beagle.jar
 RUN wget https://faculty.washington.edu/browning/beagle_utilities/vcf2beagle.jar && \
   mv vcf2beagle.jar /usr/local/bin/
