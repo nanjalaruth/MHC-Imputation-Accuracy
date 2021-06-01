@@ -4,7 +4,7 @@ process hibag_impute {
     label "bigmem"
     
     input:
-        tuple val(dataset), val(subpop), file(pbed), file(pbim), file(pfam), val(spop), file(bed), file(bim), file(fam), file(hlatyps), file(hla_a), file(hla_b), file(hla_c)
+        tuple val(dataset), val(subpop), file(bed), file(bim), file(fam), val(spop), file(model_a), file(model_b), file(model_c), file(ans_file)
     output:
         tuple val(subpop), val(spop), file("${hibag_out}*")
     script:

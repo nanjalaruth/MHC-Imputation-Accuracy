@@ -84,3 +84,18 @@ process posteprob_dosage{
         
         """
 }
+
+process measureacc {
+    tag "Measure accuracy for ${array} data using ${ref} reference"
+    publishDir "${params.outdir}/Imputation/SNP2HLA", mode: 'copy', overwrite: false
+    
+    input:
+        tuple file(answer_file), val(array), val(ref), file(bglphased)
+    output:
+        tuple val(array), val(ref), file("${output}.*") 
+    script:
+        output = "${array}_${ref}_ACCURACY"
+        """
+            python -m /usr/local/bin/CookHLA/measureAcc ${answer_file} ${bglphased} ${output} 
+        """
+}

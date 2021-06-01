@@ -16,9 +16,15 @@ convert_to_beagle as convert_to_beagle_subpop} from './modules/make_reference'
 include { preparedata_imputation; impute_data as impute_dataset; 
 impute_data as impute_subpop; imputation as subpop_imputation; 
 imputation as dataset_imputation; posteprob_dosage as posteprob_dosage_subpop;
-posteprob_dosage as posteprob_dosage_dataset} from './modules/Impute.nf'
+posteprob_dosage as posteprob_dosage_dataset;
+measureacc as measureacc_dataset; measureacc as measureacc_subpop} from './modules/Impute.nf'
 
 include { hibag_impute as hibag_impute_dataset; hibag_impute as hibag_impute_subpop } from './modules/Hibag.nf'
+
+include { makegenetic_map as makegenetic_map_dataset; 
+makegenetic_map as makegenetic_map_subpop; cookHLAimpute as cookHLAimpute_subpop;
+cookHLAimpute as cookHLAimpute_dataset; measureaccuracy as measureaccuracy_subpop;
+measureaccuracy as measureaccuracy_dataset } from './modules/cookHLA.nf'
 
 // Main workflow
 workflow{
@@ -188,29 +194,41 @@ workflow{
     // .combine(inp, by:0)
     // subpop_imputation(imp_input)
 
+    // Step 4.5: MeasureAccuracy
+    // Step 4.5.1 Subpop
+    ans =  Channel.fromPath(params.answer_file)
+    .combine(posteprob_dosage_subpop.out)
+    .map{answer, array, ref, rest -> [answer, array, ref, rest[2]]}
+    // ans.view()
+    measureacc_subpop(ans)
 
-    // Train and predict using SOFTWARE 2
+    // Step 4.5.1Subpop
+    ans =  Channel.fromPath(params.answer_file)
+    .combine(posteprob_dosage_dataset.out)
+    .map{answer, array, ref, rest -> [answer, array, ref, rest[2]]}
+    // measureacc_dataset(ans)
+
+
+    // TRAIN AND PREDICT USING SOFTWARE 2
     //2. HIBAG
     // 2.1 Subpop
+    answerfile = Channel.fromPath(params.hibag_answerfile)
     subpop_modeldata = Channel.fromList(params.subpop_modeldata)
     .map{dataset, subpop, hlaA, hlaB, hlaC  -> [dataset, subpop, file(hlaA), file(hlaB), file(hlaC)]}
-    input_ch = get_geno_plink_subpop.out.combine(subset_hlatypes_hibag.out, by:[0,1])
-    .map{dataset, subpop, bed, bim, fam, snp2hla_ped, hibag_HLAType -> [dataset, subpop, bed, bim, fam, hibag_HLAType]} 
-    .combine(subpop_modeldata, by:[0,1])
-    test_data = preparedata_imputation.out.combine(input_ch)
-    .map{dataset, subpop, pbed, pbim, pfam, pop, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC -> [dataset, subpop, pbed, pbim, pfam, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC]}
+    test_data = preparedata_imputation.out.combine(subpop_modeldata)
+    .map{dataset, subpop, bed, bim, fam, dtset, spop, model_a, model_b, model_c -> [dataset, subpop, bed, bim, fam, spop, model_a, model_b, model_c]}
+    .combine(answerfile)
     // test_data.view()
     hibag_impute_subpop(test_data)
     
 
     // 2.2 Dataset
+    answerfile = Channel.fromPath(params.hibag_answerfile)
     dataset_modeldata = Channel.fromList(params.dataset_modeldata)
     .map{dataset, subpop, hlaA, hlaB, hlaC  -> [dataset, subpop, file(hlaA), file(hlaB), file(hlaC)]}
-    input_two_ch = get_geno_plink_dataset.out.combine(combine_hlatypes_hibag.out, by:0)
-    .map{dataset, subpop, bed, bim, fam, snp2hla_ped, hibag_HLAType -> [dataset, subpop, bed, bim, fam, hibag_HLAType]} 
-    .combine(dataset_modeldata, by:[0,1])
-    tst_data = preparedata_imputation.out.combine(input_two_ch)
-    .map{dataset, subpop, pbed, pbim, pfam, pop, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC -> [dataset, subpop, pbed, pbim, pfam, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC]}
+    tst_data = preparedata_imputation.out.combine(dataset_modeldata)
+    .map{dataset, subpop, bed, bim, fam, dtset, spop, model_a, model_b, model_c -> [dataset, subpop, bed, bim, fam, spop, model_a, model_b, model_c]}
+    .combine(answerfile)
     // tst_data.view()
     hibag_impute_dataset(tst_data)
 
@@ -227,5 +245,65 @@ workflow{
     // .map{dataset, subpop, pbed, pbim, pfam, pop, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC -> [dataset, subpop, pbed, pbim, pfam, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC]}
     // test_data.view()
     // hibag_impute_subpop(test_data)
+
+
+    // TRAIN AND PREDICT USING SOFTWARE 3: CookHLA
+    // Step 1:Make GeneticMap
+    // Step 1.1: Subpop
+    ref = make_snp2hlarefpanel_subpop.out
+    .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    .combine(makeref_snp2hla_phasing_subpop.out, by:[0,1])
+    data_input = preparedata_imputation.out.combine(ref)
+    .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
+    // data_input.view()
+    makegenetic_map_subpop(data_input)
+
+    // Step 1.2: Dataset
+    ref = make_snp2hlarefpanel_dataset.out
+    .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
+    data_input = preparedata_imputation.out.combine(ref)
+    .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
+    // data_input.view()
+    makegenetic_map_dataset(data_input)
+
+    // Step 2: Imputation
+    // Step 2.1: Dataset
+    // ref = make_snp2hlarefpanel_dataset.out
+    // .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    // .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
+    // data_input = preparedata_imputation.out.combine(ref)
+    // .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    // -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
+    // .combine(makegenetic_map_dataset.out)
+    
+    // cookHLAimpute_dataset(data_input)
+
+    // Step 2.2: Subpop
+    // ref = make_snp2hlarefpanel_subpop.out
+    // .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    // .combine(makeref_snp2hla_phasing_subpop.out, by:[0,1])
+    // data_input = preparedata_imputation.out.combine(ref)
+    // .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    // -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
+    // .combine(makegenetic_map_subpop.out)
+
+    // cookHLAimpute_subpop(data_input)
+
+
+    // Step 3: Measure accuracy
+    // Step 3.1: Subpop
+    // ans =  Channel.fromPath(params.answer_file)
+    // .combine(cookHLAimpute_subpop.out)
+
+    // measureaccuracy_subpop(ans)
+
+    // Step 3.2: Dataset
+    // ans =  Channel.fromPath(params.answer_file)
+    // .combine(cookHLAimpute_dataset.out)
+
+    // measureaccuracy_dataset(ans)
 }
 
