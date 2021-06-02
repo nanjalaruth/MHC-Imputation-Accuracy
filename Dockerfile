@@ -173,7 +173,18 @@ RUN git clone https://github.com/WansonChoi/CookHLA.git && \
   cd CookHLA && \
   rm -fr example 1000G_REF img README.md CookHLA_LINUX.yml CookHLA_OSX.yml dependency && \
   mv -f * /usr/local/bin && \
-  chmod -R a+rwx /usr/local/bin/* && \ 
+  chmod -R a+rwx /usr/local/bin/CookHLA.py && \ 
+  chmod -R a+rwx /usr/local/bin/CookHLA_lab.py && \
+  chmod -R a+rwx /usr/local/bin/CookHLA_lab_bglv5.py && \
+  chmod -R a+rwx /usr/local/bin/MakeGeneticMap/* && \
+  chmod -R a+rwx /usr/local/bin/measureAcc/__init__.py && \
+  chmod -R a+rwx /usr/local/bin/measureAcc/__main__.py && \
+  chmod -R a+rwx /usr/local/bin/measureAcc/measureAccuracy.py && \
+  chmod -R a+rwx /usr/local/bin/measureAcc/NomenCleaner/* && \
+  chmod -R a+rwx /usr/local/bin/measureAcc/src/* && \
+  chmod -R a+rwx /usr/local/bin/measureAcc/data/* && \
+  chmod -R a+rwx /usr/local/bin/src/* && \
+  cd .. && \
   rm -fr CookHLA
 RUN useradd --create-home --shell /bin/bash ubuntu && \
   chown -R ubuntu:ubuntu /home/ubuntu
