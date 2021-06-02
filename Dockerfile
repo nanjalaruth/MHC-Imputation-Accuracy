@@ -138,10 +138,7 @@ RUN wget http://zzz.bwh.harvard.edu/plink/dist/plink-1.07-x86_64.zip && \
   mv beagle.18May20.d20.jar beagle5.jar && \
   wget https://faculty.washington.edu/browning/beagle_utilities/vcf2beagle.jar && \
   wget https://faculty.washington.edu/browning/beagle_utilities/beagle2vcf.jar && \
-  wget https://faculty.washington.edu/browning/beagle_utilities/transpose.jar && \
-  git clone https://github.com/WansonChoi/CookHLA.git && \
-  cd CookHLA && \
-  rm -fr example 1000G_REF 
+  wget https://faculty.washington.edu/browning/beagle_utilities/transpose.jar
 #install nano
 RUN conda clean --all --yes && \
   conda install -c conda-forge nano
@@ -171,6 +168,13 @@ RUN conda clean --all --yes && \
 #pyliftover 0.4
 RUN conda clean --all --yes && \
   conda install -c bioconda pyliftover=0.4
+#CookHLA
+RUN git clone https://github.com/WansonChoi/CookHLA.git && \
+  cd CookHLA && \
+  rm -fr example 1000G_REF img README.md CookHLA_LINUX.yml CookHLA_OSX.yml dependency && \
+  mv -f * /usr/local/bin && \
+  chmod -R a+rwx /usr/local/bin/* && \ 
+  rm -fr CookHLA
 RUN useradd --create-home --shell /bin/bash ubuntu && \
   chown -R ubuntu:ubuntu /home/ubuntu
 USER ubuntu
