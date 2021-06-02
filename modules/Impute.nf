@@ -96,6 +96,6 @@ process measureacc {
     script:
         output = "${array}_${ref}_ACCURACY"
         """
-            python -m /usr/local/bin/CookHLA/measureAcc ${answer_file} ${bglphased} ${output} 
+            python -m /usr/local/bin/measureAcc ${answer_file} ${bglphased} ${output} 
         """
 }

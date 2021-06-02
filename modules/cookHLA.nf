@@ -13,7 +13,7 @@ process makegenetic_map {
         erate = "${output}.aver.erate"
         mach = "${output}.mach_step.avg.clpsB" 
         """
-            python -m /usr/local/bin/CookHLA/MakeGeneticMap \
+            python -m /usr/local/bin/MakeGeneticMap \
             -i ${prefix} \
             -hg 18 \
             -ref ${ref}  \
@@ -37,7 +37,7 @@ process cookHLAimpute {
         alleles = "${output}.alleles"
         hped = "${output}.hped"
         """
-            python /usr/local/bin/CookHLA/CookHLA.py \
+            python /usr/local/bin/CookHLA.py \
             -i ${prefix} \
             -hg 18 \
             -ref ${ref} \
@@ -61,6 +61,6 @@ process measureaccuracy {
     script:
         output = "${array}_${ref}_ACCURACY"
         """
-            python -m /usr/local/bin/CookHLA/measureAcc ${answer_file} ${alleles} ${output} 
+            python -m /usr/local/bin/measureAcc ${answer_file} ${alleles} ${output} 
         """
 }
