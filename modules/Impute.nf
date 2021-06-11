@@ -95,7 +95,5 @@ process measureacc {
         tuple val(array), val(ref), file("${output}.*") 
     script:
         output = "${array}_${ref}_ACCURACY"
-        """
-            python -m /usr/local/bin/measureAcc ${answer_file} ${bglphased} ${output} 
-        """
+        template "measacc.py"
 }
