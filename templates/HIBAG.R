@@ -20,11 +20,19 @@ fam.fn <- ("${fam}")
 bim.fn <- ("${bim}")
 test.geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg18")
 
+# Calculate allele frequencies
+afreq = hlaGenoAFreq(test.geno)
+summary(afreq)
+write.table(afreq, file="${allele_out}_allelefreq", quote = F,col.names = F, row.names = F)
+sink()
 
+# Predict HLA alleles
 A.guess <- predict(model.a, test.geno, type="response+prob", match.type="Position")
 B.guess <- predict(model.b, test.geno, type="response+prob", match.type="Position")
 C.guess <- predict(model.c, test.geno, type="response+prob", match.type="Position")
 
+
+# Output results
 output.table = data.frame(SampleID=A.guess\$value\$sample.id, A_allele1=A.guess\$value\$allele1, A_allele2=A.guess\$value\$allele2, A_prob=A.guess\$value\$prob,
                B_allele1=B.guess\$value\$allele1, B_allele2=B.guess\$value\$allele2, B_prob=B.guess\$value\$prob,
                C_allele1=C.guess\$value\$allele1, C_allele2=C.guess\$value\$allele2, C_prob=C.guess\$value\$prob)
