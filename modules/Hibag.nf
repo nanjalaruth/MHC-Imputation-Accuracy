@@ -6,8 +6,9 @@ process hibag_impute {
     input:
         tuple val(dataset), val(subpop), file(bed), file(bim), file(fam), val(spop), file(model_a), file(model_b), file(model_c), file(ans_file)
     output:
-        tuple val(subpop), val(spop), file("${hibag_out}*")
+        tuple val(subpop), val(spop), file("${hibag_out}*"), file("${subpop}*")
     script:
         hibag_out = "${subpop}_${spop}"
+        allele_out ="${subpop}"
         template "HIBAG.R"
 }
