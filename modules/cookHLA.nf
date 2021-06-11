@@ -12,13 +12,7 @@ process makegenetic_map {
         output = "${subpop}_${spop}_GENMAP" 
         erate = "${output}.aver.erate"
         mach = "${output}.mach_step.avg.clpsB" 
-        """
-            python -m /usr/local/bin/MakeGeneticMap \
-            -i ${prefix} \
-            -hg 18 \
-            -ref ${ref}  \
-            -o ${output}
-        """
+        template "makegenmap.py"
 }
 
 
@@ -27,7 +21,7 @@ process cookHLAimpute {
     publishDir "${params.outdir}/Imputation/CookHLA", mode: 'copy', overwrite: false
     
     input:
-        tuple val(dataset), val(subpop), file(dbed), file(dbim), file(dfam), val(spop), file(frqFRQ), file(bed), file(bim), file(fam), file(bglphased), file(markers), val(dtset), file(mach), file(erate)  
+        tuple val(dataset), val(subpop), file(dbed), file(dbim), file(dfam), val(spop), file(frqFRQ), file(bed), file(bim), file(fam), file(bglphased), file(markers) 
     output:
         tuple val(subpop), val(spop), file(alleles), file(hped)
     script:
@@ -36,18 +30,7 @@ process cookHLAimpute {
         output = "${subpop}_${spop}_IMPUTED"  
         alleles = "${output}.alleles"
         hped = "${output}.hped"
-        """
-            python /usr/local/bin/CookHLA.py \
-            -i ${prefix} \
-            -hg 18 \
-            -ref ${ref} \
-            -o ${output} \
-            -gm ${mach} \
-            -ae ${erate} \
-            -mem 120g \
-            -mp 32   # The number of available cores for Multiprocessing.
-            # -bgl4   # If you want to use Beagle4 instead of Beagle5.
-        """
+        template "cook.py"
 }
 
 process measureaccuracy {
@@ -61,6 +44,7 @@ process measureaccuracy {
     script:
         output = "${array}_${ref}_ACCURACY"
         """
-            python -m /usr/local/bin/measureAcc ${answer_file} ${alleles} ${output} 
+            cd /usr/local/bin
+            python -m measureAcc ${answer_file} ${alleles} ${output} 
         """
 }
