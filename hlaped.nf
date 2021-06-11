@@ -147,12 +147,12 @@ workflow{
     subpop_imputation(imp_input)
     
     // Step 4.3.1: Dataset
-    in = make_snp2hlarefpanel_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[14]]}
-    .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
-    .map{dataset, subpop, markers, phased -> [subpop, markers, phased]}
-    impt_input = impute_dataset.out.map{datset, spop, pop, data -> [pop, spop, data[4]]}
-    .combine(in, by:0)
-    dataset_imputation(impt_input)
+    // in = make_snp2hlarefpanel_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[14]]}
+    // .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
+    // .map{dataset, subpop, markers, phased -> [subpop, markers, phased]}
+    // impt_input = impute_dataset.out.map{datset, spop, pop, data -> [pop, spop, data[4]]}
+    // .combine(in, by:0)
+    // dataset_imputation(impt_input)
 
     // Step 4.4
     // Convert posterior probability to dosage format
@@ -168,15 +168,15 @@ workflow{
     posteprob_dosage_subpop(dos_inp)
     
     // Step 4.4.2: Dataset
-    in = impute_dataset.out
-    .map {dtset, subp, ref, result -> [subp, ref, result[12]] }
-    ref = make_snp2hlarefpanel_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[10]]}
-    dos_inp = dataset_imputation.out
-    .map{dataset, reference, results -> [dataset, reference, results[1], results[2], results[3]]}
-    .combine(in, by:[0,1])
-    .combine(ref, by: 1)
-    .map{data, refenc, probs, phased, r2, dfam, set, refbim -> [data, refenc, probs, phased, r2, dfam, refbim]}
-    posteprob_dosage_dataset(dos_inp)
+    // in = impute_dataset.out
+    // .map {dtset, subp, ref, result -> [subp, ref, result[12]] }
+    // ref = make_snp2hlarefpanel_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[10]]}
+    // dos_inp = dataset_imputation.out
+    // .map{dataset, reference, results -> [dataset, reference, results[1], results[2], results[3]]}
+    // .combine(in, by:[0,1])
+    // .combine(ref, by: 1)
+    // .map{data, refenc, probs, phased, r2, dfam, set, refbim -> [data, refenc, probs, phased, r2, dfam, refbim]}
+    // posteprob_dosage_dataset(dos_inp)
       
     // MASKED DATA
     // masked_data = Channel.fromList(params.masked_data)
@@ -203,9 +203,9 @@ workflow{
     measureacc_subpop(ans)
 
     // Step 4.5.1Subpop
-    ans =  Channel.fromPath(params.answer_file)
-    .combine(posteprob_dosage_dataset.out)
-    .map{answer, array, ref, rest -> [answer, array, ref, rest[2]]}
+    // ans =  Channel.fromPath(params.answer_file)
+    // .combine(posteprob_dosage_dataset.out)
+    // .map{answer, array, ref, rest -> [answer, array, ref, rest[2]]}
     // measureacc_dataset(ans)
 
 
@@ -250,24 +250,24 @@ workflow{
     // TRAIN AND PREDICT USING SOFTWARE 3: CookHLA
     // Step 1:Make GeneticMap
     // Step 1.1: Subpop
-    ref = make_snp2hlarefpanel_subpop.out
-    .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
-    .combine(makeref_snp2hla_phasing_subpop.out, by:[0,1])
-    data_input = preparedata_imputation.out.combine(ref)
-    .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
-    -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
-    // data_input.view()
-    makegenetic_map_subpop(data_input)
+    // ref = make_snp2hlarefpanel_subpop.out
+    // .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    // .combine(makeref_snp2hla_phasing_subpop.out, by:[0,1])
+    // data_input = preparedata_imputation.out.combine(ref)
+    // .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    // -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
+    // // data_input.view()
+    // makegenetic_map_subpop(data_input)
 
-    // Step 1.2: Dataset
-    ref = make_snp2hlarefpanel_dataset.out
-    .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
-    .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
-    data_input = preparedata_imputation.out.combine(ref)
-    .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
-    -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
-    // data_input.view()
-    makegenetic_map_dataset(data_input)
+    // // Step 1.2: Dataset
+    // ref = make_snp2hlarefpanel_dataset.out
+    // .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    // .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
+    // data_input = preparedata_imputation.out.combine(ref)
+    // .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    // -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
+    // // data_input.view()
+    // makegenetic_map_dataset(data_input)
 
     // Step 2: Imputation
     // Step 2.1: Dataset
@@ -282,15 +282,15 @@ workflow{
     // cookHLAimpute_dataset(data_input)
 
     // Step 2.2: Subpop
-    // ref = make_snp2hlarefpanel_subpop.out
-    // .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
-    // .combine(makeref_snp2hla_phasing_subpop.out, by:[0,1])
-    // data_input = preparedata_imputation.out.combine(ref)
-    // .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
-    // -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
+    ref = make_snp2hlarefpanel_subpop.out
+    .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    .combine(makeref_snp2hla_phasing_subpop.out, by:[0,1])
+    data_input = preparedata_imputation.out.combine(ref)
+    .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
     // .combine(makegenetic_map_subpop.out)
-
-    // cookHLAimpute_subpop(data_input)
+    // data_input.view()
+    cookHLAimpute_subpop(data_input)
 
 
     // Step 3: Measure accuracy
