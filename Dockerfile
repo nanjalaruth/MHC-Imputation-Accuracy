@@ -136,6 +136,8 @@ RUN wget http://zzz.bwh.harvard.edu/plink/dist/plink-1.07-x86_64.zip && \
   wget http://faculty.washington.edu/browning/beagle_utilities/beagle2linkage.jar && \
   wget https://faculty.washington.edu/browning/beagle/beagle.18May20.d20.jar && \
   mv beagle.18May20.d20.jar beagle5.jar && \
+  wget https://faculty.washington.edu/browning/beagle/beagle.27Jan18.7e1.jar && \
+  mv beagle.27Jan18.7e1.jar beagle4.jar && \
   wget https://faculty.washington.edu/browning/beagle_utilities/vcf2beagle.jar && \
   wget https://faculty.washington.edu/browning/beagle_utilities/beagle2vcf.jar && \
   wget https://faculty.washington.edu/browning/beagle_utilities/transpose.jar
