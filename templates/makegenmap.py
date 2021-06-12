@@ -4,6 +4,7 @@ import sys
 sys.path.append('/scratch3/users/nanje/MHC-Imputation-Accuracy/templates')
 from MakeGeneticMap.MakeGeneticMap import MakeGeneticMap
 from MakeGeneticMap.__main__ import CookHLA_MakeGeneticMap
+from src.checkInput import FixInput
 
 import argparse,time
 parser = argparse.ArgumentParser()
