@@ -3,7 +3,7 @@ process makegenetic_map {
     publishDir "${params.outdir}/Imputation/CookHLA", mode: 'copy', overwrite: false
     
     input:
-        tuple val(dataset), val(subpop), file(dbed), file(dbim), file(dfam), val(spop), file(frqFRQ), file(bed), file(bim), file(fam), file(bglphased), file(markers)
+        tuple val(dataset), val(subpop), file(dbed), file(dbim), file(dfam), val(spop), file(frqFRQ), file(bed), file(bim), file(fam), file(markers), file(bglphased)
     output:
         tuple val(subpop), val(spop), file(erate), file(mach)  
     script:
@@ -21,7 +21,7 @@ process cookHLAimpute {
     publishDir "${params.outdir}/Imputation/CookHLA", mode: 'copy', overwrite: false
     
     input:
-        tuple val(dataset), val(subpop), file(dbed), file(dbim), file(dfam), val(spop), file(frqFRQ), file(bed), file(bim), file(fam), file(bglphased), file(markers) 
+        tuple val(dataset), val(subpop), file(dbed), file(dbim), file(dfam), val(spop), file(frqFRQ), file(bed), file(bim), file(fam), file(markers), file(bglphased), val(dtset), file(mach), file(erate)  
     output:
         tuple val(subpop), val(spop), file(alleles), file(hped)
     script:
@@ -30,7 +30,9 @@ process cookHLAimpute {
         output = "${subpop}_${spop}_IMPUTED"  
         alleles = "${output}.alleles"
         hped = "${output}.hped"
-        template "cook.py"
+        """
+            python /scratch3/users/nanje/MHC-Imputation-Accuracy/templates/CookHLA.py -i ${prefix} -hg 18 -ref ${ref} -o ${output} -gm ${mach} -ae ${erate} -mem 120g -mp 32 
+        """
 }
 
 process measureaccuracy {
@@ -43,8 +45,5 @@ process measureaccuracy {
         tuple val(array), val(ref), file("${output}.*") 
     script:
         output = "${array}_${ref}_ACCURACY"
-        """
-            cd /usr/local/bin
-            python -m measureAcc ${answer_file} ${alleles} ${output} 
-        """
+        template "cookmeasacc.py"
 }
