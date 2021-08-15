@@ -1,3 +1,5 @@
+#!/users/nanje/miniconda3/bin/Rscript
+
 args<- commandArgs(trailingOnly = TRUE)
 
 input_phased_date<-as.matrix(read.table(args[1],colClasses = 'character'))

@@ -1,3 +1,5 @@
+#!/users/nanje/miniconda3/bin/Rscript
+
 args<- commandArgs(trailingOnly = TRUE)
 
 

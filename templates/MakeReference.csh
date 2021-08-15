@@ -115,7 +115,7 @@ endif
 
 if (\$EXTRACT_FOUNDERS) then
     echo "[\$i] Extracting founders."; @ i++
-    plink --bfile \$SNP_DATA --filter-founders --mind 0.3 --alleleACGT --make-bed --out \$SNP_DATA.FOUNDERS
+    plink --bfile \$SNP_DATA --filter-founders --alleleACGT --make-bed --out \$SNP_DATA.FOUNDERS
 
     # Initial QC on Reference SNP panel
     plink --bfile \$SNP_DATA.FOUNDERS --hardy        --out \$SNP_DATA.FOUNDERS.hardy

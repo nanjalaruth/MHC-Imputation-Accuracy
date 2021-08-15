@@ -1,3 +1,5 @@
+#!/users/nanje/miniconda3/bin/python
+
 #-*- coding: utf-8 -*-
 
 import os, sys, re
@@ -31,8 +33,8 @@ TOLERATED_DIFF = 0.15
 
 
 def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGeneticMap=None, _Average_Erate=None,
-            _java_memory='2g', _MultP=1, _answer=None, __save_intermediates=False, __use_Multiple_Markers=True,
-            _p_src="./src", _p_dependency="./dependency", _given_prephased=None, f_prephasing=False, _HapMap_Map=None,
+            _java_memory='120g', _MultP=1, _answer=None, __save_intermediates=False, __use_Multiple_Markers=True,
+            _p_src="/scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src", _p_dependency="./dependency", _given_prephased=None, f_prephasing=False, _HapMap_Map=None,
             __overlap__=(0.5, 1, 1.5), _window=5, _ne=10000, _nthreads=1, f_measureAcc_v2=False, f_BEAGLE5=False,
             f_save_IMPUTATION_INPUT=False):
 
@@ -177,26 +179,26 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
     PLINK = ' '.join([_p_plink, "--noweb", "--silent", '--allow-no-sex'])
 
     if _p_beagle4.endswith('.jar'):
-        BEAGLE4 = ' '.join(['java', '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory),
+        BEAGLE4 = ' '.join(['/users/nanje/miniconda3/bin/java', '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory),
                             '-jar {}'.format(_p_beagle4)])
     else:
         BEAGLE4 = ' '.join([_p_beagle4, '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory)])
 
     if f_BEAGLE5:
         if _p_beagle5.endswith('.jar'):
-            BEAGLE5 = ' '.join(['java', '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory),
+            BEAGLE5 = ' '.join(['/users/nanje/miniconda3/bin/java', '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory),
                                 '-jar {}'.format(_p_beagle5)])
         else:
             BEAGLE5 = ' '.join([_p_beagle5, '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory)])
     else:
         BEAGLE5 = None
 
-    LINKAGE2BEAGLE = ' '.join(["java", '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory), "-jar", _p_linkage2beagle])
-    BEAGLE2LINKAGE = ' '.join(["java", '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory), "-jar", _p_beagle2linkage])
-    BEAGLE2VCF = ' '.join(["java", '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory), "-jar", _p_beagle2vcf])
-    VCF2BEAGLE = ' '.join(["java", '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory), "-jar", _p_vcf2beagle])
+    LINKAGE2BEAGLE = ' '.join(["/users/nanje/miniconda3/bin/java", '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory), "-jar", _p_linkage2beagle])
+    BEAGLE2LINKAGE = ' '.join(["/users/nanje/miniconda3/bin/java", '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory), "-jar", _p_beagle2linkage])
+    BEAGLE2VCF = ' '.join(["/users/nanje/miniconda3/bin/java", '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory), "-jar", _p_beagle2vcf])
+    VCF2BEAGLE = ' '.join(["/users/nanje/miniconda3/bin/java", '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory), "-jar", _p_vcf2beagle])
 
-    MERGE = os.path.join(p_src, 'merge_tables.pl')
+    MERGE = "/scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src/merge_tables.pl"
     # PARSEDOSAGE = os.path.join(p_src, 'ParseDosage.csh')
     # BGL2BED = os.path.join(p_src, 'Panel-BGL2BED.sh')
 

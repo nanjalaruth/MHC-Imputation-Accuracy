@@ -1,3 +1,4 @@
+#!/users/nanje/miniconda3/bin/python
 import sys, os, re
 
 p_HLA_exon = re.compile(r'^HLA_\w+_(\d+)(_\w+)?$')

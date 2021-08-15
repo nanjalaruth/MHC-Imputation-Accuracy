@@ -1,5 +1,4 @@
-#!/usr/bin/perl
-#
+#!/users/nanje/miniconda3/bin/perl
 
 use strict;
 

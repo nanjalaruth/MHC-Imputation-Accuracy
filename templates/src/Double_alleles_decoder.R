@@ -1,3 +1,5 @@
+#!/users/nanje/miniconda3/bin/Rscript
+
 ##decode_double_vcf_alleles
 
 args<- commandArgs(trailingOnly = TRUE)

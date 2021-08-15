@@ -1,3 +1,5 @@
+#!/users/nanje/miniconda3/bin/Rscript
+
 args<- commandArgs(trailingOnly = TRUE)
 
 FAM_DATA <- as.matrix(read.table(args[1],head=F))

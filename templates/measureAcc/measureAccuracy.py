@@ -1,3 +1,5 @@
+#!/users/nanje/miniconda3/bin/python
+
 #-*- coding: utf-8 -*-
 import os, sys, re
 import pandas as pd
@@ -22,7 +24,7 @@ p_HLA_allele = re.compile(r'\w+\*\d{2,3}(:\d{2,3})*')
 
 class CookHLA_measureAcc(object):
 
-    def __init__(self, _answer, _imputed, _out, _allele_group='/scratch3/users/nanje/MHC-Imputation-Accuracy/templates/measureAcc/data/SameExon234.MERGED.nuc.txt'):
+    def __init__(self, _answer, _imputed, _out, _allele_group='/scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/measureAcc/data/SameExon234.MERGED.nuc.txt'):
 
         """
         1. imputed *.alleles
@@ -99,7 +101,7 @@ class CookHLA_measureAcc(object):
 
             # (2) NomenCleaner
             t1_out = re.sub(r'hped$', 'imgt3320.4field', _f)
-            t = HATK_NomenCleaner(_f, "/scratch3/users/nanje/MHC-Imputation-Accuracy/templates/measureAcc/NomenCleaner/HLA_ALLELE_TABLE.imgt3320.hat", '3320', t1_out,
+            t = HATK_NomenCleaner(_f, "/scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/measureAcc/NomenCleaner/HLA_ALLELE_TABLE.imgt3320.hat", '3320', t1_out,
                       __f_NoCaption=False, __leave_NotFound=False,
                       __oneF=False, __twoF=False, __threeF=False, __fourF=True, __Ggroup=False, __Pgroup=False)
             # print("hped -> chped: {}".format(t.chped))

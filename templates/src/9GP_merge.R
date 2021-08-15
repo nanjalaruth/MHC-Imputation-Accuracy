@@ -1,3 +1,5 @@
+#!/users/nanje/miniconda3/bin/Rscript
+
 arg <- commandArgs(trailingOnly = TRUE)
 args <- arg[1]
 args2 <- arg[2]

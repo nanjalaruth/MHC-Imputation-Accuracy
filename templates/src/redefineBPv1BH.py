@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/users/nanje/miniconda3/bin/python
 
 ## Redefine base positions so that beagle v4 can run. 
 ## Buhm Han, 2017-01-03

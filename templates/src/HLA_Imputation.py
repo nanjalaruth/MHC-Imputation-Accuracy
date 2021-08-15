@@ -1,3 +1,4 @@
+#!/users/nanje/miniconda3/bin/python
 # -*- coding: utf-8 -*-
 
 import os, sys, re
@@ -16,8 +17,8 @@ from src.measureAccuracy import measureAccuracy
 from src.HLA_MultipleRefs import HLA_MultipleRefs
 
 # HLA genotype calling
-HLA_genotype_call_prephasing = 'src/9accuracy_pre.v2.csh' # Practically deprecated (2020.09.12.)
-HLA_genotype_call_noprephasing = 'src/9accuracy_no_CI.v2.csh' # Updated to print confident score (2020.09.12.)
+HLA_genotype_call_prephasing = '/scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src/9accuracy_pre.v2.csh' # Practically deprecated (2020.09.12.)
+HLA_genotype_call_noprephasing = '/scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src/9accuracy_no_CI.v2.csh' # Updated to print confident score (2020.09.12.)
 
 # Defined Error
 from src.CookHLAError import CookHLAImputationError, CookHLAHLATypeCallError
@@ -312,8 +313,11 @@ class HLA_Imputation(object):
         print("[{}] Converting data to beagle format.".format(self.idx_process))
         self.idx_process += 1
 
-        RUN_Bash(self.LINKAGE2BEAGLE + ' pedigree={} data={} beagle={} standard=true > {}'.format(
-            MHC + '.QC.nopheno.ped', MHC + '.QC.dat', MHC + '.QC.bgl', _out + '.bgl.log'))
+        RUN_Bash(self.LINKAGE2BEAGLE + ' {} {} > {}'.format(
+            MHC + '.QC.dat', MHC + '.QC.nopheno.ped', MHC + '.QC.bgl'))
+
+        # RUN_Bash(self.LINKAGE2BEAGLE + ' pedigree={} data={} beagle={} standard=true > {}'.format(
+        #     MHC + '.QC.nopheno.ped', MHC + '.QC.dat', MHC + '.QC.bgl', _out + '.bgl.log'))
 
         # if not self.__save_intermediates:
         #     os.system('rm {}'.format(MHC + '.QC.nopheno.ped'))
@@ -337,7 +341,7 @@ class HLA_Imputation(object):
 
         RUN_Bash('awk \'{print $2" "$4" "$5" "$6}\' %s > %s' % (MHC + '.QC.bim', MHC + '.QC.markers'))
 
-        RUN_Bash('Rscript src/excluding_snp_and_refine_target_position-v1COOK02222017.R {} {} {}'.format(
+        RUN_Bash('Rscript /scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src/excluding_snp_and_refine_target_position-v1COOK02222017.R {} {} {}'.format(
             MHC + '.QC.markers', RefinedMarkers, MHC + '.QC.pre.markers'
         ))
         if not self.__save_intermediates:
@@ -659,7 +663,7 @@ class HLA_Imputation(object):
         RUN_Bash('sed "s%#%%" {} > {}'.format(PHASED_RESULT + '.vcf.header2', PHASED_RESULT + '.vcf.noshop.header2'))
         RUN_Bash('cat {} {} > {}'.format(PHASED_RESULT + '.vcf.noshop.header2', PHASED_RESULT + '.vcf.body', PHASED_RESULT + '.tobeDoubled.vcf'))
 
-        RUN_Bash('Rscript src/Doubling_vcf.R {} {}'.format(PHASED_RESULT + '.tobeDoubled.vcf', PHASED_RESULT + '.Doubled.pre.vcf'))
+        RUN_Bash('Rscript /scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src/Doubling_vcf.R {} {}'.format(PHASED_RESULT + '.tobeDoubled.vcf', PHASED_RESULT + '.Doubled.pre.vcf'))
 
         if not os.path.exists(PHASED_RESULT + '.tobeDoubled.vcf'):
             print(std_ERROR_MAIN_PROCESS_NAME + "Doubled phased file('{}') can't be found(or wasn't generated at all.".format(PHASED_RESULT + '.tobeDoubled.pre.vcf'))
