@@ -10,6 +10,7 @@ This project focusses on assessing the accuracy of imputation tools, reference p
 
 ### Author
 Ruth Nanjala
+Find me on twitter (@Ruthnanje) and [LinkedIn](https://www.linkedin.com/in/ruth-nanjala-17991117a/)
 
 ### Mentors
 1. Prof. Nicola Mulder
