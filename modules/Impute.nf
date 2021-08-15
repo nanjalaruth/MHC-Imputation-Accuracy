@@ -82,6 +82,8 @@ process posteprob_dosage{
         #Create PLINK bed file
         plink --ped ${output}.ped --map ${output}.map --make-bed --out ${output}
         
+        #remove unwanted files
+        rm -f ${phased} ${gprobs} ${r2}
         """
 }
 

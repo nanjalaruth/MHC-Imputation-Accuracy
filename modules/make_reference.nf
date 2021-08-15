@@ -4,6 +4,7 @@
 process combine_hlatypes_snp2hla {
     tag "snp2hlatypes_${dataset}"
     publishDir "${params.outdir}/HLAtypes/SNP2HLA/Dataset", mode: 'copy', overwrite: false
+    label "bigmem"
 
     input:
         tuple val(dataset), val(hlatype_list)
@@ -71,16 +72,19 @@ process subset_hlatypes_hibag {
 process get_geno_plink {
     tag "get_geno_plink_${dataset}_${subpop}"
     publishDir "${params.outdir}/Genotypes/Reference", mode: 'copy', overwrite: false
-    
+    label "bigmem"
+
     input:
-        tuple val(dataset), file(genotypes), val(subpop), file(hlatypes)
+        tuple val(dataset), file(genotypes), val(subpop), file(snp_hlatypes), file(hibag_hlatypes)
     output:
-        tuple val(dataset), val(subpop), file(bed_out), file(bim_out), file(fam_out), file(hlatypes)
+        tuple val(dataset), val(subpop), file(bed_out), file(bim_out), file(fam_out), file(snphlatypes), file(hibaghlatypes)
     script:
         prefix = "${dataset}_${subpop}_geno"
         bed_out = "${prefix}.bed"
         bim_out = "${prefix}.bim"
         fam_out = "${prefix}.fam"
+        snphlatypes = "${snp_hlatypes}.edited"
+        hibaghlatypes = "${hibag_hlatypes}.edited"
         """
             #convert vcf to plink format
             plink2 --vcf ${genotypes} --make-bed --max-alleles 2 --out MHC
@@ -88,10 +92,17 @@ process get_geno_plink {
             cut -f 2 MHC.bim | sort | uniq -d > 1.dups
             plink2 --bfile MHC --exclude 1.dups --make-bed --out MHC.filt
             #Get the samples that were typed
-            cut -f 2 ${hlatypes} > ids.txt
+            cut -f 2 ${snp_hlatypes} > ids.txt
             # extract plink datasets
             plink2 --bfile MHC.filt --keep ids.txt --make-bed --out ${prefix}
-            rm MHC.* ids.txt ${prefix}.log
+            #Match the number of samples in the hlatypes and genotypes for snp2hla
+            cut -f 2 ${prefix}.fam > secids.txt
+            grep -f secids.txt ${snp_hlatypes} > ${snphlatypes}  
+            #Match the number of samples in the hlatypes and genotypes for hibag
+            echo -e "sample.id" | cat - secids.txt > file2
+            grep -f file2 ${hibag_hlatypes} > ${hibaghlatypes}
+            #Cleanup
+            rm MHC.* ids.txt ${prefix}.log secids.txt file2
         """
 }
 
@@ -141,6 +152,6 @@ process makeref_snp2hla_phasing {
         tuple val(dataset), val(subpop), file("${bgl}.phased")
     script:
         """
-        java -Djava.io.tmpdir=${params.scratch} -Xmx${task.memory.toGiga()}g -jar /usr/local/bin/beagle.jar unphased=${bgl} nsamples=4 niterations=10 missing=0 seed=993470 lowmem=true verbose=true maxwindow=1000 log=${bgl}.phasing
+        java -Djava.io.tmpdir=${params.h3atemp} -Xmx${task.memory.toGiga()}g -jar /usr/local/bin/beagle.jar unphased=${bgl} nsamples=2 niterations=10 missing=0 seed=893470 lowmem=true verbose=true maxwindow=1000 log=${bgl}.phasing
         """
 }
