@@ -22,7 +22,9 @@ convert_to_beagle as convert_to_beagle_H3A_dataset;
 convert_to_beagle as convert_to_beagle_subpop} from './modules/make_reference'
 
 // SNP2HLA Imputation
-include { preparedata_imputation; impute_data as impute_dataset; 
+include { preparedata_imputation as prepare_hg18_data_imputation;
+preparedata_imputation as prepare_hg19_data_imputation;
+impute_data as impute_dataset; 
 impute_data as impute_H3A_dataset; 
 impute_data as impute_subpop; imputation as subpop_imputation; 
 imputation as dataset_H3A_imputation;
@@ -40,6 +42,11 @@ include { makegenetic_map as makegenetic_map_dataset;
 makegenetic_map as makegenetic_map_subpop; cookHLAimpute as cookHLAimpute_subpop;
 cookHLAimpute as cookHLAimpute_dataset; measureaccuracy as measureaccuracy_subpop;
 measureaccuracy as measureaccuracy_dataset } from './modules/cookHLA.nf'
+
+// Generate SNP2HLA Info file
+include { combine_output as combine_dataset_H3A_output; combine_output as combine_dataset_output;
+combine_output as combine_subpop_output; generate_info as generate_subpop_info;
+generate_info as generate_dataset_info; generate_info as generate_dataset_H3A_info } from './modules/snp2hala_info.nf'
 
 // Main workflow
 workflow{
@@ -82,7 +89,7 @@ workflow{
     combine_hlatypes_1kg_All_hibag(smp_ch)
 
     // Step 1.2.2. H3Africa
-    smp_ch = Channel.fromList(params.hlatype_files)
+    smp_ch = Channel.fromList(params.H3Africa_hlatypes)
                     .map{ title, hlatype -> 
                         hlatypes = file(hlatype)
                         return [title, hlatypes] 
@@ -122,9 +129,9 @@ workflow{
                 }
                 .combine(combine_hlatypes_H3A_snp2hla.out, by:0)
                 .map{ dataset, genotypes, hlatypes -> 
-                    return [dataset, genotypes, dataset, hlatypes] 
+                    return [dataset, genotypes, dataset, hlatypes]
                 }
-                .combine(combine_hlatypes_H3A_hibag.out, by:0)       
+                .combine(combine_hlatypes_H3A_hibag.out, by:0)     
     get_geno_plink_H3A_dataset(dataset_geno_ch)
 
 
@@ -186,30 +193,38 @@ workflow{
 
 
     // Step 4: Imputation
-    // Step 4.1: prepare data
-    dataset_testdata_ch = Channel.fromList(params.sample_data)
+    // Step 4.1: prepare data (hg18 format)
+    dataset_testdata_ch = Channel.fromList(params.sample_data_hg18)
                     .map{ pop, chip, sample_geno -> 
                         genotype = file(sample_geno)
                         return [pop, chip, genotype]
                     }  
-    preparedata_imputation(dataset_testdata_ch)
+    prepare_hg18_data_imputation(dataset_testdata_ch)
+
+    // HIBAG test data (hg19 format)
+    data_ch = Channel.fromList(params.sample_data_hg19)
+                    .map{ pop, chip, sample_geno -> 
+                        genotype = file(sample_geno)
+                        return [pop, chip, genotype]
+                    }  
+    prepare_hg19_data_imputation(data_ch)
 
     // Step 4.2: Pre-imputation
     // Step 4.2.1 1kg-All subpop (African&Gambian)
     bgl_input = make_snp2hlarefpanel_subpop.out.map{dataset, subpop, datas -> [dataset, subpop, datas[9], datas[10], datas[12]]}
-    impute_input = preparedata_imputation.out.combine(bgl_input)
+    impute_input = prepare_hg18_data_imputation.out.combine(bgl_input)
     .map {dataset, subpop, bed, bim, fam, pop, spop, pbed, pbim, pfam -> [dataset, subpop, bed, bim, fam, spop, pbed, pbim, pfam]}      
     impute_subpop(impute_input)
       
     // Step 4.2.2: 1kg-All
     beagl_input = make_snp2hlarefpanel_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[9], datas[10], datas[12]]}
-    imput_input = preparedata_imputation.out.combine(beagl_input)
+    imput_input = prepare_hg18_data_imputation.out.combine(beagl_input)
     .map {dataset, subpop, bed, bim, fam, pop, spop, pbed, pbim, pfam -> [dataset, subpop, bed, bim, fam, spop, pbed, pbim, pfam]}      
     impute_dataset(imput_input)
     
     //  Step 4.2.3 H3Africa
     beagl_input = make_snp2hlarefpanel_H3A_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[9], datas[10], datas[12]]}
-    imput_input = preparedata_imputation.out.combine(beagl_input)
+    imput_input = prepare_hg18_data_imputation.out.combine(beagl_input)
     .map {dataset, subpop, bed, bim, fam, pop, spop, pbed, pbim, pfam -> [dataset, subpop, bed, bim, fam, spop, pbed, pbim, pfam]}      
     impute_H3A_dataset(imput_input)
 
@@ -265,15 +280,16 @@ workflow{
     posteprob_dosage_dataset(dos_inp)
 
     // Step 4.4.3: H3Africa
-    // in = impute_H3A_dataset.out
-    // .map {dtset, subp, ref, result -> [subp, ref, result[12]] }
-    // ref = make_snp2hlarefpanel_H3A_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[10]]}
-    // dos_inp = dataset_H3A_imputation.out
-    // .map{dataset, reference, results -> [dataset, reference, results[0], results[1], results[2]]}
-    // .combine(in, by:[0,1])
-    // .combine(ref, by: 1)
-    // .map{data, refenc, probs, phased, r2, dfam, set, refbim -> [data, refenc, probs, phased, r2, dfam, refbim]}
-    // posteprob_dosage_H3A_dataset(dos_inp)
+    in = impute_H3A_dataset.out
+    .map {dtset, subp, ref, result -> [subp, ref, result[12]] }
+    ref = make_snp2hlarefpanel_H3A_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[10]]}
+    dos_inp = dataset_H3A_imputation.out
+    .map{dataset, reference, results -> [dataset, reference, results[0], results[1], results[2]]}
+    .combine(in, by:[0,1])
+    .combine(ref, by: 1)
+    .map{data, refenc, probs, phased, r2, dfam, set, refbim -> [data, refenc, probs, phased, r2, dfam, refbim]}
+    // dos_inp.view()
+    posteprob_dosage_H3A_dataset(dos_inp)
 
 
     // Step 4.5: MeasureAccuracy
@@ -290,10 +306,10 @@ workflow{
     measureacc_dataset(ans)
 
     // Step 4.5.3 H3A
-    // ans =  Channel.fromPath(params.answer_file)
-    // .combine(posteprob_dosage_H3A_dataset.out)
-    // .map{answer, array, ref, rest -> [answer, array, ref, rest[2]]}
-    // measureacc_H3A_dataset(ans)
+    ans =  Channel.fromPath(params.answer_file)
+    .combine(posteprob_dosage_H3A_dataset.out)
+    .map{answer, array, ref, rest -> [answer, array, ref, rest[2]]}
+    measureacc_H3A_dataset(ans)
 
 
     // TRAIN AND PREDICT USING SOFTWARE 2
@@ -302,7 +318,7 @@ workflow{
     answerfile = Channel.fromPath(params.hibag_answerfile)
     subpop_modeldata = Channel.fromList(params.subpop_modeldata)
     .map{dataset, subpop, hlaA, hlaB, hlaC  -> [dataset, subpop, file(hlaA), file(hlaB), file(hlaC)]}
-    test_data = preparedata_imputation.out.combine(subpop_modeldata)
+    test_data = prepare_hg19_data_imputation.out.combine(subpop_modeldata)
     .map{dataset, subpop, bed, bim, fam, dtset, spop, model_a, model_b, model_c -> [dataset, subpop, bed, bim, fam, spop, model_a, model_b, model_c]}
     .combine(answerfile)
     hibag_impute_subpop(test_data)
@@ -312,11 +328,30 @@ workflow{
     answerfile = Channel.fromPath(params.hibag_answerfile)
     dataset_modeldata = Channel.fromList(params.dataset_modeldata)
     .map{dataset, subpop, hlaA, hlaB, hlaC  -> [dataset, subpop, file(hlaA), file(hlaB), file(hlaC)]}
-    tst_data = preparedata_imputation.out.combine(dataset_modeldata)
+    tst_data = prepare_hg19_data_imputation.out.combine(dataset_modeldata)
     .map{dataset, subpop, bed, bim, fam, dtset, spop, model_a, model_b, model_c -> [dataset, subpop, bed, bim, fam, spop, model_a, model_b, model_c]}
     .combine(answerfile)
     hibag_impute_dataset(tst_data)
 
+    // GENERATE SNP2HLA INFO FILE FOR COMPARISON WITH GENERAL IMPUTATION TOOLS
+    // subpop
+    file = posteprob_dosage_subpop.out
+    .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3] ]}
+    combine_subpop_output(file)
+
+    generate_subpop_info(combine_subpop_output.out)
+    // Dataset
+    // 1kg_All
+    file = posteprob_dosage_dataset.out
+    .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3]]}
+    combine_dataset_output(file)
+
+
+    // H3A
+    file = posteprob_dosage_H3A_dataset.out
+    .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3]]}
+    combine_dataset_H3A_output(file)
+    
 
     //MASKED DATA
     // masked_data = Channel.fromList(params.masked_data)
