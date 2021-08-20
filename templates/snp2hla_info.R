@@ -2,8 +2,8 @@
 
 # required packages
 library(optparse)
-library(tidyverse)
-library(data.table)
+# library(tidyverse)
+# library(data.table)
 
 # prepares snp2hla info file for comparison with other imputation tools
 option_list <- list(
