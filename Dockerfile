@@ -191,7 +191,7 @@ RUN git clone https://github.com/WansonChoi/CookHLA.git && \
   rm -fr CookHLA
 
 RUN conda clean --all --yes && \
-  conda install -y -c conda install r-tidyverse 
+  conda install -c r r-tidyverse 
 
 RUN conda clean --all --yes && \
   conda install -c conda-forge r-data.table
