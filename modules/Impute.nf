@@ -24,7 +24,7 @@ process preparedata_imputation {
 
 process impute_data {
     tag "Impute_${dataset}_${subpop} using ${spop} reference"
-    publishDir "${params.outdir}/Imputation/SNP2HLA", mode: 'copy', overwrite: false
+    publishDir "${params.outdir}/Imputation/SNP2HLA/PreImpute", mode: 'copy', overwrite: false
     
     input:
         tuple val(dataset), val(subpop), file(bed), file(bim), file(fam), val(spop), file(pbed), file(pbim), file(pfam)
@@ -40,7 +40,7 @@ process impute_data {
 
 process imputation{
     tag "Impute data from the ${array} array using ${ref} reference"
-    publishDir "${params.outdir}/Imputation/SNP2HLA", mode: 'copy', overwrite: false
+    publishDir "${params.outdir}/Imputation/SNP2HLA/Imputed", mode: 'copy', overwrite: false
     label "biggermem"
     
     input:
@@ -56,7 +56,7 @@ process imputation{
 
 process posteprob_dosage{
     tag "Convert posterior probability to dosage format"
-    publishDir "${params.outdir}/Imputation/SNP2HLA", mode: 'copy', overwrite: false
+    publishDir "${params.outdir}/Imputation/SNP2HLA/Imputed", mode: 'copy', overwrite: false
 
     input:
         tuple val(refenc), val(data), file(gprobs), file(phased), file(r2), file(fam), file(refbim)
@@ -83,13 +83,15 @@ process posteprob_dosage{
         plink --ped ${output}.ped --map ${output}.map --make-bed --out ${output}
         
         #remove unwanted files
-        rm -f ${phased} ${gprobs} ${r2}
+        rm -f ${phased} 
+        rm -f ${gprobs} 
+        rm -f ${r2}
         """
 }
 
 process measureacc {
     tag "Measure accuracy for ${array} data using ${ref} reference"
-    publishDir "${params.outdir}/Imputation/SNP2HLA", mode: 'copy', overwrite: false
+    publishDir "${params.outdir}/Imputation/SNP2HLA/Accuracy", mode: 'copy', overwrite: false
     
     input:
         tuple file(answer_file), val(array), val(ref), file(bglphased)
