@@ -99,9 +99,20 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
   /bin/bash ~/miniconda.sh -b -p /opt/conda && \
   rm ~/miniconda.sh && \
   echo "conda activate base" >> ~/.bashrc
+
 RUN conda clean --all --yes && \
-  conda install -y -c conda-forge r-base r-ggsci && \
-  conda install -y -c bioconda r-ggplot2 r-dplyr r-plyr r-tidyr r-data.table r-reshape2 r-optparse r-sm
+  conda install -y -c conda-forge r-base 
+
+# install R packages
+RUN R --slave -e 'install.packages("dplyr", repos="https://cloud.r-project.org/")' && \
+  R --slave -e 'install.packages("ggplot2", repos="https://cloud.r-project.org/")' && \
+  R --slave -e 'install.packages("data.table", repos="https://cloud.r-project.org/")' && \
+  R --slave -e 'install.packages("sm", repos="https://cloud.r-project.org/")' && \
+  R --slave -e 'install.packages("optparse", repos="https://cloud.r-project.org/")'  && \
+  R --slave -e 'install.packages("ggsci", repos="https://cloud.r-project.org/")'  && \
+  R --slave -e 'install.packages("tidyr", repos="https://cloud.r-project.org/")' && \
+  R --slave -e 'install.packages("tidyverse", repos="https://cloud.r-project.org/")'
+  
 # HIBAG tool
 RUN conda clean --all --yes && \
   conda install -c bioconda bioconductor-hibag

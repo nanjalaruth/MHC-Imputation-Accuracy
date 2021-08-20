@@ -2,8 +2,8 @@
 
 # required packages
 library(optparse)
-# library(tidyverse)
-# library(data.table)
+library(tidyverse)
+library(data.table)
 
 # prepares snp2hla info file for comparison with other imputation tools
 option_list <- list(
@@ -14,7 +14,7 @@ make_option(c("-r", "--rsquared"), action="store", default = "${rsquared}", type
 make_option(c("-s", "--snpid"), action = "store", default = "${snpid}", type = 'list',
               help = "Imputation .snpid file"),
 make_option(c("-o", "--info_out"), action = "store", default = "${info_out}", type = 'list',
-              help = "Combined info file"),
+              help = "Combined info file")
 )
 args <- parse_args(OptionParser(option_list = option_list))
 
