@@ -189,6 +189,13 @@ RUN git clone https://github.com/WansonChoi/CookHLA.git && \
   mv -f * .. && \
   cd .. && \
   rm -fr CookHLA
+
+RUN conda clean --all --yes && \
+  conda install -y -c conda install r-tidyverse 
+
+RUN conda clean --all --yes && \
+  conda install -c conda-forge r-data.table
+
 RUN useradd --create-home --shell /bin/bash ubuntu && \
   chown -R ubuntu:ubuntu /home/ubuntu
 USER ubuntu
