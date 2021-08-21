@@ -94,15 +94,11 @@ RUN wget https://data.broadinstitute.org/alkesgroup/Eagle/downloads/Eagle_v2.4.1
   tar xvf Eagle_v2.4.1.tar && \
   mv Eagle_v2.4.1/eagle /usr/local/bin/ && \
   rm -rf Eagle_v2.4.1
-# Install R and R packages
+# Install miniconda
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
   /bin/bash ~/miniconda.sh -b -p /opt/conda && \
   rm ~/miniconda.sh && \
   echo "conda activate base" >> ~/.bashrc
-
-RUN conda clean --all --yes && \
-  conda install -y -c conda-forge r-base 
-
 # install R packages
 RUN R --slave -e 'install.packages("dplyr", repos="https://cloud.r-project.org/")' && \
   R --slave -e 'install.packages("ggplot2", repos="https://cloud.r-project.org/")' && \
@@ -110,9 +106,8 @@ RUN R --slave -e 'install.packages("dplyr", repos="https://cloud.r-project.org/"
   R --slave -e 'install.packages("sm", repos="https://cloud.r-project.org/")' && \
   R --slave -e 'install.packages("optparse", repos="https://cloud.r-project.org/")'  && \
   R --slave -e 'install.packages("ggsci", repos="https://cloud.r-project.org/")'  && \
-  R --slave -e 'install.packages("tidyr", repos="https://cloud.r-project.org/")' && \
-  R --slave -e 'install.packages("tidyverse", repos="https://cloud.r-project.org/")'
-  
+  R --slave -e 'install.packages("tidyr", repos="https://cloud.r-project.org/")'
+
 # HIBAG tool
 RUN conda clean --all --yes && \
   conda install -c bioconda bioconductor-hibag
