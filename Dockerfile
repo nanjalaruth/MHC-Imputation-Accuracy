@@ -105,14 +105,19 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 RUN conda clean --all --yes && \
   conda install -y -c conda-forge r-base
 
+RUN apt-get -y install libcurl4-openssl-dev
+
+#setup R configs
+RUN echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile
+
 # install R packages
-RUN Rscript -e 'install.packages("dplyr", repos="https://cloud.r-project.org/")' && \
-  Rscript -e 'install.packages("ggplot2", repos="https://cloud.r-project.org/")' && \
-  Rscript -e 'install.packages("data.table", repos="https://cloud.r-project.org/")' && \
-  Rscript -e 'install.packages("sm", repos="https://cloud.r-project.org/")' && \
-  Rscript -e 'install.packages("optparse", repos="https://cloud.r-project.org/")'  && \
-  Rscript -e 'install.packages("ggsci", repos="https://cloud.r-project.org/")'  && \
-  Rscript -e 'install.packages("tidyr", repos="https://cloud.r-project.org/")'
+RUN Rscript -e 'install.packages("dplyr")' && \
+  Rscript -e 'install.packages("ggplot2")' && \
+  Rscript -e 'install.packages("data.table")' && \
+  Rscript -e 'install.packages("sm")' && \
+  Rscript -e 'install.packages("optparse")'  && \
+  Rscript -e 'install.packages("ggsci")'  && \
+  Rscript -e 'install.packages("tidyverse")'
 
 # HIBAG tool
 RUN conda clean --all --yes && \
