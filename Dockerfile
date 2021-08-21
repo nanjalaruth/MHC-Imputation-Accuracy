@@ -105,8 +105,6 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 RUN conda clean --all --yes && \
   conda install -y -c conda-forge r-base
 
-RUN apt-get -y install libcurl4-openssl-dev
-
 #setup R configs
 RUN echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile
 
