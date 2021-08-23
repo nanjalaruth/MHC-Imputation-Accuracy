@@ -204,15 +204,13 @@ RUN git clone https://github.com/WansonChoi/CookHLA.git && \
   mv -f * .. && \
   cd .. && \
   rm -fr CookHLA
-RUN useradd --create-home --shell /bin/bash ubuntu && \
-  chown -R ubuntu:ubuntu /home/ubuntu
-USER ubuntu
-CMD ["/bin/bash","-i"]
 
 
+RUN apt-get update && \
+  apt-get -y install sudo
 # install R packages
 # FROM scipy
-RUN apt-get -y install r-base
+RUN sudo apt-get -y install r-base
 # RUN pip install rpy2
 # RUN apt-get -y install libcurl4-openssl-dev
 #setup R configs
@@ -225,3 +223,12 @@ RUN Rscript -e 'install.packages("dplyr")' && \
   Rscript -e 'install.packages("optparse")'  && \
   Rscript -e 'install.packages("ggsci")'  && \
   Rscript -e 'install.packages("tidyverse")
+
+RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
+
+# RUN useradd --create-home --shell /bin/bash ubuntu && \
+#   chown -R ubuntu:ubuntu /home/ubuntu
+# USER ubuntu
+USER docker
+# CMD /bin/bash
+CMD ["/bin/bash","-i"]
