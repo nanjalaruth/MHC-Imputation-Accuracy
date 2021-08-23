@@ -346,12 +346,13 @@ workflow{
     .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3]]}
     combine_dataset_output(file)
 
-
+    generate_dataset_info(combine_dataset_output.out)
     // H3A
     file = posteprob_dosage_H3A_dataset.out
     .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3]]}
     combine_dataset_H3A_output(file)
     
+    generate_dataset_H3A_info(combine_dataset_H3A_output.out)
 
     //MASKED DATA
     // masked_data = Channel.fromList(params.masked_data)
