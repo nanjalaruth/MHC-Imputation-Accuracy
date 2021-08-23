@@ -174,8 +174,8 @@ RUN conda clean --all --yes && \
 RUN conda clean --all --yes && \
   conda install -c anaconda python=3.6
 #pandas 0.25.3
-RUN conda clean --all --yes && \
-  conda install pandas=0.25.3
+# RUN conda clean --all --yes && \
+#   conda install pandas=0.25.3
 #perl 5.26.2
 RUN conda clean --all --yes && \
   conda install -c anaconda perl=5.26.2
