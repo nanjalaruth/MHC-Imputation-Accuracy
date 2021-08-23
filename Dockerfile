@@ -222,7 +222,7 @@ RUN Rscript -e 'install.packages("dplyr")' && \
   Rscript -e 'install.packages("sm")' && \
   Rscript -e 'install.packages("optparse")'  && \
   Rscript -e 'install.packages("ggsci")'  && \
-  Rscript -e 'install.packages("tidyverse")''
+  Rscript -e 'install.packages("tidyverse")'
 
 RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
 
