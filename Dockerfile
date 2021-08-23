@@ -102,20 +102,20 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
   echo "conda activate base" >> ~/.bashrc
 
 #Install R 
-RUN conda clean --all --yes && \
-  conda install -y -c conda-forge r-base
+# RUN conda clean --all --yes && \
+#   conda install -y -c conda-forge r-base
 
-#setup R configs
-RUN echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile
+# #setup R configs
+# RUN echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile
 
-# install R packages
-RUN Rscript -e 'install.packages("dplyr")' && \
-  Rscript -e 'install.packages("ggplot2")' && \
-  Rscript -e 'install.packages("data.table")' && \
-  Rscript -e 'install.packages("sm")' && \
-  Rscript -e 'install.packages("optparse")'  && \
-  Rscript -e 'install.packages("ggsci")'  && \
-  Rscript -e 'install.packages("tidyverse")'
+# # install R packages
+# RUN Rscript -e 'install.packages("dplyr")' && \
+#   Rscript -e 'install.packages("ggplot2")' && \
+#   Rscript -e 'install.packages("data.table")' && \
+#   Rscript -e 'install.packages("sm")' && \
+#   Rscript -e 'install.packages("optparse")'  && \
+#   Rscript -e 'install.packages("ggsci")'  && \
+#   Rscript -e 'install.packages("tidyverse")'
 
 # HIBAG tool
 RUN conda clean --all --yes && \
@@ -208,3 +208,20 @@ RUN useradd --create-home --shell /bin/bash ubuntu && \
   chown -R ubuntu:ubuntu /home/ubuntu
 USER ubuntu
 CMD ["/bin/bash","-i"]
+
+
+# install R packages
+FROM scipy
+RUN apt-get -y install r-base
+RUN pip install rpy2
+RUN apt-get -y install libcurl4-openssl-dev
+#setup R configs
+RUN echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile
+
+RUN Rscript -e 'install.packages("dplyr")' && \
+  Rscript -e 'install.packages("ggplot2")' && \
+  Rscript -e 'install.packages("data.table")' && \
+  Rscript -e 'install.packages("sm")' && \
+  Rscript -e 'install.packages("optparse")'  && \
+  Rscript -e 'install.packages("ggsci")'  && \
+  Rscript -e 'install.packages("tidyverse")
