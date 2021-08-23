@@ -211,10 +211,10 @@ CMD ["/bin/bash","-i"]
 
 
 # install R packages
-FROM scipy
+# FROM scipy
 RUN apt-get -y install r-base
-RUN pip install rpy2
-RUN apt-get -y install libcurl4-openssl-dev
+# RUN pip install rpy2
+# RUN apt-get -y install libcurl4-openssl-dev
 #setup R configs
 RUN echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile
 
