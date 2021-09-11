@@ -44,8 +44,8 @@ cookHLAimpute as cookHLAimpute_dataset; measureaccuracy as measureaccuracy_subpo
 measureaccuracy as measureaccuracy_dataset } from './modules/cookHLA.nf'
 
 // Generate SNP2HLA Info file
-include { combine_output as combine_dataset_H3A_output; combine_output as combine_dataset_output;
-combine_output as combine_subpop_output; generate_info as generate_subpop_info;
+include { annotate_vcf as combine_dataset_H3A_output; annotate_vcf as combine_dataset_output;
+annotate_vcf as combine_subpop_output; generate_info as generate_subpop_info;
 generate_info as generate_dataset_info; generate_info as generate_dataset_H3A_info } from './modules/snp2hala_info.nf'
 
 // Main workflow
@@ -339,20 +339,25 @@ workflow{
     .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3] ]}
     combine_subpop_output(file)
 
-    generate_subpop_info(combine_subpop_output.out)
+    input = combine_subpop_output.out.map{data, ref, r2, id, vcf -> [data, ref, r2, id]}
+    generate_subpop_info(input)
+    
     // Dataset
     // 1kg_All
     file = posteprob_dosage_dataset.out
     .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3]]}
     combine_dataset_output(file)
 
-    generate_dataset_info(combine_dataset_output.out)
+    input = combine_dataset_output.out.map{data, ref, r2, id, vcf -> [data, ref, r2, id]}
+    generate_dataset_info(input)
+
     // H3A
     file = posteprob_dosage_H3A_dataset.out
     .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3]]}
     combine_dataset_H3A_output(file)
     
-    generate_dataset_H3A_info(combine_dataset_H3A_output.out)
+    input = combine_dataset_H3A_output.out.map{data, ref, r2, id, vcf -> [data, ref, r2, id]}
+    generate_dataset_H3A_info(input)
 
     //MASKED DATA
     // masked_data = Channel.fromList(params.masked_data)
