@@ -39,9 +39,11 @@ include { hibag_impute as hibag_impute_dataset; hibag_impute as hibag_impute_sub
 
 // CookHLA Imputation
 include { makegenetic_map as makegenetic_map_dataset; 
-makegenetic_map as makegenetic_map_subpop; cookHLAimpute as cookHLAimpute_subpop;
+makegenetic_map as makegenetic_map_subpop; makegenetic_map as makegenetic_map_H3A_dataset; 
+cookHLAimpute as cookHLAimpute_subpop; cookHLAimpute as cookHLAimpute_H3A_dataset;
 cookHLAimpute as cookHLAimpute_dataset; measureaccuracy as measureaccuracy_subpop;
-measureaccuracy as measureaccuracy_dataset } from './modules/cookHLA.nf'
+measureaccuracy as measureaccuracy_dataset;
+measureaccuracy as measureaccuracy_H3A_dataset} from './modules/cookHLA.nf'
 
 // Generate SNP2HLA Info file
 include { annotate_vcf as combine_dataset_H3A_output; annotate_vcf as combine_dataset_output;
@@ -376,67 +378,98 @@ workflow{
     // TRAIN AND PREDICT USING SOFTWARE 3: CookHLA
     // Step 1:Make GeneticMap
     // Step 1.1: Subpop
-    // ref = make_snp2hlarefpanel_subpop.out
-    // .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
-    // .combine(makeref_snp2hla_phasing_subpop.out, by:[0,1])
-    // data_input = preparedata_imputation.out.combine(ref)
-    // .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
-    // -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
-    // // data_input.view()
-    // makegenetic_map_subpop(data_input)
+    ref = make_snp2hlarefpanel_subpop.out
+    .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    .combine(makeref_snp2hla_phasing_subpop.out, by:[0,1])
+    data_input = prepare_hg18_data_imputation.out.combine(ref)
+    .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
+    // data_input.view()
+    makegenetic_map_subpop(data_input)
 
     // // Step 1.2: Dataset
-    // ref = make_snp2hlarefpanel_dataset.out
-    // .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
-    // .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
-    // data_input = preparedata_imputation.out.combine(ref)
-    // .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
-    // -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
+    ref = make_snp2hlarefpanel_dataset.out
+    .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
+    data_input = prepare_hg18_data_imputation.out.combine(ref)
+    .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
     // data_input.view()
-    // makegenetic_map_dataset(data_input)
+    makegenetic_map_dataset(data_input)
+
+    //  Step 1.3: H3Africa
+    ref = make_snp2hlarefpanel_H3A_dataset.out
+    .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    .combine(makeref_snp2hla_phasing_H3A_dataset.out, by:[0,1])
+    data_input = prepare_hg18_data_imputation.out.combine(ref)
+    .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
+    // data_input.view()
+    makegenetic_map_H3A_dataset(data_input)
 
     // Step 2: Imputation
     // Step 2.1: Dataset
-    // ref = make_snp2hlarefpanel_dataset.out
-    // .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
-    // .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
-    // data_input = preparedata_imputation.out.combine(ref)
-    // .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
-    // -> [subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased]}
-    // .combine(makegenetic_map_dataset.out, by:[0,1])
-    // .map{subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased, erate, mach
-    // -> [subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased, erate, mach]}
-    // // data_input.view()
+    ref = make_snp2hlarefpanel_dataset.out
+    .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
+    data_input = prepare_hg18_data_imputation.out.combine(ref)
+    .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    -> [subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased]}
+    .combine(makegenetic_map_dataset.out, by:[0,1])
+    .map{subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased, erate, mach
+    -> [subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased, erate, mach]}
+    // data_input.view()
     // cookHLAimpute_dataset(data_input)
 
+    // H3A dataset
+    ref = make_snp2hlarefpanel_H3A_dataset.out
+    .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    .combine(makeref_snp2hla_phasing_H3A_dataset.out, by:[0,1])
+    data_input = prepare_hg18_data_imputation.out.combine(ref)
+    .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    -> [subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased]}
+    .combine(makegenetic_map_H3A_dataset.out, by:[0,1])
+    .map{subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased, erate, mach
+    -> [subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased, erate, mach]}
+    // data_input.view()
+    cookHLAimpute_H3A_dataset(data_input)
+
+
     // Step 2.2: Subpop
-    // ref = make_snp2hlarefpanel_subpop.out
-    // .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
-    // .combine(makeref_snp2hla_phasing_subpop.out, by:[0,1])
-    // data_input = preparedata_imputation.out.combine(ref)
-    // .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
-    // -> [subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased]}
-    // .combine(makegenetic_map_subpop.out, by:[0,1])
-    // .map{subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased, erate, mach
-    // -> [subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased, erate, mach]}
-    // // data_input.view()
-    // cookHLAimpute_subpop(data_input)
+    ref = make_snp2hlarefpanel_subpop.out
+    .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
+    .combine(makeref_snp2hla_phasing_subpop.out, by:[0,1])
+    data_input = prepare_hg18_data_imputation.out.combine(ref)
+    .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    -> [subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased]}
+    .combine(makegenetic_map_subpop.out, by:[0,1])
+    .map{subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased, erate, mach
+    -> [subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased, erate, mach]}
+    // data_input.view()
+    cookHLAimpute_subpop(data_input)
 
 
     // Step 3: Measure accuracy
     // Step 3.1: Subpop
-    // ans =  Channel.fromPath(params.answer_file)
-    // .combine(cookHLAimpute_subpop.out)
+    ans =  Channel.fromPath(params.cookanswer_file)
+    .combine(cookHLAimpute_subpop.out)
+    .map{true_allele, array, ref, imputed_allele -> [true_allele, array, ref, imputed_allele[4]]}
     // ans.view()
-
-    // measureaccuracy_subpop(ans)
+    measureaccuracy_subpop(ans)
 
     // Step 3.2: Dataset
     // ans =  Channel.fromPath(params.answer_file)
     // .combine(cookHLAimpute_dataset.out)
+    // .map{true_allele, array, ref, imputed_allele -> [true_allele, array, ref, imputed_allele[4]]}
 
     // measureaccuracy_dataset(ans)
 
+    // H3A dataset
+     ans =  Channel.fromPath(params.cookanswer_file)
+    .combine(cookHLAimpute_H3A_dataset.out)
+    .map{true_allele, array, ref, imputed_allele -> [true_allele, array, ref, imputed_allele[4]]}
+    // ans.view()
+    measureaccuracy_H3A_dataset(ans)
 
     // MASKED DATA
     // masked_data = Channel.fromList(params.masked_data)
