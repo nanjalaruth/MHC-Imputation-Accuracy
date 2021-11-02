@@ -106,5 +106,3 @@ while(my $c = <T2>) {
 close(T2);
 
 #print STDERR "read $linecount lines from $Table2\n";
-
-

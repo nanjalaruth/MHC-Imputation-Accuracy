@@ -179,11 +179,9 @@ class HLA_Imputation_GM_BEAGLE5(object):
         print("[{}] Converting data to beagle format.".format(self.idx_process))
         self.idx_process += 1
 
-        RUN_Bash(self.LINKAGE2BEAGLE + ' {} {} > {} '.format(
-            MHC + '.QC.dat', MHC + '.QC.nopheno.ped', MHC + '.QC.bgl'))
 
-        # RUN_Bash(self.LINKAGE2BEAGLE + ' pedigree={} data={} beagle={} standard=true > {}'.format(
-        #     MHC + '.QC.nopheno.ped', MHC + '.QC.dat', MHC + '.QC.bgl', _out+'.bgl.log'))
+        RUN_Bash(self.LINKAGE2BEAGLE + ' {} {} > {}'.format(
+            MHC + '.QC.dat', MHC + '.QC.nopheno.ped', MHC + '.QC.bgl'))
 
         # if not self.__save_intermediates:
         #     os.system('rm {}'.format(MHC + '.QC.nopheno.ped'))
@@ -207,7 +205,7 @@ class HLA_Imputation_GM_BEAGLE5(object):
 
         RUN_Bash('awk \'{print $2" "$4" "$5" "$6}\' %s > %s' % (MHC + '.QC.bim', MHC + '.QC.markers'))
 
-        RUN_Bash('Rscript /scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src/excluding_snp_and_refine_target_position-v1COOK02222017.R {} {} {}'.format(
+        RUN_Bash('Rscript /scratch3/users/nanje/MHC-Imputation-Accuracy/templates/src/excluding_snp_and_refine_target_position-v1COOK02222017.R {} {} {}'.format(
             MHC+'.QC.markers', RefinedMarkers, MHC+'.QC.pre.markers'
         ))
         if not self.__save_intermediates:
@@ -581,9 +579,8 @@ class HLA_Imputation_GM_BEAGLE5(object):
 
         HLA_IMPUTED_Result_MHC = self.HLA_IMPUTED_Result_MHC
 
-        # RUN_Bash('Rscript src/complete_header.R {} {} {}'.format(self.GCchangeBGL, GC_decodedBGL, HLA_IMPUTED_Result_MHC+'.bgl.phased'))
-        RUN_Bash('Rscript /scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src/complete_header.R {} {} {}'.format(self.GCchangeBGL, GC_decodedBGL, HLA_IMPUTED_Result_MHC+'.bgl.phased'))
-        
+        RUN_Bash('Rscript /scratch3/users/nanje/MHC-Imputation-Accuracy/templates/src/complete_header.R {} {} {}'.format(self.GCchangeBGL, GC_decodedBGL, HLA_IMPUTED_Result_MHC+'.bgl.phased'))
+
         if not self.__save_intermediates:
             # os.system('rm {}'.format(MHC + '.QC.GCchange.bgl'))
             os.system('rm {}'.format(GC_decodedBGL))

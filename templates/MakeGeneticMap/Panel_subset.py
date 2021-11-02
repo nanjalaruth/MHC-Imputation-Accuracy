@@ -1,5 +1,3 @@
-#!/users/nanje/miniconda3/bin/python
-
 #-*- coding: utf-8 -*-
 
 import sys, os

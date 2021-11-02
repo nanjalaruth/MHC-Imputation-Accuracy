@@ -1,5 +1,4 @@
 #!/users/nanje/miniconda3/bin/python
-
 import sys, os, re
 import time
 

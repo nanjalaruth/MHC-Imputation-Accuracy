@@ -1,5 +1,5 @@
-#!/users/nanje/miniconda3/bin/python
 # -*- coding: utf-8 -*-
+#!/users/nanje/miniconda3/bin/python
 
 import os, sys, re
 import subprocess
@@ -17,8 +17,8 @@ from src.measureAccuracy import measureAccuracy
 from src.HLA_MultipleRefs import HLA_MultipleRefs
 
 # HLA genotype calling
-HLA_genotype_call_prephasing = '/scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src/9accuracy_pre.v2.csh' # Practically deprecated (2020.09.12.)
-HLA_genotype_call_noprephasing = '/scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src/9accuracy_no_CI.v2.csh' # Updated to print confident score (2020.09.12.)
+HLA_genotype_call_prephasing = '/scratch3/users/nanje/MHC-Imputation-Accuracy/templates/src/9accuracy_pre.v2.csh' # Practically deprecated (2020.09.12.)
+HLA_genotype_call_noprephasing = '/scratch3/users/nanje/MHC-Imputation-Accuracy/templates/src/9accuracy_no_CI.v2.csh' # Updated to print confident score (2020.09.12.)
 
 # Defined Error
 from src.CookHLAError import CookHLAImputationError, CookHLAHLATypeCallError
@@ -323,9 +323,6 @@ class HLA_Imputation_BEAGLE5(object):
         RUN_Bash(self.LINKAGE2BEAGLE + ' {} {} > {}'.format(
             MHC + '.QC.dat', MHC + '.QC.nopheno.ped', MHC + '.QC.bgl'))
 
-        # RUN_Bash(self.LINKAGE2BEAGLE + ' pedigree={} data={} beagle={} standard=true > {}'.format(
-        #     MHC + '.QC.nopheno.ped', MHC + '.QC.dat', MHC + '.QC.bgl', _out + '.bgl.log'))
-
         # if not self.__save_intermediates:
         #     os.system('rm {}'.format(MHC + '.QC.nopheno.ped'))
         #     os.system('rm {}'.format(MHC + '.QC.dat'))
@@ -348,7 +345,7 @@ class HLA_Imputation_BEAGLE5(object):
 
         RUN_Bash('awk \'{print $2" "$4" "$5" "$6}\' %s > %s' % (MHC + '.QC.bim', MHC + '.QC.markers'))
 
-        RUN_Bash('Rscript /scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src/excluding_snp_and_refine_target_position-v1COOK02222017.R {} {} {}'.format(
+        RUN_Bash('Rscript /scratch3/users/nanje/MHC-Imputation-Accuracy/templates/src/excluding_snp_and_refine_target_position-v1COOK02222017.R {} {} {}'.format(
             MHC + '.QC.markers', RefinedMarkers, MHC + '.QC.pre.markers'
         ))
         if not self.__save_intermediates:
@@ -500,10 +497,10 @@ class HLA_Imputation_BEAGLE5(object):
             ## Beagle 4.1 ##
             
             # prephasing
-            java -jar beagle4.jar gt=$MHC.QC.phasing_out_double.vcf ref=$REFERENCE.phased.vcf out=$MHC.QC.double.imputation_out impute=true lowmem=true gprobs=true ne=10000 overlap=${OVERLAP} err=$aver_erate map=$geneticMap.refined.map
+            /users/nanje/miniconda3/bin/java -jar beagle4.jar gt=$MHC.QC.phasing_out_double.vcf ref=$REFERENCE.phased.vcf out=$MHC.QC.double.imputation_out impute=true lowmem=true gprobs=true ne=10000 overlap=${OVERLAP} err=$aver_erate map=$geneticMap.refined.map
             
             # No-prephasing
-            java -jar beagle4.jar gt=$MHC.QC.vcf                    ref=$REFERENCE.phased.vcf out=$MHC.QC.double.imputation_out impute=true lowmem=true gprobs=true ne=10000 overlap=${OVERLAP} err=$aver_erate map=$geneticMap.refined.map
+            /users/nanje/miniconda3/bin/java -jar beagle4.jar gt=$MHC.QC.vcf                    ref=$REFERENCE.phased.vcf out=$MHC.QC.double.imputation_out impute=true lowmem=true gprobs=true ne=10000 overlap=${OVERLAP} err=$aver_erate map=$geneticMap.refined.map
             
 
 
@@ -513,7 +510,7 @@ class HLA_Imputation_BEAGLE5(object):
             Not yet.
             
             # No-prephasing
-            java -jar beagle4.jar \
+            /users/nanje/miniconda3/bin/java -jar beagle4.jar \
                     gt=$MHC.QC.vcf \
                     ref=$REFERENCE.phased.vcf \
                     out=$MHC.QC.double.imputation_out \
@@ -583,10 +580,10 @@ class HLA_Imputation_BEAGLE5(object):
             ## Beagle 4.1 ##
             
             # prephasing
-            java -jar beagle4.jar gt=$MHC.QC.phasing_out_double.vcf ref=$REFERENCE.phased.vcf out=$MHC.QC.double.imputation_out impute=true lowmem=true overlap=$OVERLAP gprobs=true
+            /users/nanje/miniconda3/bin/java -jar beagle4.jar gt=$MHC.QC.phasing_out_double.vcf ref=$REFERENCE.phased.vcf out=$MHC.QC.double.imputation_out impute=true lowmem=true overlap=$OVERLAP gprobs=true
             
             # No-prephasing
-            java -jar beagle4.jar gt=$MHC.QC.vcf                    ref=$REFERENCE.phased.vcf out=$MHC.QC.double.imputation_out impute=true lowmem=true overlap=$OVERLAP gprobs=true
+            /users/nanje/miniconda3/bin/java -jar beagle4.jar gt=$MHC.QC.vcf                    ref=$REFERENCE.phased.vcf out=$MHC.QC.double.imputation_out impute=true lowmem=true overlap=$OVERLAP gprobs=true
 
 
 
@@ -596,7 +593,7 @@ class HLA_Imputation_BEAGLE5(object):
             Not yet
             
             # No-prephasing
-            java -jar beagle4.jar \
+            /users/nanje/miniconda3/bin/java -jar beagle4.jar \
                         gt=$MHC.QC.vcf \
                         ref=$REFERENCE.phased.vcf \
                         out=$MHC.QC.double.imputation_out \
@@ -739,7 +736,7 @@ class HLA_Imputation_BEAGLE5(object):
         RUN_Bash('sed "s%#%%" {} > {}'.format(PHASED_RESULT + '.vcf.header2', PHASED_RESULT + '.vcf.noshop.header2'))
         RUN_Bash('cat {} {} > {}'.format(PHASED_RESULT + '.vcf.noshop.header2', PHASED_RESULT + '.vcf.body', PHASED_RESULT + '.tobeDoubled.vcf'))
 
-        RUN_Bash('Rscript /scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src/Doubling_vcf.R {} {}'.format(PHASED_RESULT + '.tobeDoubled.vcf', PHASED_RESULT + '.Doubled.pre.vcf'))
+        RUN_Bash('Rscript /scratch3/users/nanje/MHC-Imputation-Accuracy/templates/src/Doubling_vcf.R {} {}'.format(PHASED_RESULT + '.tobeDoubled.vcf', PHASED_RESULT + '.Doubled.pre.vcf'))
 
         if not os.path.exists(PHASED_RESULT + '.tobeDoubled.vcf'):
             print(std_ERROR_MAIN_PROCESS_NAME + "Doubled phased file('{}') can't be found(or wasn't generated at all.".format(PHASED_RESULT + '.tobeDoubled.pre.vcf'))

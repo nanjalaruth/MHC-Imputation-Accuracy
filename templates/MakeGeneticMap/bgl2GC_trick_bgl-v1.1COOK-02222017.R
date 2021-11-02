@@ -1,5 +1,5 @@
-#!/users/nanje/miniconda3/bin/Rscript
-# TO CHANGE BEAGLE R PROJECT
+#!/users/nanje/miniconda3/bin/Rscript 
+## TO CHANGE BEAGLE R PROJECT
 
 args<- commandArgs(trailingOnly = TRUE)
 

@@ -1,5 +1,4 @@
-#!/users/nanje/miniconda3/bin/Rscript
-
+#!/users/nanje/miniconda3/bin/R
 args<- commandArgs(trailingOnly = TRUE)
 
 target_MARKER_DATA <- as.matrix(read.table(args[1],head=F))
@@ -71,3 +70,4 @@ new_data_marker_sorted<-new_data_marker[order(new_data_marker[,2]),]
 save_new_markers<-args[3]
 
 write.table(new_data_marker_sorted,save_new_markers,sep = " " ,quote = FALSE,row.names = FALSE,col.names = FALSE)
+

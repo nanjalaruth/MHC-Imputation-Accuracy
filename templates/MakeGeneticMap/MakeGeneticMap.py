@@ -1,5 +1,3 @@
-#!/users/nanje/miniconda3/bin/python
-
 #-*- coding: utf-8 -*-
 
 import os, sys, re
@@ -42,7 +40,7 @@ def MakeGeneticMap(_input, _reference, _out,
 
 
     PLINK = "{} --noweb --silent --allow-no-sex".format(_p_plink)
-    LINKAGE2BEAGLE = '/users/nanje/miniconda3/bin/java -jar {}'.format(_p_linkage2beagle)
+    LINKAGE2BEAGLE = 'java -jar {}'.format(_p_linkage2beagle)
     RANDOMIZE_FAM = 'Rscript {}/STEP0_randomize_the_sample_about_fam_03_06_2017-COOK-V1.R'.format(_p_src)
     BGL2GC_TRICK_BGL = 'Rscript {}/bgl2GC_trick_bgl-v1.1COOK-02222017.R'.format(_p_src)
     BGL2BED = "{}/Panel-BGL2BED.sh".format(_p_src)
@@ -113,10 +111,9 @@ def MakeGeneticMap(_input, _reference, _out,
             RUN_Bash('awk \'{print "M " $2}\' %s > %s' % (OUTPUT_INPUT+'.subset.map', OUTPUT_INPUT+'.subset.dat'))
 
 
-            RUN_Bash(LINKAGE2BEAGLE + ' pedigree={} data={} beagle={} standard=true > {}'.format(
-                OUTPUT_INPUT+'.subset.nopheno.ped', OUTPUT_INPUT+'.subset.dat',
-                OUTPUT_INPUT + '.subset.bgl.phased', OUTPUT_INPUT+'.subset.bgl.phased.log'
-            ))
+            RUN_Bash(LINKAGE2BEAGLE + ' {} {} > {}'.format(
+                OUTPUT_INPUT+'.subset.dat', OUTPUT_INPUT+'.subset.nopheno.ped',
+                OUTPUT_INPUT+'.subset.bgl.phased'))
 
 
             RUN_Bash('awk \'{print $2" "$4" "$5" "$6}\' %s > %s' % (OUTPUT_INPUT+'.subset.bim', OUTPUT_INPUT+'.subset.markers'))
@@ -170,14 +167,10 @@ def MakeGeneticMap(_input, _reference, _out,
             RUN_Bash("cut -d ' ' -f1-5,7- {} > {}".format(OUTPUT_INPUT+'.subset.ped', OUTPUT_INPUT+'.subset.nopheno.ped'))
             RUN_Bash('awk \'{print "M " $2}\' %s > %s' % (OUTPUT_INPUT+'.subset.map', OUTPUT_INPUT+'.subset.dat'))
 
-            RUN_Bash(LINKAGE2BEAGLE + '{} {} > {} '.format(
-                OUTPUT_INPUT+'.subset.dat', OUTPUT_INPUT+'.subset.nopheno.ped', 
-                OUTPUT_INPUT + '.subset.bgl.phased'))
 
-            # RUN_Bash(LINKAGE2BEAGLE + ' pedigree={} data={} beagle={} standard=true > {}'.format(
-            #     OUTPUT_INPUT+'.subset.nopheno.ped', OUTPUT_INPUT+'.subset.dat',
-            #     OUTPUT_INPUT + '.subset.bgl.phased', OUTPUT_INPUT+'.subset.bgl.phased.log'
-            # ))
+            RUN_Bash(LINKAGE2BEAGLE + ' {} {} > {}'.format(
+                OUTPUT_INPUT+'.subset.dat', OUTPUT_INPUT+'.subset.nopheno.ped',
+                OUTPUT_INPUT + '.subset.bgl.phased'))
 
 
             RUN_Bash('awk \'{print $2" "$4" "$5" "$6}\' %s > %s' % (OUTPUT_INPUT+'.subset.bim', OUTPUT_INPUT+'.subset.markers'))

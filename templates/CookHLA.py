@@ -1,5 +1,4 @@
 #!/users/nanje/miniconda3/bin/python
-
 #-*- coding: utf-8 -*-
 
 import os, sys, re
@@ -30,11 +29,9 @@ HLA_names = ["A", "B", "C", "DPA1", "DPB1", "DQA1", "DQB1", "DRB1"]
 TOLERATED_DIFF = 0.15
 
 
-
-
 def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGeneticMap=None, _Average_Erate=None,
-            _java_memory='120g', _MultP=1, _answer=None, __save_intermediates=False, __use_Multiple_Markers=True,
-            _p_src="/scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src", _p_dependency="./dependency", _given_prephased=None, f_prephasing=False, _HapMap_Map=None,
+            _java_memory='120g', _MultP=9, _answer=None, __save_intermediates=False, __use_Multiple_Markers=True,
+            _p_src="/scratch3/users/nanje/MHC-Imputation-Accuracy/templates/src", _p_dependency="./dependency", _given_prephased=None, f_prephasing=False, _HapMap_Map=None,
             __overlap__=(0.5, 1, 1.5), _window=5, _ne=10000, _nthreads=1, f_measureAcc_v2=False, f_BEAGLE5=False,
             f_save_IMPUTATION_INPUT=False):
 
@@ -66,8 +63,10 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
     (2) Beagle5.1
     
     """
+
+    
     _p_plink = "/users/nanje/miniconda3/bin/plink"
-    _p_beagle4 = "/usr/local/bin/beagle4.jar"    
+    _p_beagle4 = "/usr/local/bin/beagle4.jar"
     _p_beagle5 = "/usr/local/bin/beagle5.jar"
     _p_tcsh = "/users/nanje/miniconda3/bin/tcsh"
     _p_perl = "/users/nanje/miniconda3/bin/perl"
@@ -198,7 +197,7 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
     BEAGLE2VCF = ' '.join(["/users/nanje/miniconda3/bin/java", '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory), "-jar", _p_beagle2vcf])
     VCF2BEAGLE = ' '.join(["/users/nanje/miniconda3/bin/java", '-Djava.io.tmpdir={}'.format(JAVATMP), "-Xmx{}".format(_java_memory), "-jar", _p_vcf2beagle])
 
-    MERGE = "/scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates/src/merge_tables.pl"
+    MERGE = '/scratch3/users/nanje/MHC-Imputation-Accuracy/templates/src/merge_tables.pl'
     # PARSEDOSAGE = os.path.join(p_src, 'ParseDosage.csh')
     # BGL2BED = os.path.join(p_src, 'Panel-BGL2BED.sh')
 
@@ -360,7 +359,7 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
             # print(command)
             os.system(command)
 
-            command = ' '.join([MERGE, _out+'.tmp2', _out+'.tmp1', 'SNP', '|', 'grep -v -w NA', '>', _out+'.SNPS.alleles'])
+            command = ' '.join([_p_perl, MERGE, _out+'.tmp2', _out+'.tmp1', 'SNP', '|', 'grep -v -w NA', '>', _out+'.SNPS.alleles'])
             # print(command)
             os.system(command)
 
@@ -403,7 +402,7 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
             # print(command)
             os.system(command)
 
-            command = ' '.join([MERGE, _reference+'.FRQ.frq', MHC+'.FLP.FRQ.frq', 'SNP', '|', 'grep -v -w NA', '>', _out+'.SNPS.frq'])
+            command = ' '.join([_p_perl, MERGE, _reference+'.FRQ.frq', MHC+'.FLP.FRQ.frq', 'SNP', '|', 'grep -v -w NA', '>', _out+'.SNPS.frq'])
             # print(command)
             os.system(command)
 
@@ -436,8 +435,8 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
             # # print(command)
             # os.system(command)
             #
-            # if not __save_intermediates:
-            #     os.system(' '.join(['rm', _out+'.SNPS.ATCG.frq']))
+            if not __save_intermediates:
+                os.system(' '.join(['rm', _out+'.SNPS.ATCG.frq']))
 
 
 
@@ -476,7 +475,7 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
 
             if not __save_intermediates:
                 os.system(' '.join(['rm', _out+'.SNPS.toremove']))
-                # os.system(' '.join(['rm', _out+'.SNPS.toflip2'])) # (1sample)
+                os.system(' '.join(['rm', _out+'.SNPS.toflip2'])) # (1sample)
                 os.system(' '.join(['rm', MHC+'.FLP.bed']))
                 os.system(' '.join(['rm', MHC+'.FLP.bim']))
                 os.system(' '.join(['rm', MHC+'.FLP.fam']))
@@ -495,7 +494,7 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
             # print(command)
             os.system(command)
 
-            command = ' '.join([MERGE, _reference+'.FRQ.frq', MHC+'.QC.FRQ.frq', 'SNP', '|', 'grep -v -w NA', '>', _out+'.SNPS.QC.frq'])
+            command = ' '.join([_p_perl, MERGE, _reference+'.FRQ.frq', MHC+'.QC.FRQ.frq', 'SNP', '|', 'grep -v -w NA', '>', _out+'.SNPS.QC.frq'])
             # print(command)
             os.system(command)
 
@@ -521,7 +520,7 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
             os.system(command)
 
 
-            command = ' '.join([MERGE, _out+'.tmp2', _out+'.tmp1', 'SNP', '|', 'awk \'{if (NR > 1){if ($5 != "NA"){pos=$5}else{pos=$2}; print "6\t" $1 "\t0\t" pos "\t" $3 "\t" $4}}\'',
+            command = ' '.join([_p_perl, MERGE, _out+'.tmp2', _out+'.tmp1', 'SNP', '|', 'awk \'{if (NR > 1){if ($5 != "NA"){pos=$5}else{pos=$2}; print "6\t" $1 "\t0\t" pos "\t" $3 "\t" $4}}\'',
                                 '>', MHC+'.QC.bim'])
             # print(command)
             os.system(command)
@@ -542,7 +541,7 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
             os.system(command)
 
             if not __save_intermediates:
-                # os.system(' '.join(['rm', MHC+'.QC.{bed,bim,fam,log}']))
+                os.system(' '.join(['rm', MHC+'.QC.{bed,bim,fam,log}']))
                 os.system(' '.join(['rm', MHC+'.QC.reorder.bed']))
                 os.system(' '.join(['rm', MHC+'.QC.reorder.bim']))
                 os.system(' '.join(['rm', MHC+'.QC.reorder.fam']))
@@ -611,7 +610,7 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
             # print(command)
             os.system(command)
 
-            command = ' '.join([MERGE, _out+'.tmp2', _out+'.tmp1', 'SNP', '|', 'grep -v -w NA', '>', _out+'.SNPS.alleles'])
+            command = ' '.join([_p_perl, MERGE, _out+'.tmp2', _out+'.tmp1', 'SNP', '|', 'grep -v -w NA', '>', _out+'.SNPS.alleles'])
             # print(command)
             os.system(command)
 
@@ -654,7 +653,7 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
             # print(command)
             os.system(command)
 
-            command = ' '.join([MERGE, _reference+'.FRQ.frq', MHC+'.FLP.FRQ.frq', 'SNP', '|', 'grep -v -w NA', '>', _out+'.SNPS.frq'])
+            command = ' '.join([_p_perl, MERGE, _reference+'.FRQ.frq', MHC+'.FLP.FRQ.frq', 'SNP', '|', 'grep -v -w NA', '>', _out+'.SNPS.frq'])
             # print(command)
             os.system(command)
 
@@ -736,7 +735,7 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
             # print(command)
             os.system(command)
 
-            command = ' '.join([MERGE, _reference+'.FRQ.frq', MHC+'.QC.FRQ.frq', 'SNP', '|', 'grep -v -w NA', '>', _out+'.SNPS.QC.frq'])
+            command = ' '.join([_p_perl, MERGE, _reference+'.FRQ.frq', MHC+'.QC.FRQ.frq', 'SNP', '|', 'grep -v -w NA', '>', _out+'.SNPS.QC.frq'])
             # print(command)
             os.system(command)
 
@@ -762,7 +761,7 @@ def CookHLA(_input, _hg_input, _out, _reference, _hg_reference='18', _AdaptiveGe
             os.system(command)
 
 
-            command = ' '.join([MERGE, _out+'.tmp2', _out+'.tmp1', 'SNP', '|', 'awk \'{if (NR > 1){if ($5 != "NA"){pos=$5}else{pos=$2}; print "6\t" $1 "\t0\t" pos "\t" $3 "\t" $4}}\'',
+            command = ' '.join([_p_perl, MERGE, _out+'.tmp2', _out+'.tmp1', 'SNP', '|', 'awk \'{if (NR > 1){if ($5 != "NA"){pos=$5}else{pos=$2}; print "6\t" $1 "\t0\t" pos "\t" $3 "\t" $4}}\'',
                                 '>', MHC+'.QC.bim'])
             # print(command)
             os.system(command)

@@ -1,4 +1,3 @@
-#!/users/nanje/miniconda3/bin/python
 #-*- coding: utf-8 -*-
 
 import os, sys, re
@@ -21,7 +20,7 @@ class CookHLA_MakeGeneticMap(object):
     def __init__(self, _input, _hg_input, _reference, _out):
 
 
-        _p_plink = which("plink")
+        _p_plink = "/users/nanje/miniconda3/bin/plink"
         PLINK = "{} --noweb --silent --allow-no-sex".format(_p_plink)
 
 
