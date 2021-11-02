@@ -21,20 +21,18 @@ process makegenetic_map {
 process cookHLAimpute {
     tag "CookHLA Imputation of ${dataset} datasets using ${spop} reference"
     publishDir "${params.outdir}/Imputation/CookHLA", mode: 'copy', overwrite: false
+    label "bigmem"
     
     input:
         tuple val(dataset), file(dbed), file(dbim), file(dfam), val(spop), file(frqFRQ), file(bed), file(bim), file(fam), file(markers), file(bglphased), file(erate), file(mach)
     output:
-        tuple val(dataset), val(spop), file(alleles), file(hped)
+        tuple val(dataset), val(spop), file("${output}.*")
     script:
         prefix = dbed.baseName
         ref = bed.baseName
-        output = "${dataset}_${spop}_IMPUTED"  
-        alleles = "${output}.alleles"
-        hped = "${output}.hped"
-        
+        output = "${dataset}_${spop}"  
         """
-            /users/nanje/miniconda3/bin/python /scratch3/users/nanje/MHC-Imputation-Accuracy/templates/CookHLA.py -i ${prefix} -hg 18 -ref ${ref} -o ${output} -gm ${mach} -ae ${erate} -mem 120g -mp 9 -bgl4
+        /users/nanje/miniconda3/bin/python /scratch3/users/nanje/MHC-Imputation-Accuracy/templates/CookHLA.py -i ${prefix} -hg 18 -ref ${ref} -o ${output} -gm ${mach} -ae ${erate} -mem 120g -mp 9 -bgl4
         """
 }
 

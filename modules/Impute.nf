@@ -96,8 +96,8 @@ process measureacc {
     input:
         tuple file(answer_file), val(array), val(ref), file(bglphased)
     output:
-        tuple val(array), val(ref), file("${output}.*") 
+        tuple val(array), val(ref), file("${output}.accuracy"), file("${output}_IMPUTED.hped")
     script:
-        output = "${array}_${ref}_ACCURACY"
+        output = "${array}_${ref}"
         template "measacc.py"
 }
