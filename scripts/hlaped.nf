@@ -75,3 +75,8 @@ process hibaghlatypes {
   ( echo -e "\tsample.id\tA.1\tA.2\tB.1\tB.2\tC.1\tC.2\tDQA1.1\tDQA1.2\tDQB1.1\tDQB1.2\tDRB1.1\tDRB1.2"; cat trial ) > gwd_hibag_HLA_Type  
   """
 }
+
+
+// replace : with nothing
+awk '{OFS="\t";gsub(":","",$2); gsub(":","",$3); gsub(":","",$5); gsub(":","",$6); gsub(":","",$8);gsub(":","",$9)}1' omni_H3Africa_HIBAG_HLA.txt > omni_H3A_HIBAG_HLA.txt
+
