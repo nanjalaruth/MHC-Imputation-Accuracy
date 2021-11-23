@@ -1,8 +1,7 @@
 # HLA Class I Imputation Accuracy Workflow
 
 [![Nextflow](https://img.shields.io/badge/nextflow-%E2%89%A520.04.0-brightgreen.svg)](https://www.nextflow.io/)
-[![Docker](https://img.shields.io/badge/docker%20registry-Quay.io-red)](https://quay.io/h3abionet_org/imputation_tools)
-[![Singularity]()
+[![Docker](https://img.shields.io/badge/docker%20registry-Quay.io-red)](https://quay.io/repository/nanjalaruth/impute-hla?tab=tags)
 
 ## Greetings!!
 ### So excited to have you here!!
