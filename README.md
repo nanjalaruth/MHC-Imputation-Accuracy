@@ -26,6 +26,6 @@ To execute the pipeline run:
 ```
 nextflow run nanjalaruth/MHC-Imputation-Accuracy/main.nf -profile singularity
 ```
-- `singularity` profile will download the singularity image from https://quay.io/h3abionet_org/imputation_tools
+- `singularity` profile will download the singularity image from https://quay.io/nanjalaruth/impute-hla
 
-Find me on twitter (@Ruthnanje) and [LinkedIn](https://www.linkedin.com/in/ruth-nanjala-17991117a/)
+### Find me on twitter (@Ruthnanje) and [LinkedIn](https://www.linkedin.com/in/ruth-nanjala-17991117a/)
