@@ -9,7 +9,7 @@
 ## Project description
 Genotype imputation refers to the statistical inference of unobserved genotypes.
 
-This project focused on assessing the accuracy of __imputation tools__ ([SNP2HLA](http://software.broadinstitute.org/mpg/snp2hla/) and [HIBAG](https://github.com/zhengxwen/HIBAG)), __reference panels__(1kg-All, 1kg-Gwd, 1kg-Afr, H3Africa) and __genotyping arrays__ (Illumina Omni 2.5 array, H3Africa array) used for imputation of the human leukocyte antigen (HLA) region in selected African populations. 
+This project focused on assessing the accuracy of __imputation tools__ ([SNP2HLA](http://software.broadinstitute.org/mpg/snp2hla/) and [HIBAG](https://github.com/zhengxwen/HIBAG)), __reference panels__(1kg-All, 1kg-Gwd, 1kg-Afr, H3Africa) and __genotyping arrays__ (Illumina Omni 2.5 array, H3Africa array) used for imputation of the human leukocyte antigen (HLA) region in __selected African populations. 
 
 The HLA region has been associated to *autoimmune* diseases such as rheumatoid arthritis and *infectious diseases* such as HIV/AIDS. Accurate imputation of this highly polymorphic region would increase the chances of identifying the causal variants of some autoimmune and immune mediated diseases.
 
@@ -20,7 +20,7 @@ The HLA region has been associated to *autoimmune* diseases such as rheumatoid a
 
 ## Running the pipeline
 The pipeline does not require installation as `NextFlow` will automatically fetch it from `GitHub`.
-Please edit the *nextflow.config* to suit the path to where your datasets are stored.
+Please edit the __*nextflow.config*__ to suit the path to where your datasets are stored.
 
 To execute the pipeline run:
 ```
