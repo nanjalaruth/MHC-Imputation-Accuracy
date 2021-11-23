@@ -1,4 +1,4 @@
-<H1 align="center"> HLA Class I Imputation Accuracy Workflow <br/> </H1>
+# HLA Class I Imputation Accuracy Workflow 
 
 [![Nextflow](https://img.shields.io/badge/nextflow-%E2%89%A520.04.0-brightgreen.svg)](https://www.nextflow.io/)
 [![Docker](https://img.shields.io/badge/docker%20registry-Quay.io-red)](https://quay.io/repository/nanjalaruth/impute-hla?tab=tags)
@@ -13,25 +13,19 @@ This project focused on assessing the accuracy of __imputation tools__ ([SNP2HLA
 
 The HLA region has been associated to *autoimmune* diseases such as rheumatoid arthritis and *infectious diseases* such as HIV/AIDS. Accurate imputation of this highly polymorphic region would increase the chances of identifying the causal variants of some autoimmune and immune mediated diseases.
 
-### Installation 
+## Installation 
 1. [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html)
 2. [Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04) 
 3. [Singularity](https://sylabs.io/guides/3.0/user-guide/installation.html)
 
+## Running the pipeline
+The pipeline does not require installation as `NextFlow` will automatically fetch it from `GitHub`.
+Please edit the *nextflow.config* to suit the path to where your datasets are stored.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+To execute the pipeline run:
+```
+nextflow run nanjalaruth/MHC-Imputation-Accuracy/main.nf -profile singularity
+```
+- `singularity` profile will download the singularity image from https://quay.io/h3abionet_org/imputation_tools
 
 Find me on twitter (@Ruthnanje) and [LinkedIn](https://www.linkedin.com/in/ruth-nanjala-17991117a/)
-
