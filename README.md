@@ -1,4 +1,4 @@
-<H1 align="center"> HLA Class I Imputation Accuracy Workflow <br/> nanjalaruth/MHC-Imputation-Accuracy </H1>
+<H1 align="center"> HLA Class I Imputation Accuracy Workflow <br/> </H1>
 
 [![Nextflow](https://img.shields.io/badge/nextflow-%E2%89%A520.04.0-brightgreen.svg)](https://www.nextflow.io/)
 [![Docker](https://img.shields.io/badge/docker%20registry-Quay.io-red)](https://quay.io/repository/nanjalaruth/impute-hla?tab=tags)
