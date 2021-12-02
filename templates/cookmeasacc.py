@@ -1,6 +1,6 @@
 #!/users/nanje/miniconda3/bin/python3.6
 import sys
-sys.path.append('/scratch3/users/nanje/MHC-Imputation-Accuracy/cookHLA/templates')
+sys.path.append('/scratch3/users/nanje/MHC-Imputation-Accuracy/templates')
 from measureAcc.measureAccuracy import CookHLA_measureAcc
 import argparse,time
 parser = argparse.ArgumentParser()
