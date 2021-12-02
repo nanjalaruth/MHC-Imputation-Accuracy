@@ -1,4 +1,7 @@
-# MHC-Imputation-Accuracy
+# HLA Imputation Accuracy Workflow 
+
+[![Nextflow](https://img.shields.io/badge/nextflow-%E2%89%A520.04.0-brightgreen.svg)](https://www.nextflow.io/)
+[![Docker](https://img.shields.io/badge/docker%20registry-Quay.io-red)](https://quay.io/repository/nanjalaruth/impute-hla?tab=tags)
 
 ## Greetings!!
 ### So excited to have you here!!
@@ -6,15 +9,23 @@
 ## Project description
 Genotype imputation refers to the statistical inference of unobserved genotypes.
 
-This project focusses on assessing the accuracy of imputation tools, reference panels and genotyping arrays used for imputation of the human leukocyte antigen (HLA) region in selected African populations. The human Major histocompatibility Complex region also referred to as the HLA region has been associated to autoimmune and immune mediated diseases such as rheumatoid arthritis. Accurate imputation of this highly polymorphic region would increase the chances of identifying the causal variants of some autoimmune and immune mediated diseases.
+This project focused on assessing the accuracy of __imputation tools__ ([SNP2HLA](http://software.broadinstitute.org/mpg/snp2hla/) and [HIBAG](https://github.com/zhengxwen/HIBAG)), __reference panels__(1kg-All, 1kg-Gwd, 1kg-Afr, H3Africa) and __genotyping arrays__ (Illumina Omni 2.5 array, H3Africa array) used for imputation of the human leukocyte antigen (HLA) class I alleles in __selected African populations.__ 
 
-### Author
-Ruth Nanjala
+The HLA region has been associated to *autoimmune* diseases such as rheumatoid arthritis and *infectious diseases* such as HIV/AIDS. Accurate imputation of this highly polymorphic region would increase the chances of identifying the causal variants of some autoimmune and immune mediated diseases.
 
-Find me on twitter (@Ruthnanje) and [LinkedIn](https://www.linkedin.com/in/ruth-nanjala-17991117a/)
+## Installation 
+1. [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html)
+2. [Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04) 
+3. [Singularity](https://sylabs.io/guides/3.0/user-guide/installation.html)
 
-### Mentors
-1. Prof. Nicola Mulder
-2. Mamana Mbiyavanga
-3. Prof. Santie De Villiers
-4. Prof. Suhaila Hashim
+## Running the pipeline
+The pipeline does not require installation as `NextFlow` will automatically fetch it from `GitHub`.
+Please edit the __*nextflow.config*__ to suit the path to where your datasets are stored.
+
+To execute the pipeline run:
+```
+nextflow run nanjalaruth/MHC-Imputation-Accuracy/main.nf -profile singularity
+```
+- `singularity` profile will download the singularity image from https://quay.io/nanjalaruth/impute-hla
+
+### Find me on twitter (@Ruthnanje) and [LinkedIn](https://www.linkedin.com/in/ruth-nanjala-17991117a/)
