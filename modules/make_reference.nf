@@ -111,7 +111,7 @@ process make_snp2hlarefpanel {
     publishDir "${params.outdir}/RefPanel/SNP2HLA", mode: 'copy', overwrite: false
     
     input:
-        tuple val(dataset), val(subpop), file(bed), file(bim), file(fam), file(hla)
+        tuple val(dataset), val(subpop), path(bed), path(bim), path(fam), path(hla)
     output:
         tuple val(dataset), val(subpop), file("${refoutput}.*")
     script:
