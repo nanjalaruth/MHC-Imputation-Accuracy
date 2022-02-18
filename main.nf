@@ -8,34 +8,46 @@ nextflow.enable.dsl=2
 include {  combine_hlatypes_snp2hla as combine_hlatypes_H3A_snp2hla;
 combine_hlatypes_snp2hla as combine_hlatypes_1kg_All_snp2hla; combine_hlatypes_hibag; 
 combine_hlatypes_hibag as combine_hlatypes_1kg_All_hibag;
-combine_hlatypes_hibag as combine_hlatypes_H3A_hibag;;
+combine_hlatypes_hibag as combine_hlatypes_H3A_hibag;
 subset_hlatypes_snp2hla; subset_hlatypes_hibag; get_geno_plink as get_geno_plink_dataset; 
 get_geno_plink as get_geno_plink_H3A_dataset; get_geno_plink as get_geno_plink_subpop; 
 make_snp2hlarefpanel as make_snp2hlarefpanel_dataset; 
 make_snp2hlarefpanel as make_snp2hlarefpanel_H3A_dataset
-make_snp2hlarefpanel as make_snp2hlarefpanel_subpop; 
+make_snp2hlarefpanel as make_snp2hlarefpanel_subpop;
+make_snp2hlarefpanel as make_snp2hlarefpanel_eur;
 makeref_snp2hla_phasing as makeref_snp2hla_phasing_dataset; 
 makeref_snp2hla_phasing as makeref_snp2hla_phasing_H3A_dataset;
 makeref_snp2hla_phasing as makeref_snp2hla_phasing_subpop; 
+makeref_snp2hla_phasing as makeref_snp2hla_phasing_eur;
 convert_to_beagle as convert_to_beagle_dataset; 
 convert_to_beagle as convert_to_beagle_H3A_dataset;
-convert_to_beagle as convert_to_beagle_subpop} from './modules/make_reference'
+convert_to_beagle as convert_to_beagle_subpop;
+convert_to_beagle as convert_to_beagle_eur;
+} from './modules/make_reference'
 
 // SNP2HLA Imputation
 include { preparedata_imputation as prepare_hg18_data_imputation;
 preparedata_imputation as prepare_hg19_data_imputation;
 impute_data as impute_dataset; 
 impute_data as impute_H3A_dataset; 
-impute_data as impute_subpop; imputation as subpop_imputation; 
+impute_data as impute_subpop; 
+impute_data as impute_eur;
+imputation as subpop_imputation; 
 imputation as dataset_H3A_imputation;
-imputation as dataset_imputation; posteprob_dosage as posteprob_dosage_subpop;
+imputation as dataset_imputation; 
+imputation as eur_imputation;
+posteprob_dosage as posteprob_dosage_subpop;
 posteprob_dosage as posteprob_dosage_dataset;
 posteprob_dosage as posteprob_dosage_H3A_dataset;
+posteprob_dosage as posteprob_dosage_eur;
 measureacc as measureacc_H3A_dataset;
-measureacc as measureacc_dataset; measureacc as measureacc_subpop} from './modules/Impute.nf'
+measureacc as measureacc_dataset; 
+measureacc as measureacc_subpop;
+measureacc as measureacc_eur} from './modules/Impute.nf'
 
 // HIBAG Imputation
-include { hibag_impute as hibag_impute_dataset; hibag_impute as hibag_impute_subpop } from './modules/Hibag.nf'
+include { hibag_impute as hibag_impute_dataset; 
+hibag_impute as hibag_impute_subpop; hibag_impute_eur } from './modules/Hibag.nf'
 
 // CookHLA Imputation
 include { makegenetic_map as makegenetic_map_dataset; 
@@ -168,6 +180,10 @@ workflow{
     .map{dataset, subpop, bed, bim, fam, snphla, hibaghla -> [dataset, subpop, bed, bim, fam, snphla]}
     make_snp2hlarefpanel_subpop(inp)
 
+    // Step 3.1.1.4 Pre built European population
+    eur_input =  Channel.fromList(params.eur_datasets)
+    // eur_input.view()
+    make_snp2hlarefpanel_eur(eur_input)
 
     // Step 3.1.2 Convert to Beagle
     // Step 3.1.2.1: 1kg-All
@@ -179,8 +195,15 @@ workflow{
     convert_to_beagle_H3A_dataset(beagle_input)
 
     // Step 3.1.2.3. 1kg-All subpop (African&Gambian)
-    beagle_subpop_input = make_snp2hlarefpanel_subpop.out.map{dataset, subpop, datas -> [dataset, subpop, datas[11], datas[15]]}
+    beagle_subpop_input = make_snp2hlarefpanel_subpop.out
+    .map{dataset, subpop, datas -> [dataset, subpop, datas[11], datas[15]]}
     convert_to_beagle_subpop(beagle_subpop_input)
+
+    // Step 3.1.2.4 Pre built European population
+    beagle_input = make_snp2hlarefpanel_eur.out
+    .map{dataset, subpop, datas -> [dataset, subpop, datas[4], datas[8]]}
+    // beagle_input.view()
+    convert_to_beagle_eur(beagle_input)
 
 
     // Step 3.1.3: Phasing
@@ -193,6 +216,8 @@ workflow{
     //  Step 3.1.3.3. 1kg-All subpop (African&Gambian)
     makeref_snp2hla_phasing_subpop(convert_to_beagle_subpop.out)
 
+    //  Step 3.1.3.4. Pre built European population
+    makeref_snp2hla_phasing_eur(convert_to_beagle_eur.out)
 
     // Step 4: Imputation
     // Step 4.1: prepare data (hg18 format)
@@ -225,11 +250,19 @@ workflow{
     impute_dataset(imput_input)
     
     //  Step 4.2.3 H3Africa
-    beagl_input = make_snp2hlarefpanel_H3A_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[9], datas[10], datas[12]]}
+    beagl_input = make_snp2hlarefpanel_H3A_dataset.out
+    .map{dataset, subpop, datas -> [dataset, subpop, datas[9], datas[10], datas[12]]}
     imput_input = prepare_hg18_data_imputation.out.combine(beagl_input)
     .map {dataset, subpop, bed, bim, fam, pop, spop, pbed, pbim, pfam -> [dataset, subpop, bed, bim, fam, spop, pbed, pbim, pfam]}      
     impute_H3A_dataset(imput_input)
 
+    // Step 4.2.4 Pre built model
+    bgl_input = make_snp2hlarefpanel_eur.out
+    .map{dataset, subpop, datas -> [dataset, subpop, datas[2], datas[3], datas[5]]}
+    impute_input = prepare_hg18_data_imputation.out.combine(bgl_input)
+    .map {dataset, subpop, bed, bim, fam, pop, spop, pbed, pbim, pfam -> [dataset, subpop, bed, bim, fam, spop, pbed, pbim, pfam]}      
+    // impute_input.view()
+    impute_eur(impute_input)
 
     // Step 4.3: Proceed with imputation
     // Step 4.3.1: 1kg-All subpop (African&Gambian)
@@ -249,13 +282,23 @@ workflow{
     dataset_imputation(impt_input)
 
     // Step 4.3.2: H3Africa
-    in = make_snp2hlarefpanel_H3A_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[14]]}
+    in = make_snp2hlarefpanel_H3A_dataset.out
+    .map{dataset, subpop, datas -> [dataset, subpop, datas[14]]}
     .combine(makeref_snp2hla_phasing_H3A_dataset.out, by:[0,1])
     .map{dataset, subpop, markers, phased -> [subpop, markers, phased]}
     impt_input = impute_H3A_dataset.out.map{datset, spop, pop, data -> [pop, spop, data[4]]}
     .combine(in, by:0)
     dataset_H3A_imputation(impt_input)
 
+    // Step 4.3.4: Pre built European model
+    inp = make_snp2hlarefpanel_eur.out
+    .map{dataset, subpop, datas -> [dataset, subpop, datas[7]]}
+    .combine(makeref_snp2hla_phasing_eur.out, by:[0,1])
+    .map{dataset, subpop, markers, phased -> [subpop, markers, phased]}
+    imp_input = impute_eur.out
+    .map{datset, spop, pop, data -> [pop, spop, data[4]]}
+    .combine(inp, by:0)
+    eur_imputation(imp_input)
 
     // Step 4.4
     // Convert posterior probability to dosage format
@@ -284,14 +327,28 @@ workflow{
     // Step 4.4.3: H3Africa
     in = impute_H3A_dataset.out
     .map {dtset, subp, ref, result -> [subp, ref, result[12]] }
-    ref = make_snp2hlarefpanel_H3A_dataset.out.map{dataset, subpop, datas -> [dataset, subpop, datas[10]]}
+    ref = make_snp2hlarefpanel_H3A_dataset.out
+    .map{dataset, subpop, datas -> [dataset, subpop, datas[10]]}
     dos_inp = dataset_H3A_imputation.out
     .map{dataset, reference, results -> [dataset, reference, results[0], results[1], results[2]]}
     .combine(in, by:[0,1])
     .combine(ref, by: 1)
     .map{data, refenc, probs, phased, r2, dfam, set, refbim -> [data, refenc, probs, phased, r2, dfam, refbim]}
-    // dos_inp.view()
     posteprob_dosage_H3A_dataset(dos_inp)
+
+
+    // Step 4.4.4: Pre built European model
+    in = impute_eur.out
+    .map {dtset, subp, ref, result -> [subp, ref, result[12]] }
+    ref = make_snp2hlarefpanel_eur.out
+    .map{dataset, subpop, datas -> [dataset, subpop, datas[3]]}
+    dos_inp = eur_imputation.out
+    .map{dataset, reference, results -> [dataset, reference, results[1], results[2], results[3]]}
+    .combine(in, by:[0,1])
+    .combine(ref, by: 1)
+    .map{data, refenc, probs, phased, r2, dfam, set, refbim -> [data, refenc, probs, phased, r2, dfam, refbim]}
+    // dos_inp.view()
+    posteprob_dosage_eur(dos_inp)
 
 
     // Step 4.5: MeasureAccuracy
@@ -312,6 +369,13 @@ workflow{
     .combine(posteprob_dosage_H3A_dataset.out)
     .map{answer, array, ref, rest -> [answer, array, ref, rest[2]]}
     measureacc_H3A_dataset(ans)
+  
+
+    // Step 4.5.4 Prebuilt European model
+    ans =  Channel.fromPath(params.answer_file)
+    .combine(posteprob_dosage_eur.out)
+    .map{answer, array, ref, rest -> [answer, array, ref, rest[2]]}
+    measureacc_eur(ans)
 
 
     // TRAIN AND PREDICT USING SOFTWARE 2
@@ -334,6 +398,13 @@ workflow{
     .map{dataset, subpop, bed, bim, fam, dtset, spop, model_a, model_b, model_c -> [dataset, subpop, bed, bim, fam, spop, model_a, model_b, model_c]}
     .combine(answerfile)
     hibag_impute_dataset(tst_data)
+
+    // 2.3 Hibag Pre built model (European population)
+    answerfile = Channel.fromPath(params.hibag_answerfile)
+    tst_data = prepare_hg18_data_imputation.out
+    .combine(answerfile)
+    // tst_data.view()
+    // hibag_impute_eur(tst_data)
 
     // GENERATE SNP2HLA INFO FILE FOR COMPARISON WITH GENERAL IMPUTATION TOOLS
     // subpop
