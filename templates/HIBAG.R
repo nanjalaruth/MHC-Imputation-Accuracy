@@ -18,7 +18,7 @@ model.c <- hlaModelFromObj(model.objC)
 bed.fn <- ("${bed}")
 fam.fn <- ("${fam}")
 bim.fn <- ("${bim}")
-test.geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg18")
+test.geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
 
 # Calculate allele frequencies
 afreq = hlaGenoAFreq(test.geno)
