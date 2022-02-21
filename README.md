@@ -26,7 +26,7 @@ Imputation accuracy was based on [SNP2HLA](http://software.broadinstitute.org/mp
 ### Target Genotype file
 
 The input file must be a VCF file. As the work focuses on the HLA region, you are required to only use SNPs in chr6:29-34Mb. Thus, you can portably prepare only those SNPs in that region as input file.
-SNP2HLA uses
+SNP2HLA uses hg18 data while HIBAG uses hg19 data. You are therefore required to provide both files as input.
 
 ### Reference panel
 
@@ -37,6 +37,7 @@ I focused on 4  custom made reference panels; 1kg-All, 1kg-Gwd, 1kg-Afr, H3Afric
 
 If you are working with populations that are not linked, provide the paths to the SNP genotype vcf file as demonstrated in the `genotype_files` flag in the test.config file. If you have multiple files, you could assign them to the same flag by creating more lists like what has been done with the sample dataset. Also provide the path to the HLA type file as shown in the `hlatype_files` flag within the test.config file.
 
+**N/B** HLA typing was done using the [Optitype tool](https://github.com/nf-core/hlatyping)
 
 ## Running the pipeline
 There are 2 ways to run the pipeline:
