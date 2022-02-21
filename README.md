@@ -11,12 +11,9 @@ Some regions within the human genome (MHC otherwise known as HLA) are highly var
 
 Genotype imputation is a statistical process and thus needs to be assessed to ensure that the predicted genotypes are accurate.
 
-The project focused on assessing the accuracy of HLA alleles and HLA SNPs imputation in __selected African populations.__ 
+The project focused on assessing the accuracy of HLA Class I alleles imputation in __selected African populations.__ 
 
-### HLA alleles class I alleles 
 Imputation accuracy was based on [SNP2HLA](http://software.broadinstitute.org/mpg/snp2hla/) and [HIBAG](https://github.com/zhengxwen/HIBAG) __imputation tools__, 1kg-All, 1kg-Gwd, 1kg-Afr, H3Africa, prebuilt EUR __reference panels__ and Illumina Omni 2.5 array, H3Africa array __genotyping arrays__  
-
-### HLA SNPs
 
 ## Installation 
 1. [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html)
@@ -24,6 +21,22 @@ Imputation accuracy was based on [SNP2HLA](http://software.broadinstitute.org/mp
 3. [Singularity](https://sylabs.io/guides/3.0/user-guide/installation.html)
 
 **N/B** You do not need to install any other tool as `singularity` profile will download the singularity image from https://quay.io/nanjalaruth/impute-hla
+
+## Preparing Input files
+1. Target Genotype file
+
+The input file must be a VCF file. As the work focuses on the HLA region, you are required to only use SNPs in chr6:29-34Mb. Thus, you can portably prepare only those SNPs in that region as input file.
+SNP2HLA uses
+
+2. Reference panel
+
+The workflow focuses on running the data on a pre built European reference panel and reference panels that are built in the process of running the pipeline.
+To custom make a reference panel, a HLA type file and SNP genotype file are required. The pipeline thus requires a HLA type file and SNP genotype file to make the reference panel.
+
+I focused on 4  custom made reference panels; 1kg-All, 1kg-Gwd, 1kg-Afr, H3Africa. The 1kg-Gwd and 1kg-Afr are a subset of 1kg-All. In case you have a similar dataset, assign the path to the file with the subpopulation rsids to the flag termed `subpop_ids`. This is to bypass the need to get a vcf file that matches the subsetted population.
+
+If you are working with populations that are not linked, provide the paths to the SNP genotype vcf file as demonstrated in the `genotype_files` flag in the test.config file. If you have multiple files, you could assign them to the same flag by creating more lists like what has been done with the sample dataset. Also provide the path to the HLA type file as shown in the `hlatype_files` flag within the test.config file.
+
 
 ## Running the pipeline
 There are 2 ways to run the pipeline:
