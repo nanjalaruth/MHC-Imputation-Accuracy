@@ -74,4 +74,4 @@ nextflow run main.nf -c conf/test.config -profile singularity, slurm
 nextflow run nanjalaruth/MHC-Imputation-Accuracy -c `path to your config file` -profile singularity
 ```
 
-In case of any querries, tag me on an issue or send me a message on twitter (@Ruthnanje) or [LinkedIn](https://www.linkedin.com/in/ruth-nanjala-17991117a/)
+## In case of any querries, tag me on an issue or send me a message on twitter (@Ruthnanje) or [LinkedIn](https://www.linkedin.com/in/ruth-nanjala-17991117a/)
