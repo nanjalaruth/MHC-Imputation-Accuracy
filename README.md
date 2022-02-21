@@ -11,7 +11,7 @@ Some regions within the human genome (MHC otherwise known as HLA) are highly var
 
 Genotype imputation is a statistical process and thus needs to be assessed to ensure that the predicted genotypes are accurate.
 
-The project focused on assessing the accuracy of HLA Class I alleles imputation in __selected African populations.__ 
+The project focused on assessing the accuracy of imputing HLA Class I alleles in __selected African populations.__ 
 
 Imputation accuracy was based on [SNP2HLA](http://software.broadinstitute.org/mpg/snp2hla/) and [HIBAG](https://github.com/zhengxwen/HIBAG) __imputation tools__, 1kg-All, 1kg-Gwd, 1kg-Afr, H3Africa, prebuilt EUR __reference panels__ and Illumina Omni 2.5 array, H3Africa array __genotyping arrays__  
 
@@ -23,12 +23,12 @@ Imputation accuracy was based on [SNP2HLA](http://software.broadinstitute.org/mp
 **N/B** You do not need to install any other tool as `singularity` profile will download the singularity image from https://quay.io/nanjalaruth/impute-hla
 
 ## Preparing Input files
-1. Target Genotype file
+## Target Genotype file
 
 The input file must be a VCF file. As the work focuses on the HLA region, you are required to only use SNPs in chr6:29-34Mb. Thus, you can portably prepare only those SNPs in that region as input file.
 SNP2HLA uses
 
-2. Reference panel
+### Reference panel
 
 The workflow focuses on running the data on a pre built European reference panel and reference panels that are built in the process of running the pipeline.
 To custom make a reference panel, a HLA type file and SNP genotype file are required. The pipeline thus requires a HLA type file and SNP genotype file to make the reference panel.
