@@ -11,7 +11,12 @@ Some regions within the human genome (MHC otherwise known as HLA) are highly var
 
 Genotype imputation is a statistical process and thus needs to be assessed to ensure that the predicted genotypes are accurate.
 
-The project focused on assessing the accuracy of __imputation tools__ ([SNP2HLA](http://software.broadinstitute.org/mpg/snp2hla/) and [HIBAG](https://github.com/zhengxwen/HIBAG)), __reference panels__(1kg-All, 1kg-Gwd, 1kg-Afr, H3Africa) and __genotyping arrays__ (Illumina Omni 2.5 array, H3Africa array) used for imputation of the human leukocyte antigen (HLA) class I alleles in __selected African populations.__ 
+The project focused on assessing the accuracy of HLA alleles and HLA SNPs imputation in __selected African populations.__ 
+
+### HLA alleles class I alleles 
+Imputation accuracy was based on [SNP2HLA](http://software.broadinstitute.org/mpg/snp2hla/) and [HIBAG](https://github.com/zhengxwen/HIBAG) __imputation tools__, 1kg-All, 1kg-Gwd, 1kg-Afr, H3Africa, prebuilt EUR __reference panels__ and Illumina Omni 2.5 array, H3Africa array __genotyping arrays__  
+
+### HLA SNPs
 
 ## Installation 
 1. [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html)
