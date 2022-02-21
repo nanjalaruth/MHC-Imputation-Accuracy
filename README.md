@@ -45,7 +45,7 @@ If you are using any job scheduler, be sure to include it in the profile. For ex
 nextflow run main.nf -c conf/test.config -profile singularity, slurm
 ```
 
-### Running the pipeline directly from GitHub
+### Run the pipeline directly from GitHub
 `NextFlow` will automatically fetch the pipeline from `GitHub` so you don't need to install it.
 
 #### Steps to follow
