@@ -23,7 +23,7 @@ Imputation accuracy was based on [SNP2HLA](http://software.broadinstitute.org/mp
 **N/B** You do not need to install any other tool as `singularity` profile will download the singularity image from https://quay.io/nanjalaruth/impute-hla
 
 ## Preparing Input files
-## Target Genotype file
+### Target Genotype file
 
 The input file must be a VCF file. As the work focuses on the HLA region, you are required to only use SNPs in chr6:29-34Mb. Thus, you can portably prepare only those SNPs in that region as input file.
 SNP2HLA uses
