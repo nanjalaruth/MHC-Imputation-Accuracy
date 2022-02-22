@@ -7,7 +7,7 @@
 ## Introduction
 Association studies for instance GWAS, traditionally use genotyping arrays to genotype large set of individuals and in this way determine SNPs that are significantly overrepresented in the cases compared to the controls and thus determine association with disease. Genotyping arrays are cheaper than sequencing but can only measure a tag of SNPs from the >300 million SNPs that are available. In order to increase the number of SNPs that can be used for association studies, genotype imputation is performed. Genotype imputation refers to the statistical inference of unobserved genotypes. 
 
-Some regions within the human genome (MHC otherwise known as HLA) are highly variable and maybe difficult to impute. The HLA region has been associated to *autoimmune* diseases such as rheumatoid arthritis and *infectious diseases* such as HIV/AIDS. Accurate imputation of this region is key, as it would help increase the chances of identifying the causal variants of some autoimmune and immune mediated diseases. 
+Some regions within the human genome, (MHC otherwise known as HLA), are highly variable and maybe difficult to impute. The HLA region has been associated to *autoimmune* diseases such as rheumatoid arthritis and *infectious diseases* such as HIV/AIDS. Accurate imputation of this region is key, as it would help increase the chances of identifying the causal variants of some autoimmune and immune mediated diseases. 
 
 Genotype imputation is a statistical process and thus needs to be assessed to ensure that the predicted genotypes are accurate.
 
