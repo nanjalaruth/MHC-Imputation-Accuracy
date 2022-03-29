@@ -32,7 +32,7 @@ process cookHLAimpute {
         ref = bed.baseName
         output = "${dataset}_${spop}"  
         """
-        /users/nanje/miniconda3/bin/python /scratch3/users/nanje/MHC-Imputation-Accuracy/templates/CookHLA.py -i ${prefix} -hg 18 -ref ${ref} -o ${output} -gm ${mach} -ae ${erate} -mem 120g -mp 9 -bgl4
+        /users/nanje/miniconda3/bin/python /scratch3/users/nanje/MHC-Imputation-Accuracy/templates/CookHLA.py -i ${prefix} -hg 18 -ref ${ref} -o ${output} -gm ${mach} -ae ${erate} -mem 120g -bgl4
         """
 }
 
