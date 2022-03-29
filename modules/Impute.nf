@@ -94,7 +94,7 @@ process measureacc {
     publishDir "${params.outdir}/Imputation/SNP2HLA/Accuracy", mode: 'copy', overwrite: false
     
     input:
-        tuple file(answer_file), val(array), val(ref), file(bglphased)
+        tuple file(answer_file), val(array), val(ref), path(bglphased)
     output:
         tuple val(array), val(ref), file("${output}.accuracy"), file("${output}_IMPUTED.hped")
     script:
