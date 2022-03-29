@@ -43,7 +43,8 @@ posteprob_dosage as posteprob_dosage_eur;
 measureacc as measureacc_H3A_dataset;
 measureacc as measureacc_dataset; 
 measureacc as measureacc_subpop;
-measureacc as measureacc_eur} from './modules/Impute.nf'
+measureacc as measureacc_eur;
+measureacc as measureacc_multiethnic} from './modules/Impute.nf'
 
 // HIBAG Imputation
 include { hibag_impute as hibag_impute_dataset; 
@@ -51,8 +52,11 @@ hibag_impute as hibag_impute_subpop; hibag_impute_eur } from './modules/Hibag.nf
 
 // CookHLA Imputation
 include { makegenetic_map as makegenetic_map_dataset; 
-makegenetic_map as makegenetic_map_subpop; makegenetic_map as makegenetic_map_H3A_dataset; 
+makegenetic_map as makegenetic_map_subpop; 
+makegenetic_map as makegenetic_map_H3A_dataset; 
+makegenetic_map as makegenetic_map_eur_dataset;
 cookHLAimpute as cookHLAimpute_subpop; cookHLAimpute as cookHLAimpute_H3A_dataset;
+cookHLAimpute as cookHLAimpute_eur;
 cookHLAimpute as cookHLAimpute_dataset; measureaccuracy as measureaccuracy_subpop;
 measureaccuracy as measureaccuracy_dataset;
 measureaccuracy as measureaccuracy_H3A_dataset} from './modules/cookHLA.nf'
@@ -64,6 +68,8 @@ generate_info as generate_dataset_info; generate_info as generate_dataset_H3A_in
 
 // Main workflow
 workflow{
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Step 1. Getting HLA TYPES 
     // Step 1.1. For SNP2HLA
@@ -93,7 +99,7 @@ workflow{
     subset_hlatypes_snp2hla(subpop_ids_ch)
 
 
-    // Step 1.2. For HIBAG
+    // Step 1.2. Getting HLAtypes For HIBAG
     // Step 1.2.1. 1kg-All
     smp_ch = Channel.fromList(params.hlatype_files)
                     .map{ title, hlatype -> 
@@ -162,6 +168,9 @@ workflow{
     get_geno_plink_subpop(subpop_geno_ch)
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // Step 3: Make reference panel
     // Step 3.1. For SNP2HLA
     // Step 3.1.1 Get first output files
@@ -218,6 +227,9 @@ workflow{
 
     //  Step 3.1.3.4. Pre built European population
     makeref_snp2hla_phasing_eur(convert_to_beagle_eur.out)
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Step 4: Imputation
     // Step 4.1: prepare data (hg18 format)
@@ -369,7 +381,7 @@ workflow{
     .combine(posteprob_dosage_H3A_dataset.out)
     .map{answer, array, ref, rest -> [answer, array, ref, rest[2]]}
     measureacc_H3A_dataset(ans)
-  
+    // ans.view()
 
     // Step 4.5.4 Prebuilt European model
     ans =  Channel.fromPath(params.answer_file)
@@ -377,6 +389,46 @@ workflow{
     .map{answer, array, ref, rest -> [answer, array, ref, rest[2]]}
     measureacc_eur(ans)
 
+    // Step 4.5.5 Multiethnic HLA reference panel (Yang Luo)
+    multi = Channel.fromList(params.multi_ethnic)
+    ans =  Channel.fromPath(params.answer_file)
+    .combine(multi)
+    // ans.view()
+    // measureacc_multiethnic(ans)
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    // GENERATE SNP2HLA INFO FILE FOR COMPARISON WITH GENERAL IMPUTATION TOOLS
+    // subpop
+    file = posteprob_dosage_subpop.out
+    .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3] ]}
+    combine_subpop_output(file)
+
+    input = combine_subpop_output.out.map{data, ref, r2, id, vcf -> [data, ref, r2, id]}
+    generate_subpop_info(input)
+    
+    // Dataset
+    // 1kg_All
+    // file = posteprob_dosage_dataset.out
+    // .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3]]}
+    // combine_dataset_output(file)
+
+    // input = combine_dataset_output.out.map{data, ref, r2, id, vcf -> [data, ref, r2, id]}
+    // generate_dataset_info(input)
+
+    // H3A
+    file = posteprob_dosage_H3A_dataset.out
+    .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3]]}
+    combine_dataset_H3A_output(file)
+    
+    input = combine_dataset_H3A_output.out.map{data, ref, r2, id, vcf -> [data, ref, r2, id]}
+    generate_dataset_H3A_info(input)
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // TRAIN AND PREDICT USING SOFTWARE 2
     //2. HIBAG
@@ -406,45 +458,8 @@ workflow{
     // tst_data.view()
     // hibag_impute_eur(tst_data)
 
-    // GENERATE SNP2HLA INFO FILE FOR COMPARISON WITH GENERAL IMPUTATION TOOLS
-    // subpop
-    file = posteprob_dosage_subpop.out
-    .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3] ]}
-    combine_subpop_output(file)
 
-    input = combine_subpop_output.out.map{data, ref, r2, id, vcf -> [data, ref, r2, id]}
-    generate_subpop_info(input)
-    
-    // Dataset
-    // 1kg_All
-    file = posteprob_dosage_dataset.out
-    .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3]]}
-    combine_dataset_output(file)
-
-    input = combine_dataset_output.out.map{data, ref, r2, id, vcf -> [data, ref, r2, id]}
-    generate_dataset_info(input)
-
-    // H3A
-    file = posteprob_dosage_H3A_dataset.out
-    .map {target, reference, out -> [target, reference, out[0], out[4], out[6], out[8], out[10], out[3]]}
-    combine_dataset_H3A_output(file)
-    
-    input = combine_dataset_H3A_output.out.map{data, ref, r2, id, vcf -> [data, ref, r2, id]}
-    generate_dataset_H3A_info(input)
-
-    //MASKED DATA
-    // masked_data = Channel.fromList(params.masked_data)
-    // .map{dataset, subpop, pbed, pbim, pfam  -> [dataset, subpop, file(pbed), file(pbim), file(pfam)]}
-    // subpop_modeldata = Channel.fromList(params.subpop_modeldata)
-    // .map{dataset, subpop, hlaA, hlaB, hlaC  -> [dataset, subpop, file(hlaA), file(hlaB), file(hlaC)]}
-    // input_ch = get_geno_plink_subpop.out.combine(subset_hlatypes_hibag.out, by:[0,1])
-    // .map{dataset, subpop, bed, bim, fam, snp2hla_ped, hibag_HLAType -> [dataset, subpop, bed, bim, fam, hibag_HLAType]} 
-    // .combine(subpop_modeldata, by:[0,1])
-    // test_data = masked_data.combine(input_ch)
-    // .map{dataset, subpop, pbed, pbim, pfam, pop, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC -> [dataset, subpop, pbed, pbim, pfam, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC]}
-    // test_data.view()
-    // hibag_impute_subpop(test_data)
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // TRAIN AND PREDICT USING SOFTWARE 3: CookHLA
     // Step 1:Make GeneticMap
@@ -458,7 +473,8 @@ workflow{
     // data_input.view()
     makegenetic_map_subpop(data_input)
 
-    // // // Step 1.2: Dataset
+
+    // Step 1.2: Dataset
     ref = make_snp2hlarefpanel_dataset.out
     .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
     .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
@@ -475,11 +491,21 @@ workflow{
     data_input = prepare_hg18_data_imputation.out.combine(ref)
     .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
     -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
+    // ref.view()
     // data_input.view()
     makegenetic_map_H3A_dataset(data_input)
 
-    // // Step 2: Imputation
-    // // Step 2.1: Dataset
+    // //  Step 1.4: Pre built European model
+    ref = make_snp2hlarefpanel_eur.out
+    .map{dataset, subpop, inp -> [dataset, subpop, inp[0], inp[2], inp[3], inp[5], inp[7]]}
+    .combine(makeref_snp2hla_phasing_eur.out, by:[0,1])
+    data_input = prepare_hg18_data_imputation.out.combine(ref)
+    .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    -> [dataset, subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased]}
+    // makegenetic_map_eur_dataset(data_input)
+
+    // Step 2: Imputation
+    // Step 2.1: Dataset
     ref = make_snp2hlarefpanel_dataset.out
     .map{dataset, subpop, inp -> [dataset, subpop, inp[2], inp[9], inp[10], inp[12], inp[14]]}
     .combine(makeref_snp2hla_phasing_dataset.out, by:[0,1])
@@ -490,7 +516,7 @@ workflow{
     .map{subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased, erate, mach
     -> [subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased, erate, mach]}
     // // data_input.view()
-    // cookHLAimpute_dataset(data_input)
+    cookHLAimpute_dataset(data_input)
 
     // // H3A dataset
     ref = make_snp2hlarefpanel_H3A_dataset.out
@@ -519,6 +545,19 @@ workflow{
     // data_input.view()
     cookHLAimpute_subpop(data_input)
 
+    // Step 2.2: Pre built Eur model
+    // ref = make_snp2hlarefpanel_eur.out
+    // .map{dataset, subpop, inp -> [dataset, subpop, inp[0], inp[2], inp[3], inp[5], inp[7]]}
+    // .combine(makeref_snp2hla_phasing_eur.out, by:[0,1])
+    // data_input = prepare_hg18_data_imputation.out.combine(ref)
+    // .map{dataset, subpop, bed, bim, fam, dtset, spop, frq, rbed, rbim, rfam, markers, bglphased 
+    // -> [subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased]}
+    // .combine(makegenetic_map_eur_dataset.out, by:[0,1])
+    // .map{subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased, erate, mach
+    // -> [subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased, erate, mach]}
+    // data_input.view()
+    // cookHLAimpute_eur(data_input)
+
 
     // // Step 3: Measure accuracy
     // // Step 3.1: Subpop
@@ -529,11 +568,12 @@ workflow{
     measureaccuracy_subpop(ans)
 
     // // Step 3.2: Dataset
-    // // ans =  Channel.fromPath(params.answer_file)
-    // // .combine(cookHLAimpute_dataset.out)
-    // // .map{true_allele, array, ref, imputed_allele -> [true_allele, array, ref, imputed_allele[4]]}
+    ans =  Channel.fromPath(params.cookanswer_file)
+    .combine(cookHLAimpute_dataset.out)
+    .map{true_allele, array, ref, imputed_allele -> [true_allele, array, ref, imputed_allele[4]]}
+    // ans.view()
 
-    // // measureaccuracy_dataset(ans)
+    measureaccuracy_dataset(ans)
 
     // // H3A dataset
      ans =  Channel.fromPath(params.cookanswer_file)
@@ -541,6 +581,9 @@ workflow{
     .map{true_allele, array, ref, imputed_allele -> [true_allele, array, ref, imputed_allele[4]]}
     // ans.view()
     measureaccuracy_H3A_dataset(ans)
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // MASKED DATA
     // masked_data = Channel.fromList(params.masked_data)
@@ -557,5 +600,18 @@ workflow{
     // imp_input = impute_subpop.out.map{datset, spop, pop, data -> [pop, spop, data[4]]}
     // .combine(inp, by:0)
     // subpop_imputation(imp_input)
+
+     //MASKED DATA
+    // masked_data = Channel.fromList(params.masked_data)
+    // .map{dataset, subpop, pbed, pbim, pfam  -> [dataset, subpop, file(pbed), file(pbim), file(pfam)]}
+    // subpop_modeldata = Channel.fromList(params.subpop_modeldata)
+    // .map{dataset, subpop, hlaA, hlaB, hlaC  -> [dataset, subpop, file(hlaA), file(hlaB), file(hlaC)]}
+    // input_ch = get_geno_plink_subpop.out.combine(subset_hlatypes_hibag.out, by:[0,1])
+    // .map{dataset, subpop, bed, bim, fam, snp2hla_ped, hibag_HLAType -> [dataset, subpop, bed, bim, fam, hibag_HLAType]} 
+    // .combine(subpop_modeldata, by:[0,1])
+    // test_data = masked_data.combine(input_ch)
+    // .map{dataset, subpop, pbed, pbim, pfam, pop, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC -> [dataset, subpop, pbed, pbim, pfam, spop, bed, bim, fam, hibag_HLAType, hlaA, hlaB, hlaC]}
+    // test_data.view()
+    // hibag_impute_subpop(test_data)
 }
 
