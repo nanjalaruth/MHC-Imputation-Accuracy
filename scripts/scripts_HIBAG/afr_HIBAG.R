@@ -28,7 +28,7 @@ geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
 
 #STEP 2
 ##LOAD HLA TYPES
-HLA_Type_Table <- read.table(file="africans_hibag_HLAType")
+HLA_Type_Table <- read.table(file="africans_hibag_HLAType.edited")
 head(HLA_Type_Table)
 dim(HLA_Type_Table)
 
@@ -108,7 +108,7 @@ summary(train.geno)
 #STEP 11
 #BUILD AND PREDICT IN PARALLEL
 library(parallel)
-cl <- makeCluster(32)
+cl <- makeCluster(20)
 set.seed(1000)
 hlaParallelAttrBagging(cl, train.HLA_A, train.geno, nclassifier=100, 
                       auto.save = "africans_HLA_A_Model.RData", stop.cluster=TRUE)
@@ -222,7 +222,7 @@ summary(train.geno)
 #STEP 11
 #BUILD AND PREDICT IN PARALLEL
 library(parallel)
-cl <- makeCluster(32)
+cl <- makeCluster(20)
 set.seed(1000)
 hlaParallelAttrBagging(cl, train.HLA_B, train.geno, nclassifier=100, 
                       auto.save = "africans_HLA_B_Model.RData", stop.cluster=TRUE)
@@ -335,7 +335,7 @@ summary(train.geno)
 #STEP 11
 #BUILD AND PREDICT IN PARALLEL
 library(parallel)
-cl <- makeCluster(32)
+cl <- makeCluster(20)
 set.seed(1000)
 hlaParallelAttrBagging(cl, train.HLA_C, train.geno, nclassifier=100, 
                       auto.save = "africans_HLA_C_Model.RData", stop.cluster=TRUE)

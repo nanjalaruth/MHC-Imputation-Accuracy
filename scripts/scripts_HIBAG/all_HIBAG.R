@@ -28,7 +28,7 @@ geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
 
 #STEP 2
 ##LOAD HLA TYPES
-HLA_Type_Table <- read.table(file="1kg_all_hibag_hlatypes")
+HLA_Type_Table <- read.table(file="1kg_all_hibag_hlatypes.edited")
 head(HLA_Type_Table)
 dim(HLA_Type_Table)
 
@@ -107,7 +107,14 @@ summary(train.geno)
 
 #STEP 11
 #BUILD AND PREDICT IN PARALLEL
-# 
+library(parallel)
+cl <- makeCluster(20)
+set.seed(1000)
+hlaParallelAttrBagging(cl, train.HLA_A, train.geno, nclassifier=100, 
+                       auto.save = "1kg_all_HLA_A_Model.RData", stop.cluster=TRUE)
+model.obj <- get(load("1kg_all_HLA_A_Model.RData"))
+model <- hlaModelFromObj(model.obj)
+summary(model)
 
 
 #STEP 12
@@ -214,14 +221,14 @@ summary(train.geno)
 
 #STEP 11
 #BUILD AND PREDICT IN PARALLEL
-# library(parallel)
-# cl <- makeCluster(32)
-# set.seed(1000)
-# hlaParallelAttrBagging(cl, train.HLA_B, train.geno, nclassifier=100, 
-#                       auto.save = "1kg_all_HLA_B_Model.RData", stop.cluster=TRUE)
-# model.obj <- get(load("1kg_all_HLA_B_Model.RData"))
-# model <- hlaModelFromObj(model.obj)
-# summary(model)
+library(parallel)
+cl <- makeCluster(20)
+set.seed(1000)
+hlaParallelAttrBagging(cl, train.HLA_B, train.geno, nclassifier=100, 
+                      auto.save = "1kg_all_HLA_B_Model.RData", stop.cluster=TRUE)
+model.obj <- get(load("1kg_all_HLA_B_Model.RData"))
+model <- hlaModelFromObj(model.obj)
+summary(model)
 
 
 #STEP 12
@@ -328,7 +335,7 @@ summary(train.geno)
 #STEP 11
 #BUILD AND PREDICT IN PARALLEL
 library(parallel)
-cl <- makeCluster(32)
+cl <- makeCluster(20)
 set.seed(1000)
 hlaParallelAttrBagging(cl, train.HLA_C, train.geno, nclassifier=100, 
                       auto.save = "1kg_all_HLA_C_Model.RData", stop.cluster=TRUE)

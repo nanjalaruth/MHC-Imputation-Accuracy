@@ -18,57 +18,57 @@ library("HIBAG")
 
 #STEP 1
 ##LOAD SNP GENOTYPES
-bed.fn <- "/scratch3/users/nanje/hlatyping/results/my-results/Genotypes/Reference/h3a_h3a_geno.bed"
-fam.fn <- "/scratch3/users/nanje/hlatyping/results/my-results/Genotypes/Reference/h3a_h3a_geno.fam"
-bim.fn <- "/scratch3/users/nanje/hlatyping/results/my-results/Genotypes/Reference/h3a_h3a_geno.bim"
+bed.fn <- "./H3Africa_H3Africa_geno.bed"
+fam.fn <- "./H3Africa_H3Africa_geno.fam"
+bim.fn <- "./H3Africa_H3Africa_geno.bim"
 geno <- hlaBED2Geno(bed.fn, fam.fn, bim.fn, assembly="hg19")
 
 #STEP 2
 ##LOAD HLA TYPES
-HLA_Type_Table <- read.table(file="/scratch3/users/nanje/hlatyping/results/my-results/Genotypes/Reference/h3a_hibag_hlatypes.edited")
+HLA_Type_Table <- read.table(file="./H3Africa_hibag_hlatypes.edited")
 head(HLA_Type_Table)
 dim(HLA_Type_Table)
 
-# ##Convert the HLA type table fields to a vector
-# HLA_Type_Table$sample.id <- as.vector(HLA_Type_Table$sample.id)
-# HLA_Type_Table$A.1 <- as.vector(HLA_Type_Table$A.1)     
-# HLA_Type_Table$A.2 <- as.vector(HLA_Type_Table$A.2)
+##Convert the HLA type table fields to a vector
+HLA_Type_Table$sample.id <- as.vector(HLA_Type_Table$sample.id)
+HLA_Type_Table$A.1 <- as.vector(HLA_Type_Table$A.1)     
+HLA_Type_Table$A.2 <- as.vector(HLA_Type_Table$A.2)
 
-# #STEP 3
-# ##Train HLA A allele
-# hlaA.id <- "A"
-# train.HLA_A <- hlaAllele(HLA_Type_Table$sample.id,
-#                        H1 = HLA_Type_Table[, paste(hlaA.id, ".1", sep="")],
-#                        H2 = HLA_Type_Table[, paste(hlaA.id, ".2", sep="")],
-#                        locus=hlaA.id, assembly="hg19")
-
-
-# #STEP 4
-# # Select SNPs flanking a region of 500kb on each side 
-# #or an appropriate flanking size without sacrificing predictive accuracy
-# region <- 500   # kb
-# snpid <- hlaFlankingSNP(geno$snp.id,
-#                         geno$snp.position, hlaA.id, region*1000, assembly="hg19")
-# length(snpid)
+#STEP 3
+##Train HLA A allele
+hlaA.id <- "A"
+train.HLA_A <- hlaAllele(HLA_Type_Table$sample.id,
+                       H1 = HLA_Type_Table[, paste(hlaA.id, ".1", sep="")],
+                       H2 = HLA_Type_Table[, paste(hlaA.id, ".2", sep="")],
+                       locus=hlaA.id, assembly="hg19")
 
 
-# #STEP 5
-# # TRAIN SNP GENOTYPES
-# train.geno <- hlaGenoSubset(geno,
-#                             snp.sel = match(snpid, geno$snp.id))
-# summary(train.geno)
+#STEP 4
+# Select SNPs flanking a region of 500kb on each side 
+#or an appropriate flanking size without sacrificing predictive accuracy
+region <- 500   # kb
+snpid <- hlaFlankingSNP(geno$snp.id,
+                        geno$snp.position, hlaA.id, region*1000, assembly="hg19")
+length(snpid)
+
+
+#STEP 5
+# TRAIN SNP GENOTYPES
+train.geno <- hlaGenoSubset(geno,
+                            snp.sel = match(snpid, geno$snp.id))
+summary(train.geno)
 
 # #Build model in parallel
-# library(parallel)
-# cl <- makeCluster(32)
-# set.seed(1000)
-# hlaParallelAttrBagging(cl, train.HLA_A, train.geno, nclassifier=100, 
-#                       auto.save = "h3a_h3a_HLA_A_Model.RData", stop.cluster=TRUE)
+library(parallel)
+cl <- makeCluster(20)
+set.seed(1000)
+hlaParallelAttrBagging(cl, train.HLA_A, train.geno, nclassifier=100, 
+                      auto.save = "h3a_h3a_HLA_A_Model.RData", stop.cluster=TRUE)
 
 # #Release model
-# model.obj <- get(load("h3a_h3a_HLA_A_Model.RData"))
-# model <- hlaModelFromObj(model.obj)
-# summary(model)
+model.obj <- get(load("h3a_h3a_HLA_A_Model.RData"))
+model <- hlaModelFromObj(model.obj)
+summary(model)
 
 
 # ###########################################################################
@@ -91,48 +91,48 @@ dim(HLA_Type_Table)
 # # head(HLA_Type_Table)
 # # dim(HLA_Type_Table)
 
-# ##Convert the HLA type table fields to a vector
-# HLA_Type_Table$sample.id <- as.vector(HLA_Type_Table$sample.id)
-# HLA_Type_Table$B.1 <- as.vector(HLA_Type_Table$B.1)
-# HLA_Type_Table$B.2 <- as.vector(HLA_Type_Table$B.2)
+##Convert the HLA type table fields to a vector
+HLA_Type_Table$sample.id <- as.vector(HLA_Type_Table$sample.id)
+HLA_Type_Table$B.1 <- as.vector(HLA_Type_Table$B.1)
+HLA_Type_Table$B.2 <- as.vector(HLA_Type_Table$B.2)
 
 
-# #STEP 3
-# ##Train HLA A allele
-# hlaB.id <- "B"
-# train.HLA_B <- hlaAllele(HLA_Type_Table$sample.id,
-#                          H1 = HLA_Type_Table[, paste(hlaB.id, ".1", sep="")],
-#                          H2 = HLA_Type_Table[, paste(hlaB.id, ".2", sep="")],
-#                          locus=hlaB.id, assembly="hg19")
+#STEP 3
+##Train HLA A allele
+hlaB.id <- "B"
+train.HLA_B <- hlaAllele(HLA_Type_Table$sample.id,
+                         H1 = HLA_Type_Table[, paste(hlaB.id, ".1", sep="")],
+                         H2 = HLA_Type_Table[, paste(hlaB.id, ".2", sep="")],
+                         locus=hlaB.id, assembly="hg19")
 
-# #STEP 4
-# # Select SNPs flanking a region of 500kb on each side 
-# #or an appropriate flanking size without sacrificing predictive accuracy
-# region <- 500   # kb
-# snpid <- hlaFlankingSNP(geno$snp.id,
-#                         geno$snp.position, hlaB.id, region*1000, assembly="hg19")
-# length(snpid)
-
-
-# #STEP 5
-# # TRAIN SNP GENOTYPES
-# # train.geno <- hlaGenoSubset(geno,
-# #                             snp.sel = match(snpid, geno$snp.id))
-# # summary(train.geno)
+#STEP 4
+# Select SNPs flanking a region of 500kb on each side 
+#or an appropriate flanking size without sacrificing predictive accuracy
+region <- 500   # kb
+snpid <- hlaFlankingSNP(geno$snp.id,
+                        geno$snp.position, hlaB.id, region*1000, assembly="hg19")
+length(snpid)
 
 
-# #Build HIBAG model
-# library(parallel)
-# cl <- makeCluster(32)
-# set.seed(1000)
-# hlaParallelAttrBagging(cl, train.HLA_B, train.geno, nclassifier=100, 
-#                       auto.save = "h3a_h3a_HLA_B_Model.RData", stop.cluster=TRUE)
+#STEP 5
+# TRAIN SNP GENOTYPES
+train.geno <- hlaGenoSubset(geno,
+                            snp.sel = match(snpid, geno$snp.id))
+summary(train.geno)
 
 
-# #Release model
-# model.obj <- get(load("h3a_h3a_HLA_B_Model.RData"))
-# model <- hlaModelFromObj(model.obj)
-# summary(model)
+#Build HIBAG model
+library(parallel)
+cl <- makeCluster(20)
+set.seed(1000)
+hlaParallelAttrBagging(cl, train.HLA_B, train.geno, nclassifier=100, 
+                      auto.save = "h3a_h3a_HLA_B_Model.RData", stop.cluster=TRUE)
+
+
+#Release model
+model.obj <- get(load("h3a_h3a_HLA_B_Model.RData"))
+model <- hlaModelFromObj(model.obj)
+summary(model)
 
 
 ###########################################################################
@@ -185,7 +185,7 @@ summary(train.geno)
 
 #BUILD AND PREDICT IN PARALLEL
 library(parallel)
-cl <- makeCluster(32)
+cl <- makeCluster(20)
 set.seed(1000)
 hlaParallelAttrBagging(cl, train.HLA_C, train.geno, nclassifier=100, 
                       auto.save = "h3a_h3a_HLA_C_Model.RData", stop.cluster=TRUE)
