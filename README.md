@@ -16,9 +16,9 @@ The project focused on assessing the accuracy of imputing HLA Class I alleles in
 Imputation accuracy was based on [SNP2HLA](http://software.broadinstitute.org/mpg/snp2hla/) and [HIBAG](https://github.com/zhengxwen/HIBAG) __imputation tools__, 1kg-All, 1kg-Gwd, 1kg-Afr, H3Africa, prebuilt EUR __reference panels__ and Illumina Omni 2.5 array, H3Africa array __genotyping arrays__  
 
 ## Installation 
-1. [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html)
-2. [Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04) 
-3. [Singularity](https://sylabs.io/guides/3.0/user-guide/installation.html)
+1. [Nextflow](https://www.nextflow.io/docs/latest/getstarted.html) The pipeline runs using Nextflow 21.10.6
+3. [Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04) 
+4. [Singularity](https://sylabs.io/guides/3.0/user-guide/installation.html)
 
 **N/B** You do not need to install any other tool as `singularity` profile will download the singularity image from https://quay.io/nanjalaruth/impute-hla
 
