@@ -1,0 +1,14 @@
+*.log
+*.RData
+*.bim
+*.bed
+*.fam
+*.edited
+*.nextflow.log*
+*.sh
+*.R
+work/
+nextflow
+.nextflow
+datasets/
+templates/src/__pycache__/
