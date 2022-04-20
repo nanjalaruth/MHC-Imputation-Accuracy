@@ -389,12 +389,15 @@ workflow{
     .map{answer, array, ref, rest -> [answer, array, ref, rest[2]]}
     measureacc_eur(ans)
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Measure accuracy using Minimac4 and the Multiethnic reference panel.
+
     // Step 4.5.5 Multiethnic HLA reference panel (Yang Luo)
     multi = Channel.fromList(params.multi_ethnic)
     ans =  Channel.fromPath(params.answer_file)
     .combine(multi)
     // ans.view()
-    // measureacc_multiethnic(ans)
+    measureacc_multiethnic(ans)
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -439,7 +442,7 @@ workflow{
     test_data = prepare_hg19_data_imputation.out.combine(subpop_modeldata)
     .map{dataset, subpop, bed, bim, fam, dtset, spop, model_a, model_b, model_c -> [dataset, subpop, bed, bim, fam, spop, model_a, model_b, model_c]}
     .combine(answerfile)
-    // hibag_impute_subpop(test_data)
+    hibag_impute_subpop(test_data)
     
 
     // 2.2 1kg-All & H3Africa
@@ -555,7 +558,7 @@ workflow{
     // .combine(makegenetic_map_eur_dataset.out, by:[0,1])
     // .map{subpop, spop, bed, bim, fam, frq, rbed, rbim, rfam, markers, bglphased, erate, mach
     // -> [subpop, bed, bim, fam, spop, frq, rbed, rbim, rfam, markers, bglphased, erate, mach]}
-    // data_input.view()
+    // // data_input.view()
     // cookHLAimpute_eur(data_input)
 
 
