@@ -452,7 +452,7 @@ workflow{
     tst_data = prepare_hg19_data_imputation.out.combine(dataset_modeldata)
     .map{dataset, subpop, bed, bim, fam, dtset, spop, model_a, model_b, model_c -> [dataset, subpop, bed, bim, fam, spop, model_a, model_b, model_c]}
     .combine(answerfile)
-    // hibag_impute_dataset(tst_data)
+    hibag_impute_dataset(tst_data)
 
     // 2.3 Hibag Pre built model (European population)
     answerfile = Channel.fromPath(params.hibag_answerfile)
