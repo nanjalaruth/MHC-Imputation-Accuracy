@@ -170,9 +170,13 @@ Omni_ggvp <- unlist(read.csv("./omni_ggvp_SNP_pos.csv",stringsAsFactors = FALSE,
 Omni <- unlist(read.csv("./omni_SNP_pos.csv",stringsAsFactors = FALSE,header = TRUE),use.names = FALSE)
 H3A_ggvp <- unlist(read.csv("./h3a_ggvp_SNP_pos",stringsAsFactors = FALSE,header = TRUE),use.names = FALSE)
 H3A <- unlist(read.csv("./h3a_SNP_pos",stringsAsFactors = FALSE,header = TRUE),use.names = FALSE)
+sets <- list(Omni_ggvp=Omni_ggvp,Omni=Omni)
+sets <- list(H3A_ggvp=H3A_ggvp,H3A=H3A)
 sets <- list(Omni_ggvp=Omni_ggvp,Omni=Omni,H3A_ggvp=H3A_ggvp,H3A=H3A)
+pdf(file="h3a_upset.pdf", onefile=FALSE) # or other device
 upset(fromList(sets),sets.bar.color = "gray23", order.by = "freq", nsets = 4,
       point.size = 3.5, line.size = 2, 
       mainbar.y.label = "SNPs Intersections", 
       sets.x.label = "SNPs Per Array")
+dev.off()
 
